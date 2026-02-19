@@ -10,6 +10,7 @@ const fleet = [
     hp: "650 HP", accel: "2.7s 0–60", top: "205 mph",
     c1: "#cc0000", c2: "#7f0000",
     tag: "sports",
+    img: "images/porsche-911-turbo-s.jpg",
     desc: "The pinnacle of sports car engineering. Raw, unadulterated performance wrapped in iconic Porsche design.",
     feats: ["Heated Seats", "Sport Chrono", "PASM", "Bose Sound", "Night Vision", "Apple CarPlay"]
   },
@@ -19,6 +20,7 @@ const fleet = [
     hp: "1,020 HP", accel: "1.99s 0–60", top: "200 mph",
     c1: "#111", c2: "#333",
     tag: "electric",
+    img: "images/tesla-model-s-plaid.jpg",
     desc: "The fastest production sedan ever made. Zero emissions, infinite thrills.",
     feats: ["Autopilot", "17\" Display", "Gaming", "Air Suspension", "HEPA Filter", "FSD"]
   },
@@ -28,6 +30,7 @@ const fleet = [
     hp: "530 HP", accel: "5.1s 0–60", top: "155 mph",
     c1: "#2c2c2c", c2: "#444",
     tag: "suv",
+    img: "images/range-rover-autobiography.jpg",
     desc: "The ultimate luxury SUV. Commanding presence meets extraordinary refinement.",
     feats: ["Meridian Sound", "Massage Seats", "Air Suspension", "Panoramic Roof", "4x4", "Night Vision"]
   },
@@ -37,6 +40,7 @@ const fleet = [
     hp: "631 HP", accel: "2.9s 0–60", top: "202 mph",
     c1: "#cc0000", c2: "#990000",
     tag: "sports",
+    img: "images/lamborghini-huracan.jpg",
     desc: "A visceral supercar experience. Every drive is an event you'll never forget.",
     feats: ["Carbon Fiber", "Lifting System", "Alcantara Interior", "Sport Exhaust", "Rear Camera", "Launch Control"]
   },
@@ -46,6 +50,7 @@ const fleet = [
     hp: "503 HP", accel: "4.4s 0–60", top: "155 mph",
     c1: "#1a1a1a", c2: "#2c2c2c",
     tag: "luxury",
+    img: "images/mercedes-s-class-amg.jpg",
     desc: "The benchmark of automotive luxury. Effortless power meets supreme comfort.",
     feats: ["Burmester 4D", "Rear Executive Seats", "MBUX", "E-Active Body", "AR Navigation", "Massage Seats"]
   },
@@ -55,6 +60,7 @@ const fleet = [
     hp: "503 HP", accel: "3.4s 0–60", top: "180 mph",
     c1: "#333", c2: "#555",
     tag: "sports",
+    img: "images/bmw-m4-competition.jpg",
     desc: "The perfect blend of track performance and daily usability. Pure driving pleasure.",
     feats: ["M Sport Seats", "Harman Kardon", "M Drive Pro", "Adaptive M Suspension", "HUD", "Wireless CarPlay"]
   },
@@ -64,6 +70,7 @@ const fleet = [
     hp: "420 HP", accel: "5.9s 0–60", top: "130 mph",
     c1: "#1a1a1a", c2: "#333",
     tag: "suv",
+    img: "images/cadillac-escalade-esv.jpg",
     desc: "American luxury at its finest. Commanding, spacious, and impossibly comfortable.",
     feats: ["AKG Sound", "Curved OLED", "Super Cruise", "Air Ride", "Panoramic Sunroof", "Rear Entertainment"]
   },
@@ -73,6 +80,7 @@ const fleet = [
     hp: "201 HP", accel: "6.6s 0–60", top: "130 mph",
     c1: "#555", c2: "#777",
     tag: "economy",
+    img: "images/audi-a3-premium.jpg",
     desc: "Premium quality without the premium price. Smart, efficient, and refined.",
     feats: ["Virtual Cockpit", "MMI Navigation", "Wireless Charging", "LED Headlights", "Parking Assist", "Apple CarPlay"]
   },
@@ -82,6 +90,7 @@ const fleet = [
     hp: "659 HP", accel: "3.6s 0–60", top: "207 mph",
     c1: "#2c2c2c", c2: "#1a1a1a",
     tag: "luxury",
+    img: "images/bentley-continental-gt.jpg",
     desc: "Handcrafted British excellence. The grand tourer that defines the genre.",
     feats: ["Naim Audio", "Rotating Display", "Handcrafted Interior", "Air Suspension", "Night Vision", "Massage Seats"]
   }
@@ -124,7 +133,7 @@ function renderFleet(filter = 'all') {
   grid.innerHTML = list.map((car, i) => `
     <div class="car-card reveal" data-id="${car.id}" style="transition-delay:${i * 0.06}s">
       <div class="cc-img" style="background:linear-gradient(135deg,${car.c1}22,${car.c2}11)">
-        ${makeSVG(car.c1, car.c2)}
+        <img src="${car.img}" alt="${car.name}" class="cc-car-photo" onerror="this.style.display='none'" />
         <span class="cc-tag">${car.tag}</span>
       </div>
       <div class="cc-body">
@@ -171,6 +180,7 @@ function openModal(id) {
   const car = fleet.find(c => c.id === id);
   if (!car) return;
   document.getElementById('modalBody').innerHTML = `
+    <div class="m-img-wrap"><img src="${car.img}" alt="${car.name}" class="m-car-photo" onerror="this.style.display='none'" /></div>
     <span class="m-tag">${car.tag}</span>
     <div class="m-name">${car.name}</div>
     <div class="m-price">$${car.price}<span>/day</span></div>

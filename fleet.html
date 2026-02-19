@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SUVs — CertifiedCityWhips</title>
+    <title>Browse Fleet — CertifiedCityWhips</title>
     <meta name="description"
-        content="Browse our premium SUV fleet at CertifiedCityWhips. Commanding, spacious, and built for the city." />
+        content="Browse the full CertifiedCityWhips fleet. Premium SUVs, sedans, and exotic cars available for rent." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,16 +18,14 @@
             padding: 160px 0 100px;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(160deg, #0a0d1a 0%, #0d1228 50%, #111a38 100%);
+            background: linear-gradient(160deg, #0a0d1a 0%, #0d0810 50%, #100a0d 100%);
         }
 
         .page-hero::before {
             content: '';
             position: absolute;
             inset: 0;
-            background:
-                radial-gradient(ellipse 70% 60% at 10% 40%, rgba(26, 42, 94, 0.5) 0%, transparent 60%),
-                radial-gradient(ellipse 50% 50% at 90% 60%, rgba(200, 16, 46, 0.08) 0%, transparent 55%);
+            background: radial-gradient(ellipse 70% 60% at 10% 40%, rgba(200, 16, 46, 0.12) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 90% 60%, rgba(90, 0, 16, 0.08) 0%, transparent 55%);
             pointer-events: none;
         }
 
@@ -54,7 +52,7 @@
         }
 
         .back-link::before {
-            content: '←';
+            content: '\2190';
         }
 
         .page-hero h1 {
@@ -74,7 +72,7 @@
         .page-hero-sub {
             font-size: 1.05rem;
             color: rgba(255, 255, 255, 0.55);
-            max-width: 540px;
+            max-width: 560px;
             line-height: 1.7;
             margin-bottom: 48px;
         }
@@ -125,12 +123,53 @@
             margin-top: 4px;
         }
 
+        /* Filter tabs */
+        .fleet-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+
+        .fleet-filter-btn {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 10px 24px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .fleet-filter-btn:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .fleet-filter-btn.active {
+            background: var(--red);
+            border-color: var(--red);
+            color: #fff;
+        }
+
+        .fleet-filter-btn .filter-count {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            opacity: 0.7;
+        }
+
         .vehicles-section {
             padding: 100px 0;
         }
 
         .vehicles-section .section-header {
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
 
         .vehicles-section h2 {
@@ -159,9 +198,9 @@
         }
 
         .v-card:hover {
-            border-color: rgba(255, 255, 255, 0.18);
+            border-color: rgba(200, 16, 46, 0.3);
             transform: translateY(-6px);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 24px 60px rgba(200, 16, 46, 0.15);
         }
 
         .v-img {
@@ -342,6 +381,14 @@
             color: #fff;
         }
 
+        .fleet-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 20px;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 1.1rem;
+        }
+
         .reveal {
             opacity: 0;
             transform: translateY(24px);
@@ -353,7 +400,13 @@
             transform: none;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
+            .vehicles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
             .vehicles-grid {
                 grid-template-columns: 1fr;
             }
@@ -361,6 +414,15 @@
             .page-hero-stats {
                 flex-wrap: wrap;
                 border-radius: 20px;
+            }
+
+            .fleet-filters {
+                gap: 6px;
+            }
+
+            .fleet-filter-btn {
+                padding: 8px 16px;
+                font-size: 0.78rem;
             }
         }
     </style>
@@ -380,7 +442,7 @@
                 <li><a href="index.html#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="nav-end">
-                <a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span class="cart-badge"
+                <a href="checkout.html" class="nav-link" style="position:relative;">&#x1f6d2; <span class="cart-badge"
                         style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a>
                 <a href="login.html" class="nav-cta nav-auth-btn" id="navCta">Login</a>
                 <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -390,22 +452,21 @@
 
     <header class="page-hero">
         <div class="wrap page-hero-inner">
-            <a href="index.html#fleet" class="back-link">Back to Fleet</a>
-            <div class="section-eyebrow">Our Fleet — SUVs</div>
-            <h1>Built for the<br><span>City & Beyond.</span></h1>
-            <p class="page-hero-sub">Commanding presence. Elevated comfort. Our hand-picked SUV lineup delivers power,
-                space, and style — whether you're navigating city streets or heading out of town.</p>
+            <a href="index.html" class="back-link">Back to Home</a>
+            <div class="section-eyebrow">Our Complete Fleet</div>
+            <h1>Browse All<br><span>Vehicles.</span></h1>
+            <p class="page-hero-sub">From executive sedans to exotic supercars, our entire hand-picked fleet at your fingertips. Filter by category, compare specs, and book your perfect ride.</p>
             <div class="page-hero-stats">
                 <div class="ph-stat">
-                    <div class="ph-stat-n">3<em>+</em></div>
-                    <div class="ph-stat-l">SUV Models</div>
+                    <div class="ph-stat-n" id="statTotal">10</div>
+                    <div class="ph-stat-l">Total Vehicles</div>
                 </div>
                 <div class="ph-stat">
-                    <div class="ph-stat-n">7<em>+</em></div>
-                    <div class="ph-stat-l">Seats Available</div>
+                    <div class="ph-stat-n">3</div>
+                    <div class="ph-stat-l">Categories</div>
                 </div>
                 <div class="ph-stat">
-                    <div class="ph-stat-n">$199<em>/day</em></div>
+                    <div class="ph-stat-n">$89<em>/day</em></div>
                     <div class="ph-stat-l">Starting From</div>
                 </div>
             </div>
@@ -415,151 +476,19 @@
     <section class="vehicles-section">
         <div class="wrap">
             <div class="section-header">
-                <div class="section-eyebrow">Choose Your SUV</div>
-                <h2>Premium SUV Lineup</h2>
-                <p>Each vehicle is inspected, detailed, and certified before every rental.</p>
+                <div class="section-eyebrow">Filter & Explore</div>
+                <h2>Full Fleet Lineup</h2>
             </div>
-            <div class="vehicles-grid">
 
-                <div class="v-card reveal">
-                    <div class="v-img">
-                        <img src="images/range-rover-autobiography.jpg"
-                            alt="Range Rover Autobiography"
-                            onerror="this.parentElement.style.background='linear-gradient(135deg,rgba(26,42,94,0.4),rgba(13,21,47,0.6))'" />
-                        <div class="v-img-overlay"></div>
-                        <span class="v-img-label">SUV — Luxury</span>
-                        <div class="v-img-price">$319 <span>/day</span></div>
-                    </div>
-                    <div class="v-body">
-                        <div class="v-name">Range Rover Autobiography</div>
-                        <div class="v-year">2024 · Hybrid · AWD</div>
-                        <p class="v-desc">The ultimate luxury SUV. Commanding presence meets extraordinary refinement.
-                            Perfect for executives and families who refuse to compromise.</p>
-                        <div class="v-specs">
-                            <div class="v-spec">
-                                <div class="v-spec-l">Power</div>
-                                <div class="v-spec-v">530 HP</div>
-                            </div>
-                            <div class="v-spec">
-                                <div class="v-spec-l">0–60 mph</div>
-                                <div class="v-spec-v">5.1 sec</div>
-                            </div>
-                            <div class="v-spec">
-                                <div class="v-spec-l">Seats</div>
-                                <div class="v-spec-v">5 Passengers</div>
-                            </div>
-                            <div class="v-spec">
-                                <div class="v-spec-l">Top Speed</div>
-                                <div class="v-spec-v">155 mph</div>
-                            </div>
-                        </div>
-                        <div class="v-feats">
-                            <span class="v-feat">Meridian Sound</span><span class="v-feat">Massage Seats</span>
-                            <span class="v-feat">Air Suspension</span><span class="v-feat">Panoramic Roof</span>
-                            <span class="v-feat">4×4</span><span class="v-feat">Night Vision</span>
-                        </div>
-                        <div class="v-actions">
-                            <a href="car-detail.html?id=2" class="v-book"
-                                style="text-decoration:none;text-align:center;">Book Now</a>
-                            <a href="car-detail.html?id=2" class="v-info"
-                                style="text-decoration:none;text-align:center;">Details</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="fleet-filters" id="fleetFilters">
+                <button class="fleet-filter-btn active" data-filter="all">All Vehicles <span class="filter-count" id="countAll"></span></button>
+                <button class="fleet-filter-btn" data-filter="suv">SUVs <span class="filter-count" id="countSuv"></span></button>
+                <button class="fleet-filter-btn" data-filter="sedan">Sedans <span class="filter-count" id="countSedan"></span></button>
+                <button class="fleet-filter-btn" data-filter="exotic">Exotic Cars <span class="filter-count" id="countExotic"></span></button>
+            </div>
 
-                <div class="v-card reveal">
-                    <div class="v-img">
-                        <img src="images/cadillac-escalade-esv.jpg"
-                            alt="Cadillac Escalade ESV"
-                            onerror="this.parentElement.style.background='linear-gradient(135deg,rgba(40,20,60,0.4),rgba(20,10,30,0.6))'" />
-                        <div class="v-img-overlay"></div>
-                        <span class="v-img-label">SUV — Full Size</span>
-                        <div class="v-img-price">$249 <span>/day</span></div>
-                    </div>
-                    <div class="v-body">
-                        <div class="v-name">Cadillac Escalade ESV</div>
-                        <div class="v-year">2024 · Petrol · AWD</div>
-                        <p class="v-desc">American luxury at its finest. Commanding, spacious, and impossibly
-                            comfortable. The Escalade ESV is the gold standard of full-size SUVs.</p>
-                        <div class="v-specs">
-                            <div class="v-spec">
-                                <div class="v-spec-l">Power</div>
-                                <div class="v-spec-v">420 HP</div>
-                            </div>
-                            <div class="v-spec">
-                                <div class="v-spec-l">0–60 mph</div>
-                                <div class="v-spec-v">5.9 sec</div>
-                            </div>
-                            <div class="v-spec">
-                                <div class="v-spec-l">Seats</div>
-                                <div class="v-spec-v">8 Passengers</div>
-                            </div>
-                            <div class="v-spec">
-                                <div class="v-spec-l">Top Speed</div>
-                                <div class="v-spec-v">130 mph</div>
-                            </div>
-                        </div>
-                        <div class="v-feats">
-                            <span class="v-feat">AKG Sound</span><span class="v-feat">Curved OLED</span>
-                            <span class="v-feat">Super Cruise</span><span class="v-feat">Air Ride</span>
-                            <span class="v-feat">Panoramic Sunroof</span><span class="v-feat">Rear Entertainment</span>
-                        </div>
-                        <div class="v-actions">
-                            <a href="car-detail.html?id=7" class="v-book"
-                                style="text-decoration:none;text-align:center;">Book Now</a>
-                            <a href="car-detail.html?id=7" class="v-info"
-                                style="text-decoration:none;text-align:center;">Details</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="v-card reveal">
-                    <div class="v-img">
-                        <img src="images/bmw-x7-m60i.jpg"
-                            alt="BMW X7 M60i"
-                            onerror="this.parentElement.style.background='linear-gradient(135deg,rgba(10,30,60,0.5),rgba(5,15,35,0.6))'" />
-                        <div class="v-img-overlay"></div>
-                        <span class="v-img-label">SUV — Sport</span>
-                        <div class="v-img-price">$199 <span>/day</span></div>
-                    </div>
-                    <div class="v-body">
-                        <div class="v-name">BMW X7 M60i</div>
-                        <div class="v-year">2024 · Petrol · xDrive AWD</div>
-                        <p class="v-desc">Where sport meets luxury. The BMW X7 M60i delivers exhilarating performance
-                            without sacrificing an ounce of comfort or practicality.</p>
-                        <div class="v-specs">
-                            <div class="v-spec">
-                                <div class="v-spec-l">Power</div>
-                                <div class="v-spec-v">523 HP</div>
-                            </div>
-                            <div class="v-spec">
-                                <div class="v-spec-l">0–60 mph</div>
-                                <div class="v-spec-v">4.7 sec</div>
-                            </div>
-                            <div class="v-spec">
-                                <div class="v-spec-l">Seats</div>
-                                <div class="v-spec-v">7 Passengers</div>
-                            </div>
-                            <div class="v-spec">
-                                <div class="v-spec-l">Top Speed</div>
-                                <div class="v-spec-v">155 mph</div>
-                            </div>
-                        </div>
-                        <div class="v-feats">
-                            <span class="v-feat">Bowers & Wilkins</span><span class="v-feat">Curved Display</span>
-                            <span class="v-feat">Sky Lounge Roof</span><span class="v-feat">Massage Seats</span>
-                            <span class="v-feat">Driving Assistant Pro</span><span class="v-feat">Wireless
-                                CarPlay</span>
-                        </div>
-                        <div class="v-actions">
-                            <a href="car-detail.html?id=9" class="v-book"
-                                style="text-decoration:none;text-align:center;">Book Now</a>
-                            <a href="car-detail.html?id=9" class="v-info"
-                                style="text-decoration:none;text-align:center;">Details</a>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="vehicles-grid" id="vehiclesGrid">
+                <!-- Dynamically populated -->
             </div>
         </div>
     </section>
@@ -576,39 +505,149 @@
                 </div>
                 <div class="footer-cols">
                     <div class="fcol">
-                        <h5>Fleet</h5><a href="suvs.html">SUVs</a><a href="sedans.html">Sedans</a><a
-                            href="exotics.html">Exotic Cars</a>
+                        <h5>Fleet</h5>
+                        <a href="suvs.html">SUVs</a>
+                        <a href="sedans.html">Sedans</a>
+                        <a href="exotics.html">Exotic Cars</a>
                     </div>
                     <div class="fcol">
-                        <h5>Services</h5><a href="services.html">Car Rental</a><a href="services.html#roadside">Roadside
-                            Assistance</a><a href="services.html#insurance">Insurance</a>
+                        <h5>Services</h5>
+                        <a href="services.html">Car Rental</a>
+                        <a href="services.html#roadside">Roadside Assistance</a>
+                        <a href="services.html#insurance">Insurance</a>
                     </div>
                     <div class="fcol">
-                        <h5>Support</h5><a href="faq.html">FAQ</a><a href="index.html#contact">Contact</a><a
-                            href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+                        <h5>Support</h5>
+                        <a href="faq.html">FAQ</a>
+                        <a href="index.html#contact">Contact</a>
+                        <a href="privacy.html">Privacy</a>
+                        <a href="terms.html">Terms</a>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
-                <p>Built for the city. Certified for the road. 🔴</p>
-            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CertifiedCityWhips. All rights reserved.</p>
+            <p>Built for the city. Certified for the road.</p>
         </div>
     </footer>
 
     <div class="toast" id="toast"></div>
+
     <script src="cars-db.js"></script>
     <script src="auth.js"></script>
     <script src="cart.js"></script>
     <script src="ccw-new.js"></script>
     <script>
-        if (CCW_AUTH.isLoggedIn()) { const b = document.querySelector('.nav-auth-btn'); if (b) { b.textContent = 'Dashboard'; b.href = 'dashboard.html'; } }
-        const obs = new IntersectionObserver(entries => {
+        // Auth button
+        if (CCW_AUTH.isLoggedIn()) {
+            const b = document.querySelector('.nav-auth-btn');
+            if (b) { b.textContent = 'Dashboard'; b.href = 'dashboard.html'; }
+        }
+
+        // Populate filter counts
+        document.getElementById('countAll').textContent = CARS_DB.length;
+        document.getElementById('countSuv').textContent = getCarsByCategory('suv').length;
+        document.getElementById('countSedan').textContent = getCarsByCategory('sedan').length;
+        document.getElementById('countExotic').textContent = getCarsByCategory('exotic').length;
+        document.getElementById('statTotal').textContent = CARS_DB.length;
+
+        // Render vehicle cards
+        function renderVehicles(category) {
+            const cars = category === 'all' ? CARS_DB : getCarsByCategory(category);
+            const grid = document.getElementById('vehiclesGrid');
+
+            if (cars.length === 0) {
+                grid.innerHTML = '<div class="fleet-empty">No vehicles found in this category.</div>';
+                return;
+            }
+
+            grid.innerHTML = cars.map((car, i) => `
+                <div class="v-card reveal" style="transition-delay:${i * 0.08}s">
+                    <div class="v-img">
+                        <img src="${car.imageUrl}"
+                            alt="${car.name}"
+                            onerror="this.parentElement.style.background='${car.fallbackGradient}'" />
+                        <div class="v-img-overlay"></div>
+                        <span class="v-img-label">${car.categoryLabel}</span>
+                        <div class="v-img-price">$${car.price} <span>/day</span></div>
+                    </div>
+                    <div class="v-body">
+                        <div class="v-name">${car.name}</div>
+                        <div class="v-year">${car.year} &middot; ${car.fuel} &middot; ${car.drivetrain}</div>
+                        <p class="v-desc">${car.description}</p>
+                        <div class="v-specs">
+                            <div class="v-spec">
+                                <div class="v-spec-l">Power</div>
+                                <div class="v-spec-v">${car.hp}</div>
+                            </div>
+                            <div class="v-spec">
+                                <div class="v-spec-l">0&ndash;60 mph</div>
+                                <div class="v-spec-v">${car.accel}</div>
+                            </div>
+                            <div class="v-spec">
+                                <div class="v-spec-l">Seats</div>
+                                <div class="v-spec-v">${car.seats} Passengers</div>
+                            </div>
+                            <div class="v-spec">
+                                <div class="v-spec-l">Top Speed</div>
+                                <div class="v-spec-v">${car.topSpeed}</div>
+                            </div>
+                        </div>
+                        <div class="v-feats">
+                            ${car.features.slice(0, 6).map(f => `<span class="v-feat">${f}</span>`).join('')}
+                        </div>
+                        <div class="v-actions">
+                            <a href="car-detail.html?id=${car.id}" class="v-book" style="text-decoration:none;text-align:center;">Book Now</a>
+                            <a href="car-detail.html?id=${car.id}" class="v-info" style="text-decoration:none;text-align:center;">Details</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Observe reveal animations
+            setTimeout(() => {
+                document.querySelectorAll('.v-card.reveal').forEach(el => {
+                    revealObs.observe(el);
+                });
+            }, 50);
+        }
+
+        // Filter click handler
+        document.getElementById('fleetFilters').addEventListener('click', function(e) {
+            const btn = e.target.closest('.fleet-filter-btn');
+            if (!btn) return;
+
+            document.querySelectorAll('.fleet-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.filter;
+            renderVehicles(filter);
+        });
+
+        // Scroll reveal observer
+        const revealObs = new IntersectionObserver(entries => {
             entries.forEach((e, i) => {
-                if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 100); obs.unobserve(e.target); }
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('visible'), i * 80);
+                    revealObs.unobserve(e.target);
+                }
             });
         }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        // Check URL params for category pre-filter
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoryParam = urlParams.get('category');
+        if (categoryParam && ['suv', 'sedan', 'exotic'].includes(categoryParam)) {
+            const targetBtn = document.querySelector(`.fleet-filter-btn[data-filter="${categoryParam}"]`);
+            if (targetBtn) {
+                document.querySelectorAll('.fleet-filter-btn').forEach(b => b.classList.remove('active'));
+                targetBtn.classList.add('active');
+            }
+            renderVehicles(categoryParam);
+        } else {
+            renderVehicles('all');
+        }
     </script>
 </body>
 

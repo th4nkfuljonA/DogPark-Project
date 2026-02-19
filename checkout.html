@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout — CertifiedCityWhips</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="ccw-new.css" />
+    <style>
+        .ck-page {
+            padding: 140px 0 80px;
+            min-height: 100vh;
+        }
+
+        .ck-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            color: #fff;
+            margin-bottom: 32px;
+        }
+
+        /* Steps indicator */
+        .ck-steps {
+            display: flex;
+            gap: 0;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        .ck-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .ck-step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.82rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 6px;
+            transition: all 0.3s;
+        }
+
+        .ck-step.active .ck-step-num {
+            border-color: var(--red);
+            color: #fff;
+            background: var(--red);
+        }
+
+        .ck-step.done .ck-step-num {
+            border-color: #2ecc71;
+            color: #fff;
+            background: #2ecc71;
+        }
+
+        .ck-step-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.25);
+            transition: color 0.3s;
+        }
+
+        .ck-step.active .ck-step-label {
+            color: #fff;
+        }
+
+        /* Panels */
+        .ck-panel {
+            display: none;
+        }
+
+        .ck-panel.active {
+            display: block;
+        }
+
+        /* Cart items */
+        .ck-cart-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        .ck-cart-img {
+            width: 120px;
+            height: 80px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #0a0d1a;
+        }
+
+        .ck-cart-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ck-cart-info {
+            flex: 1;
+        }
+
+        .ck-cart-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .ck-cart-dates {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .ck-cart-price {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: var(--red);
+            text-align: right;
+        }
+
+        .ck-cart-price-sub {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .ck-cart-remove {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            font-size: 0.78rem;
+            padding: 4px 8px;
+            transition: color 0.2s;
+        }
+
+        .ck-cart-remove:hover {
+            color: var(--red);
+        }
+
+        .ck-empty {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .ck-empty-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .ck-empty-text {
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 20px;
+        }
+
+        .ck-total-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            margin-top: 20px;
+        }
+
+        .ck-total-label {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .ck-total-value {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--red);
+        }
+
+        /* Form fields */
+        .ck-form {
+            max-width: 560px;
+        }
+
+        .ck-field {
+            margin-bottom: 16px;
+        }
+
+        .ck-field label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 6px;
+        }
+
+        .ck-field input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            outline: none;
+        }
+
+        .ck-field input:focus {
+            border-color: var(--red);
+        }
+
+        .ck-field input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .ck-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .ck-btn {
+            padding: 14px 32px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.92rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .ck-btn-primary {
+            background: var(--red);
+            color: #fff;
+            border: 1.5px solid #e8304a;
+        }
+
+        .ck-btn-primary:hover {
+            background: #e8304a;
+            box-shadow: 0 4px 20px rgba(200, 16, 46, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .ck-btn-ghost {
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ck-btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .ck-btns {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        /* Payment mockup notice */
+        .ck-mockup {
+            background: rgba(200, 16, 46, 0.08);
+            border: 1px solid rgba(200, 16, 46, 0.2);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 24px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .ck-mockup strong {
+            color: var(--red);
+        }
+
+        /* Confirmation */
+        .ck-success {
+            text-align: center;
+            padding: 60px 24px;
+        }
+
+        .ck-success-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .ck-success-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .ck-success-sub {
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 12px;
+        }
+
+        .ck-success-ref {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            color: var(--red);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 640px) {
+            .ck-row {
+                grid-template-columns: 1fr;
+            }
+
+            .ck-cart-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .ck-cart-img {
+                width: 100%;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#fleet" class="nav-link">Fleet</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="index.html#process" class="nav-link">How It Works</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-end">
+                <a href="checkout.html" class="nav-link" style="position:relative;color:var(--red);">🛒 <span
+                        class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a>
+                <a href="login.html" class="nav-cta nav-auth-btn" id="navCta">Login</a>
+                <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ck-page">
+        <div class="wrap">
+            <h1 class="ck-title">Checkout</h1>
+
+            <div class="ck-steps">
+                <div class="ck-step active" data-step="1">
+                    <div class="ck-step-num">1</div>
+                    <div class="ck-step-label">Cart</div>
+                </div>
+                <div class="ck-step" data-step="2">
+                    <div class="ck-step-num">2</div>
+                    <div class="ck-step-label">Details</div>
+                </div>
+                <div class="ck-step" data-step="3">
+                    <div class="ck-step-num">3</div>
+                    <div class="ck-step-label">Payment</div>
+                </div>
+                <div class="ck-step" data-step="4">
+                    <div class="ck-step-num">4</div>
+                    <div class="ck-step-label">Confirm</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Cart Review -->
+            <div class="ck-panel active" id="panel1">
+                <div id="cartItems"></div>
+                <div class="ck-total-bar" id="cartTotal" style="display:none;">
+                    <span class="ck-total-label">Total</span>
+                    <span class="ck-total-value" id="totalValue">$0</span>
+                </div>
+                <div class="ck-btns" id="cartBtns" style="display:none;">
+                    <a href="index.html#fleet" class="ck-btn ck-btn-ghost">Continue Shopping</a>
+                    <button class="ck-btn ck-btn-primary" onclick="goToStep(2)">Continue →</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Personal Info -->
+            <div class="ck-panel" id="panel2">
+                <form class="ck-form" id="infoForm">
+                    <div class="ck-row">
+                        <div class="ck-field"><label>First Name</label><input type="text" id="ckFirstName"
+                                placeholder="John" required /></div>
+                        <div class="ck-field"><label>Last Name</label><input type="text" id="ckLastName"
+                                placeholder="Doe" required /></div>
+                    </div>
+                    <div class="ck-field"><label>Email</label><input type="email" id="ckEmail"
+                            placeholder="your@email.com" required /></div>
+                    <div class="ck-field"><label>Phone</label><input type="tel" id="ckPhone"
+                            placeholder="+1 (555) 123-4567" required /></div>
+                    <div class="ck-field"><label>Driver's License #</label><input type="text" id="ckLicense"
+                            placeholder="DL Number" required /></div>
+                    <div class="ck-btns">
+                        <button type="button" class="ck-btn ck-btn-ghost" onclick="goToStep(1)">← Back</button>
+                        <button type="submit" class="ck-btn ck-btn-primary">Continue to Payment →</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 3: Payment Mockup -->
+            <div class="ck-panel" id="panel3">
+                <div class="ck-form">
+                    <div class="ck-mockup">
+                        <strong>⚠️ Demo Mode:</strong> This is a payment mockup. No real charges will be made.
+                    </div>
+                    <div class="ck-field"><label>Card Number</label><input type="text" id="ckCard"
+                            placeholder="4242 4242 4242 4242" maxlength="19" /></div>
+                    <div class="ck-row">
+                        <div class="ck-field"><label>Expiration</label><input type="text" placeholder="MM/YY"
+                                maxlength="5" /></div>
+                        <div class="ck-field"><label>CVC</label><input type="text" placeholder="123" maxlength="4" />
+                        </div>
+                    </div>
+                    <div class="ck-field"><label>Cardholder Name</label><input type="text" placeholder="John Doe" />
+                    </div>
+                    <div class="ck-btns">
+                        <button class="ck-btn ck-btn-ghost" onclick="goToStep(2)">← Back</button>
+                        <button class="ck-btn ck-btn-primary" onclick="completeCheckout()">Complete Booking →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Confirmation -->
+            <div class="ck-panel" id="panel4">
+                <div class="ck-success">
+                    <div class="ck-success-icon">✅</div>
+                    <h2 class="ck-success-title">Booking Confirmed!</h2>
+                    <p class="ck-success-sub">Your rental has been booked successfully.</p>
+                    <p class="ck-success-ref" id="bookingRef">Booking #CCW-000000</p>
+                    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+                        <a href="dashboard.html" class="ck-btn ck-btn-primary">View Dashboard →</a>
+                        <a href="index.html" class="ck-btn ck-btn-ghost">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Premium city car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Company</h5><a href="about.html">About CCW</a><a href="careers.html">Careers</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5><a href="services.html">Car Rental</a><a href="services.html">Roadside
+                            Assistance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5><a href="faq.html">FAQ</a><a href="index.html#contact">Contact</a><a
+                            href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+    <script src="cars-db.js"></script>
+    <script src="auth.js"></script>
+    <script src="cart.js"></script>
+    <script src="ccw-new.js"></script>
+    <script>
+        if (CCW_AUTH.isLoggedIn()) {
+            const btn = document.querySelector('.nav-auth-btn');
+            if (btn) { btn.textContent = 'Dashboard'; btn.href = 'dashboard.html'; }
+        }
+
+        let currentStep = 1;
+
+        function goToStep(step) {
+            currentStep = step;
+            document.querySelectorAll('.ck-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('panel' + step).classList.add('active');
+            document.querySelectorAll('.ck-step').forEach(s => {
+                const n = parseInt(s.dataset.step);
+                s.classList.remove('active', 'done');
+                if (n === step) s.classList.add('active');
+                if (n < step) s.classList.add('done');
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderCart() {
+            const cart = CCW_CART.getCart();
+            const container = document.getElementById('cartItems');
+            const totalBar = document.getElementById('cartTotal');
+            const btns = document.getElementById('cartBtns');
+
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="ck-empty"><div class="ck-empty-icon">🛒</div><p class="ck-empty-text">Your cart is empty.</p><a href="index.html#fleet" class="ck-btn ck-btn-primary">Browse Fleet →</a></div>';
+                totalBar.style.display = 'none';
+                btns.style.display = 'none';
+                return;
+            }
+
+            container.innerHTML = cart.map((item, i) => `
+                <div class="ck-cart-item">
+                    <div class="ck-cart-img"><img src="${item.carImage}" alt="${item.carName}" onerror="this.parentElement.style.background='${item.carFallback}';this.style.display='none'" /></div>
+                    <div class="ck-cart-info">
+                        <div class="ck-cart-name">${item.carName}</div>
+                        <div class="ck-cart-dates">${new Date(item.pickupDate).toLocaleDateString()} — ${new Date(item.returnDate).toLocaleDateString()} · ${item.days} day${item.days > 1 ? 's' : ''}</div>
+                    </div>
+                    <div>
+                        <div class="ck-cart-price">$${item.total.toLocaleString()}</div>
+                        <div class="ck-cart-price-sub">$${item.pricePerDay}/day × ${item.days}</div>
+                        <button class="ck-cart-remove" onclick="removeItem(${i})">✕ Remove</button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('totalValue').textContent = '$' + CCW_CART.getCartTotal().toLocaleString();
+            totalBar.style.display = 'flex';
+            btns.style.display = 'flex';
+        }
+
+        function removeItem(i) {
+            CCW_CART.removeFromCart(i);
+            renderCart();
+        }
+
+        // Info form submit
+        document.getElementById('infoForm').addEventListener('submit', e => {
+            e.preventDefault();
+            goToStep(3);
+        });
+
+        function completeCheckout() {
+            const cart = CCW_CART.getCart();
+            const user = CCW_AUTH.getCurrentUser();
+
+            // Save each item as a rental
+            cart.forEach(item => {
+                CCW_AUTH.addRental({
+                    userId: user ? user.userId : 'guest',
+                    carId: item.carId,
+                    carName: item.carName,
+                    pickupDate: item.pickupDate,
+                    returnDate: item.returnDate,
+                    days: item.days,
+                    total: item.total
+                });
+            });
+
+            const ref = 'CCW-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+            document.getElementById('bookingRef').textContent = 'Booking #' + ref;
+
+            CCW_CART.clearCart();
+            goToStep(4);
+        }
+
+        // Pre-fill email if logged in
+        if (CCW_AUTH.isLoggedIn()) {
+            const user = CCW_AUTH.getCurrentUser();
+            const emailField = document.getElementById('ckEmail');
+            if (emailField && user) emailField.value = user.email;
+            const nameField = document.getElementById('ckFirstName');
+            if (nameField && user) nameField.value = user.name.split(' ')[0];
+        }
+
+        renderCart();
+    </script>
+</body>
+
+</html>

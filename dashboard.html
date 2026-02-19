@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — CertifiedCityWhips</title>
+    <meta name="description" content="Your CertifiedCityWhips dashboard — manage rentals and bookings." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="ccw-new.css" />
+    <style>
+        .dash-page {
+            padding: 140px 0 80px;
+            min-height: 100vh;
+        }
+
+        .dash-header {
+            margin-bottom: 48px;
+        }
+
+        .dash-greeting {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .dash-greeting span {
+            color: var(--red);
+        }
+
+        .dash-sub {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .dash-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .dash-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            border: none;
+        }
+
+        .dash-btn-primary {
+            background: var(--red);
+            color: #fff;
+            border: 1.5px solid #e8304a;
+        }
+
+        .dash-btn-primary:hover {
+            background: #e8304a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(200, 16, 46, 0.3);
+        }
+
+        .dash-btn-ghost {
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dash-btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+
+        .dash-section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+
+        .dash-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+        }
+
+        .rental-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .rental-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .rental-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .rental-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #fff;
+        }
+
+        .rental-status {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 999px;
+        }
+
+        .rental-status.active {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .rental-status.completed {
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rental-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .rental-detail-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 2px;
+        }
+
+        .rental-detail-value {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.92rem;
+            color: #fff;
+        }
+
+        .dash-empty {
+            text-align: center;
+            padding: 60px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+
+        .dash-empty-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .dash-empty-text {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .dash-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#fleet" class="nav-link">Fleet</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="index.html#process" class="nav-link">How It Works</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-end">
+                <a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a>
+                <a href="dashboard.html" class="nav-cta" id="navCta">Dashboard</a>
+                <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dash-page">
+        <div class="wrap">
+            <div class="dash-header">
+                <h1 class="dash-greeting">Welcome back, <span id="userName">User</span></h1>
+                <p class="dash-sub">Manage your rentals and bookings.</p>
+                <div class="dash-actions">
+                    <a href="index.html#fleet" class="dash-btn dash-btn-primary">Browse Fleet →</a>
+                    <button class="dash-btn dash-btn-ghost" id="logoutBtn">Log Out</button>
+                </div>
+            </div>
+
+            <h3 class="dash-section-title">Your Rentals</h3>
+            <div id="rentalsList"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Premium city car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Company</h5><a href="about.html">About CCW</a><a href="careers.html">Careers</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5><a href="services.html">Car Rental</a><a href="services.html">Roadside
+                            Assistance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5><a href="faq.html">FAQ</a><a href="index.html#contact">Contact</a><a
+                            href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+    <script src="cars-db.js"></script>
+    <script src="auth.js"></script>
+    <script src="cart.js"></script>
+    <script src="ccw-new.js"></script>
+    <script>
+        // Redirect if not logged in
+        if (!CCW_AUTH.isLoggedIn()) {
+            window.location.href = 'login.html';
+        }
+
+        const user = CCW_AUTH.getCurrentUser();
+        if (user) {
+            document.getElementById('userName').textContent = user.name.split(' ')[0];
+        }
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            CCW_AUTH.logout();
+            window.location.href = 'login.html';
+        });
+
+        // Render rentals
+        function renderRentals() {
+            const rentals = CCW_AUTH.getUserRentals();
+            const container = document.getElementById('rentalsList');
+
+            if (rentals.length === 0) {
+                container.innerHTML = `
+                    <div class="dash-empty">
+                        <div class="dash-empty-icon">🚗</div>
+                        <p class="dash-empty-text">You haven't booked any rentals yet.</p>
+                        <a href="index.html#fleet" class="dash-btn dash-btn-primary">Browse Fleet →</a>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = '<div class="dash-grid">' + rentals.map(r => `
+                <div class="rental-card">
+                    <div class="rental-top">
+                        <div class="rental-name">${r.carName}</div>
+                        <span class="rental-status ${r.status}">${r.status}</span>
+                    </div>
+                    <div class="rental-details">
+                        <div><div class="rental-detail-label">Pickup</div><div class="rental-detail-value">${new Date(r.pickupDate).toLocaleDateString()}</div></div>
+                        <div><div class="rental-detail-label">Return</div><div class="rental-detail-value">${new Date(r.returnDate).toLocaleDateString()}</div></div>
+                        <div><div class="rental-detail-label">Total</div><div class="rental-detail-value" style="color:var(--red)">$${r.total.toLocaleString()}</div></div>
+                        <div><div class="rental-detail-label">Booking ID</div><div class="rental-detail-value">${r.id}</div></div>
+                    </div>
+                </div>
+            `).join('') + '</div>';
+        }
+
+        renderRentals();
+    </script>
+</body>
+
+</html>

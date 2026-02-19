@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services — CertifiedCityWhips</title>
+    <meta name="description"
+        content="CertifiedCityWhips services: Car Rental, Roadside Assistance, and Insurance. Transparent pricing, no hidden fees." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&family=Montserrat:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="ccw-new.css" />
+    <style>
+        /* ── PAGE HERO ── */
+        .page-hero {
+            padding: 160px 0 100px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(160deg, #0a0d1a 0%, #0d1228 50%, #111a38 100%);
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 10% 40%, rgba(26, 42, 94, 0.5) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 90% 60%, rgba(200, 16, 46, 0.1) 0%, transparent 55%);
+            pointer-events: none;
+        }
+
+        .page-hero-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 32px;
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--red);
+        }
+
+        .back-link::before {
+            content: '←';
+        }
+
+        .page-hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .page-hero h1 span {
+            color: var(--red);
+        }
+
+        .page-hero-sub {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.55);
+            max-width: 540px;
+            line-height: 1.7;
+        }
+
+        /* ── SERVICES SECTION ── */
+        .services-section {
+            padding: 100px 0;
+        }
+
+        /* ── SERVICE BLOCK ── */
+        .service-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+            padding: 80px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .service-block:last-child {
+            border-bottom: none;
+        }
+
+        .service-block.reverse {
+            direction: rtl;
+        }
+
+        .service-block.reverse>* {
+            direction: ltr;
+        }
+
+        .service-icon-wrap {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, rgba(200, 16, 46, 0.2), rgba(200, 16, 46, 0.05));
+            border: 1px solid rgba(200, 16, 46, 0.25);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 28px;
+        }
+
+        .service-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: #fff;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .service-desc {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.75;
+            margin-bottom: 36px;
+            max-width: 480px;
+        }
+
+        /* ── INCLUDED LIST ── */
+        .included-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 36px;
+        }
+
+        .included-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            font-size: 0.92rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+        }
+
+        .included-check {
+            width: 22px;
+            height: 22px;
+            background: rgba(200, 16, 46, 0.15);
+            border: 1px solid rgba(200, 16, 46, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--red);
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* ── PRICING CARD ── */
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(30px) saturate(160%);
+            -webkit-backdrop-filter: blur(30px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid var(--red);
+            border-radius: 20px;
+            padding: 36px;
+            position: sticky;
+            top: 90px;
+        }
+
+        .pricing-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 24px;
+        }
+
+        .pricing-tiers {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-bottom: 24px;
+        }
+
+        .pricing-tier {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .pricing-tier:last-child {
+            border-bottom: none;
+        }
+
+        .pt-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .pt-name small {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 2px;
+        }
+
+        .pt-price {
+            text-align: right;
+        }
+
+        .pt-amount {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--red);
+            line-height: 1;
+        }
+
+        .pt-per {
+            font-size: 0.68rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+        }
+
+        .pricing-note {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border-left: 3px solid var(--red);
+        }
+
+        .pricing-cta {
+            display: block;
+            width: 100%;
+            background: var(--red);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            padding: 14px 24px;
+            border-radius: 999px;
+            border: 1.5px solid #e8304a;
+            transition: all 0.2s;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .pricing-cta:hover {
+            background: #e8304a;
+            box-shadow: 0 4px 24px rgba(200, 16, 46, 0.4);
+            transform: translateY(-1px);
+        }
+
+        /* ── CTA BAND ── */
+        .services-cta {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(26, 42, 94, 0.2), rgba(61, 42, 94, 0.15));
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .services-cta h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .services-cta p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1rem;
+            max-width: 480px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+
+        .services-cta-btns {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(15, 18, 35, 0.95);
+            backdrop-filter: blur(20px);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 9999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ── REVEAL ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (max-width: 900px) {
+            .service-block {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .service-block.reverse {
+                direction: ltr;
+            }
+
+            .pricing-card {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#fleet" class="nav-link">Fleet</a></li>
+                <li><a href="services.html" class="nav-link" style="color:var(--red)">Services</a></li>
+                <li><a href="index.html#process" class="nav-link">How It Works</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-end">
+                <a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a>
+                <a href="login.html" class="nav-cta nav-auth-btn" id="navCta">Login</a>
+                <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <header class="page-hero" id="services">
+        <div class="wrap page-hero-inner">
+            <a href="index.html" class="back-link">Back to Home</a>
+            <div class="section-eyebrow">What We Offer</div>
+            <h1>Our <span>Services.</span></h1>
+            <p class="page-hero-sub">Everything you need — from the keys to the coverage. CertifiedCityWhips has you
+                covered before, during, and after every ride.</p>
+        </div>
+    </header>
+
+    <!-- SERVICES -->
+    <section class="services-section">
+        <div class="wrap">
+
+            <!-- SERVICE 1: CAR RENTAL -->
+            <div class="service-block" id="rental">
+                <div class="service-left reveal">
+                    <div class="service-icon-wrap">🚗</div>
+                    <div class="section-eyebrow">Service 01</div>
+                    <h2 class="service-title">Car Rental</h2>
+                    <p class="service-desc">The core of what we do. Browse our hand-picked fleet of SUVs, sedans, and
+                        exotic cars — then book in minutes. No paperwork nightmares, no hidden fees, no waiting around.
+                        Just keys and open road.</p>
+                    <div class="included-list">
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Instant online booking — confirmed in
+                                seconds</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Free cancellation up to 24 hours before
+                                pickup</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>All vehicles certified, inspected, and
+                                detailed</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Flexible pickup and drop-off at any CCW
+                                location</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Available in 7 cities across the US</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>24/7 customer support included</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-right reveal">
+                    <div class="pricing-card">
+                        <div class="pricing-label">Rental Pricing — Starting From</div>
+                        <div class="pricing-tiers">
+                            <div class="pricing-tier">
+                                <div class="pt-name">Sedan<small>Economy to Luxury</small></div>
+                                <div class="pt-price">
+                                    <div class="pt-amount">$89</div>
+                                    <div class="pt-per">/day</div>
+                                </div>
+                            </div>
+                            <div class="pricing-tier">
+                                <div class="pt-name">SUV<small>Sport to Full-Size Luxury</small></div>
+                                <div class="pt-price">
+                                    <div class="pt-amount">$199</div>
+                                    <div class="pt-per">/day</div>
+                                </div>
+                            </div>
+                            <div class="pricing-tier">
+                                <div class="pt-name">Exotic Car<small>Sports Cars & Grand Tourers</small></div>
+                                <div class="pt-price">
+                                    <div class="pt-amount">$349</div>
+                                    <div class="pt-per">/day</div>
+                                </div>
+                            </div>
+                            <div class="pricing-tier">
+                                <div class="pt-name">Weekly Rate<small>7+ day discount applied</small></div>
+                                <div class="pt-price">
+                                    <div class="pt-amount">15%</div>
+                                    <div class="pt-per">off/week</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pricing-note">💡 Prices vary by vehicle, city, and season. All prices shown are base
+                            rates before taxes and fees. No hidden charges — ever.</div>
+                        <a href="index.html#fleet" class="pricing-cta">Browse Fleet & Book →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SERVICE 2: ROADSIDE ASSISTANCE -->
+            <div class="service-block reverse" id="roadside">
+                <div class="service-left reveal">
+                    <div class="service-icon-wrap">🛠️</div>
+                    <div class="section-eyebrow">Service 02</div>
+                    <h2 class="service-title">Roadside Assistance</h2>
+                    <p class="service-desc">Breakdowns happen. When they do, we've got your back — 24 hours a day, 7
+                        days a week. One call and our certified technicians are on the way. Because nothing should ruin
+                        your ride.</p>
+                    <div class="included-list">
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>24/7 emergency dispatch — average response under 45
+                                min</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Towing to nearest CCW service center
+                                included</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Flat tire change and jump-start service</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Fuel delivery if you run out on the road</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Lockout assistance — locked out? We'll get you
+                                in</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Free replacement vehicle if yours is out of service
+                                4+ hours</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-right reveal">
+                    <div class="pricing-card">
+                        <div class="pricing-label">Roadside Assistance Plans</div>
+                        <div class="pricing-tiers">
+                            <div class="pricing-tier">
+                                <div class="pt-name">Basic Coverage<small>Included with every rental</small></div>
+                                <div class="pt-price">
+                                    <div class="pt-amount">FREE</div>
+                                    <div class="pt-per">included</div>
+                                </div>
+                            </div>
+                            <div class="pricing-tier">
+                                <div class="pt-name">Standard Plan<small>Towing + tire + jump-start</small></div>
+                                <div class="pt-price">
+                                    <div class="pt-amount">$15</div>
+                                    <div class="pt-per">/day add-on</div>
+                                </div>
+                            </div>
+                            <div class="pricing-tier">
+                                <div class="pt-name">Premium Plan<small>All Standard + fuel + lockout + replacement
+                                        vehicle</small></div>
+                                <div class="pt-price">
+                                    <div class="pt-amount">$29</div>
+                                    <div class="pt-per">/day add-on</div>
+                                </div>
+                            </div>
+                            <div class="pricing-tier">
+                                <div class="pt-name">Annual Membership<small>Unlimited calls, priority dispatch</small>
+                                </div>
+                                <div class="pt-price">
+                                    <div class="pt-amount">$199</div>
+                                    <div class="pt-per">/year</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pricing-note">🛡️ Basic roadside assistance is included at no extra charge with
+                            every CCW rental. Upgrade for enhanced coverage and peace of mind.</div>
+                        <div class="service-tier-select" data-service="Roadside Assistance">
+                            <label class="tier-radio"><input type="radio" name="roadside" value="9"
+                                    data-tier="Basic Plan" checked> <span>Basic — $9/day</span></label>
+                            <label class="tier-radio"><input type="radio" name="roadside" value="15"
+                                    data-tier="Standard Plan"> <span>Standard — $15/day</span></label>
+                            <label class="tier-radio"><input type="radio" name="roadside" value="29"
+                                    data-tier="Premium Plan"> <span>Premium — $29/day</span></label>
+                        </div>
+                        <button class="pricing-cta" onclick="addService('roadside')">Add to Cart →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SERVICE 3: INSURANCE -->
+            <div class="service-block" id="insurance">
+                <div class="service-left reveal">
+                    <div class="service-icon-wrap">🛡️</div>
+                    <div class="section-eyebrow">Service 03</div>
+                    <h2 class="service-title">Insurance</h2>
+                    <p class="service-desc">Drive with complete confidence. Our flexible insurance plans cover you from
+                        minor scrapes to major incidents. Choose the level of protection that fits your needs — and
+                        drive without worry.</p>
+                    <div class="included-list">
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Collision Damage Waiver (CDW) — reduces your
+                                liability</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Third-party liability coverage up to
+                                $1,000,000</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Personal accident insurance for driver and
+                                passengers</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Theft protection — we cover it if the car is
+                                stolen</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>No deductible option available on Premium
+                                plan</span>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-check">✓</div><span>Instant claims processing — no waiting months for
+                                resolution</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-right reveal">
+                    <div class="pricing-card">
+                        <div class="pricing-label">Insurance Plans</div>
+                        <div class="pricing-tiers">
+                            <div class="pricing-tier">
+                                <div class="pt-name">Basic Liability<small>State minimum coverage — included</small>
+                                </div>
+                                <div class="pt-price">
+                                    <div class="pt-amount">FREE</div>
+                                    <div class="pt-per">included</div>
+                                </div>
+                            </div>
+                            <div class="pricing-tier">
+                                <div class="pt-name">Standard CDW<small>Collision damage waiver, $500 deductible</small>
+                                </div>
+                                <div class="pt-price">
+                                    <div class="pt-amount">$18</div>
+                                    <div class="pt-per">/day</div>
+                                </div>
+                            </div>
+                            <div class="pricing-tier">
+                                <div class="pt-name">Full Coverage<small>CDW + theft + personal accident, $250
+                                        deductible</small></div>
+                                <div class="pt-price">
+                                    <div class="pt-amount">$32</div>
+                                    <div class="pt-per">/day</div>
+                                </div>
+                            </div>
+                            <div class="pricing-tier">
+                                <div class="pt-name">Premium Zero<small>Full coverage, zero deductible, priority
+                                        claims</small></div>
+                                <div class="pt-price">
+                                    <div class="pt-amount">$49</div>
+                                    <div class="pt-per">/day</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pricing-note">⚠️ We recommend at minimum Standard CDW for all rentals. Exotic car
+                            rentals require Full Coverage or Premium Zero.</div>
+                        <div class="service-tier-select" data-service="Insurance">
+                            <label class="tier-radio"><input type="radio" name="insurance" value="19"
+                                    data-tier="Basic CDW" checked> <span>Basic CDW — $19/day</span></label>
+                            <label class="tier-radio"><input type="radio" name="insurance" value="32"
+                                    data-tier="Full Coverage"> <span>Full Coverage — $32/day</span></label>
+                            <label class="tier-radio"><input type="radio" name="insurance" value="49"
+                                    data-tier="Premium Zero"> <span>Premium Zero — $49/day</span></label>
+                        </div>
+                        <button class="pricing-cta" onclick="addService('insurance')">Add to Cart →</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <section class="services-cta">
+        <div class="wrap">
+            <div class="section-eyebrow" style="display:block;text-align:center;margin-bottom:16px">Ready to Roll?</div>
+            <h2>All Three. One Booking.</h2>
+            <p>Bundle your rental with roadside assistance and insurance for the ultimate peace of mind. One seamless
+                experience, start to finish.</p>
+            <div class="services-cta-btns">
+                <a href="index.html#book" class="btn-primary">Reserve Your Whip →</a>
+                <a href="index.html#contact" class="btn-ghost">Talk to Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Premium city car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Fleet</h5><a href="suvs.html">SUVs</a><a href="sedans.html">Sedans</a><a
+                            href="exotics.html">Exotic Cars</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5><a href="services.html#rental">Car Rental</a><a
+                            href="services.html#roadside">Roadside Assistance</a><a
+                            href="services.html#insurance">Insurance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5><a href="faq.html">FAQ</a><a href="index.html#contact">Contact</a><a
+                            href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+                <p>Built for the city. Certified for the road. 🔴</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+    <script src="cars-db.js"></script>
+    <script src="auth.js"></script>
+    <script src="cart.js"></script>
+    <script src="ccw-new.js"></script>
+    <script>
+        if (CCW_AUTH.isLoggedIn()) { const b = document.querySelector('.nav-auth-btn'); if (b) { b.textContent = 'Dashboard'; b.href = 'dashboard.html'; } }
+
+        function addService(type) {
+            const wrap = document.querySelector(`.service-tier-select [name="${type}"]:checked`);
+            if (!wrap) return;
+            const price = parseInt(wrap.value);
+            const tier = wrap.getAttribute('data-tier');
+            const serviceName = wrap.closest('.service-tier-select').getAttribute('data-service');
+            const added = CCW_CART.addServiceToCart(serviceName, price, tier);
+            const t = document.getElementById('toast');
+            if (added) {
+                t.textContent = `✅ ${serviceName} (${tier}) — $${price}/day added to cart!`;
+            } else {
+                t.textContent = `ℹ️ ${serviceName} (${tier}) is already in your cart.`;
+            }
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 4000);
+        }
+
+        function showToast(msg) {
+            const el = document.getElementById('toast');
+            el.textContent = msg;
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 4000);
+        }
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+            });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    </script>
+    <style>
+        .service-tier-select {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .tier-radio {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .tier-radio:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .tier-radio:has(input:checked) {
+            border-color: rgba(200, 16, 46, 0.5);
+            background: rgba(200, 16, 46, 0.08);
+            color: #fff;
+        }
+
+        .tier-radio input[type="radio"] {
+            accent-color: var(--red);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+    </style>
+</body>
+
+</html>

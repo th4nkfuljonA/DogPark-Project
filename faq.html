@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ — CertifiedCityWhips</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="ccw-new.css" />
+    <style>
+        .faq-page {
+            padding: 140px 0 80px;
+            min-height: 100vh;
+        }
+
+        .faq-eyebrow {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 12px;
+        }
+
+        .faq-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .faq-sub {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 48px;
+            max-width: 560px;
+        }
+
+        .faq-list {
+            max-width: 720px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .faq-item.open {
+            border-color: rgba(200, 16, 46, 0.3);
+        }
+
+        .faq-q {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+            transition: color 0.2s;
+        }
+
+        .faq-q:hover {
+            color: var(--red);
+        }
+
+        .faq-q-icon {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .faq-item.open .faq-q-icon {
+            transform: rotate(45deg);
+            color: var(--red);
+        }
+
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s;
+        }
+
+        .faq-item.open .faq-a {
+            max-height: 300px;
+        }
+
+        .faq-a-inner {
+            padding: 0 24px 20px;
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.45);
+            line-height: 1.8;
+        }
+
+        .faq-contact {
+            margin-top: 48px;
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            max-width: 720px;
+        }
+
+        .faq-contact h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .faq-contact p {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .faq-contact a {
+            color: var(--red);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#fleet" class="nav-link">Fleet</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="index.html#process" class="nav-link">How It Works</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-end"><a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span
+                        class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a><a
+                    href="login.html" class="nav-cta nav-auth-btn" id="navCta">Login</a><button class="burger"
+                    id="burger" aria-label="Menu"><span></span><span></span><span></span></button></div>
+        </div>
+    </nav>
+
+    <div class="faq-page">
+        <div class="wrap">
+            <div class="faq-eyebrow">Support</div>
+            <h1 class="faq-title">Frequently Asked Questions</h1>
+            <p class="faq-sub">Everything you need to know about renting with CertifiedCityWhips.</p>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">How do I book a vehicle? <span
+                            class="faq-q-icon">+</span></div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">Browse our fleet, select a vehicle, choose your dates, and complete the
+                            checkout process. The entire booking takes less than 2 minutes. You'll receive a
+                            confirmation email with pickup instructions immediately.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">What are the age requirements? <span
+                            class="faq-q-icon">+</span></div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">You must be at least 21 years old with a valid driver's license held
+                            for a minimum of 2 years. For exotic and sports vehicles, the minimum age is 25. Drivers
+                            under 25 may be subject to a young driver surcharge.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Is insurance included? <span
+                            class="faq-q-icon">+</span></div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">Basic liability coverage is included with every rental. We recommend
+                            adding our Comprehensive Coverage ($29/day) or Full Protection Package ($49/day) for
+                            complete peace of mind. You may also use your personal auto insurance if it covers rental
+                            vehicles.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">What is the cancellation policy? <span
+                            class="faq-q-icon">+</span></div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">Free cancellation up to 48 hours before your scheduled pickup.
+                            Cancellations within 24–48 hours receive a 50% refund. Cancellations within 24 hours or
+                            no-shows are non-refundable. Contact us for exceptions due to emergencies.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">What happens if the car breaks down? <span
+                            class="faq-q-icon">+</span></div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">All CCW rentals include 24/7 roadside assistance at no extra cost. In
+                            the unlikely event of a mechanical issue, call our hotline and we'll dispatch assistance or
+                            a replacement vehicle within 60 minutes in metro areas.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Can I extend my rental? <span
+                            class="faq-q-icon">+</span></div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">Yes! You can extend your rental through your dashboard or by calling
+                            us, subject to vehicle availability. Extensions are charged at the same daily rate. We
+                            recommend extending at least 12 hours before your scheduled return.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Is there a mileage limit? <span
+                            class="faq-q-icon">+</span></div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">Standard rentals include 200 miles per day. Unlimited mileage packages
+                            are available for most vehicles at an additional cost. Exotic vehicles are limited to 100
+                            miles per day with additional miles charged at $2.50/mile.</div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Do you offer delivery? <span
+                            class="faq-q-icon">+</span></div>
+                    <div class="faq-a">
+                        <div class="faq-a-inner">Yes, we offer vehicle delivery and pickup within a 30-mile radius of
+                            our locations. Airport delivery is available at select locations. Delivery fees vary by
+                            distance, starting at $50. Contact us for a quote.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-contact">
+                <h3>Still have questions?</h3>
+                <p>Our team is available 24/7. Reach us at <a
+                        href="mailto:hello@certifiedcitywhips.com">hello@certifiedcitywhips.com</a> or call <a
+                        href="tel:+18002299447">+1 (800) CCW-WHIPS</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand"><a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Premium city car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Company</h5><a href="about.html">About CCW</a><a href="careers.html">Careers</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5><a href="services.html">Car Rental</a><a href="services.html">Roadside
+                            Assistance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5><a href="faq.html">FAQ</a><a href="index.html#contact">Contact</a><a
+                            href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <div class="toast" id="toast"></div>
+    <script src="cars-db.js"></script>
+    <script src="auth.js"></script>
+    <script src="cart.js"></script>
+    <script src="ccw-new.js"></script>
+    <script>
+        if (CCW_AUTH.isLoggedIn()) { const b = document.querySelector('.nav-auth-btn'); if (b) { b.textContent = 'Dashboard'; b.href = 'dashboard.html'; } }
+        function toggleFaq(el) { const item = el.parentElement; item.classList.toggle('open'); }
+    </script>
+</body>
+
+</html>

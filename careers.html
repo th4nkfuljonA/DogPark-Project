@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Careers — CertifiedCityWhips</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="ccw-new.css" />
+    <style>
+        .careers-page {
+            padding: 140px 0 80px;
+            min-height: 100vh;
+        }
+
+        .careers-eyebrow {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 12px;
+        }
+
+        .careers-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .careers-sub {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.45);
+            max-width: 600px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+        }
+
+        .careers-perks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+
+        .careers-perk {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .careers-perk:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .careers-perk-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .careers-perk h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .careers-perk p {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.35);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .careers-jobs-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+
+        .job-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .job-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .job-info h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .job-tag {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            padding: 4px 12px;
+        }
+
+        .job-apply {
+            padding: 10px 24px;
+            background: var(--red);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.82rem;
+            border: 1.5px solid #e8304a;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .job-apply:hover {
+            background: #e8304a;
+            box-shadow: 0 4px 16px rgba(200, 16, 46, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#fleet" class="nav-link">Fleet</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="index.html#process" class="nav-link">How It Works</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-end"><a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span
+                        class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a><a
+                    href="login.html" class="nav-cta nav-auth-btn" id="navCta">Login</a><button class="burger"
+                    id="burger" aria-label="Menu"><span></span><span></span><span></span></button></div>
+        </div>
+    </nav>
+
+    <div class="careers-page">
+        <div class="wrap">
+            <div class="careers-eyebrow">Careers</div>
+            <h1 class="careers-title">Build the Future of<br>Premium Car Rental.</h1>
+            <p class="careers-sub">Join a team of passionate individuals redefining the car rental experience. We move
+                fast, think big, and take care of our people.</p>
+
+            <div class="careers-perks">
+                <div class="careers-perk">
+                    <div class="careers-perk-icon">💰</div>
+                    <h3>Competitive Pay</h3>
+                    <p>Top-of-market salaries with performance bonuses.</p>
+                </div>
+                <div class="careers-perk">
+                    <div class="careers-perk-icon">🏥</div>
+                    <h3>Full Benefits</h3>
+                    <p>Health, dental, vision, and 401(k) matching from day one.</p>
+                </div>
+                <div class="careers-perk">
+                    <div class="careers-perk-icon">🚗</div>
+                    <h3>Car Perks</h3>
+                    <p>Free vehicle rentals for employees. Yes, including the exotics.</p>
+                </div>
+                <div class="careers-perk">
+                    <div class="careers-perk-icon">🌴</div>
+                    <h3>Unlimited PTO</h3>
+                    <p>Take the time you need. We trust our team to manage their time.</p>
+                </div>
+                <div class="careers-perk">
+                    <div class="careers-perk-icon">🏠</div>
+                    <h3>Remote Flexible</h3>
+                    <p>Work from anywhere for eligible roles. In-office optional.</p>
+                </div>
+                <div class="careers-perk">
+                    <div class="careers-perk-icon">📈</div>
+                    <h3>Growth Path</h3>
+                    <p>Clear career progression with mentorship and learning budgets.</p>
+                </div>
+            </div>
+
+            <h2 class="careers-jobs-title">Open Positions</h2>
+
+            <div class="job-card">
+                <div class="job-info">
+                    <h3>Senior Frontend Developer</h3>
+                    <div class="job-meta"><span class="job-tag">Engineering</span><span
+                            class="job-tag">Remote</span><span class="job-tag">Full-Time</span></div>
+                </div>
+                <a href="mailto:careers@certifiedcitywhips.com?subject=Application: Senior Frontend Developer"
+                    class="job-apply">Apply →</a>
+            </div>
+            <div class="job-card">
+                <div class="job-info">
+                    <h3>Fleet Operations Manager</h3>
+                    <div class="job-meta"><span class="job-tag">Operations</span><span class="job-tag">Beverly
+                            Hills</span><span class="job-tag">Full-Time</span></div>
+                </div>
+                <a href="mailto:careers@certifiedcitywhips.com?subject=Application: Fleet Operations Manager"
+                    class="job-apply">Apply →</a>
+            </div>
+            <div class="job-card">
+                <div class="job-info">
+                    <h3>Customer Experience Lead</h3>
+                    <div class="job-meta"><span class="job-tag">Support</span><span class="job-tag">Miami /
+                            NYC</span><span class="job-tag">Full-Time</span></div>
+                </div>
+                <a href="mailto:careers@certifiedcitywhips.com?subject=Application: Customer Experience Lead"
+                    class="job-apply">Apply →</a>
+            </div>
+            <div class="job-card">
+                <div class="job-info">
+                    <h3>Digital Marketing Specialist</h3>
+                    <div class="job-meta"><span class="job-tag">Marketing</span><span class="job-tag">Remote</span><span
+                            class="job-tag">Full-Time</span></div>
+                </div>
+                <a href="mailto:careers@certifiedcitywhips.com?subject=Application: Digital Marketing Specialist"
+                    class="job-apply">Apply →</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand"><a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Premium city car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Company</h5><a href="about.html">About CCW</a><a href="careers.html">Careers</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5><a href="services.html">Car Rental</a><a href="services.html">Roadside
+                            Assistance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5><a href="faq.html">FAQ</a><a href="index.html#contact">Contact</a><a
+                            href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <div class="toast" id="toast"></div>
+    <script src="cars-db.js"></script>
+    <script src="auth.js"></script>
+    <script src="cart.js"></script>
+    <script src="ccw-new.js"></script>
+    <script>if (CCW_AUTH.isLoggedIn()) { const b = document.querySelector('.nav-auth-btn'); if (b) { b.textContent = 'Dashboard'; b.href = 'dashboard.html'; } }</script>
+</body>
+
+</html>

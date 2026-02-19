@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CertifiedCityWhips — Premium City Car Rentals</title>
+    <meta name="description"
+        content="CertifiedCityWhips — hand-picked premium city car rentals. Zero hidden fees, instant booking, 7 cities. The city is yours." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&family=Montserrat:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="ccw-new.css" />
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#fleet" class="nav-link">Fleet</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="#process" class="nav-link">How It Works</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+
+            <div class="nav-end">
+                <a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a>
+                <a href="login.html" class="nav-cta nav-auth-btn" id="navCta">Login</a>
+                <button class="burger" id="burger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero" id="home">
+
+        <!-- Full-bleed photo background -->
+        <div class="hero-photo-wrap">
+            <img src="hero-car.png" alt="Red sports car at night over city skyline" class="hero-photo" />
+            <div class="hero-photo-overlay"></div>
+        </div>
+
+        <!-- Subtle orbs layered on top of photo -->
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+
+        <!-- Giant CCW overlaid on photo — HYER style -->
+        <div class="hero-brand-giant">CCW</div>
+
+        <!-- Right side tagline -->
+        <div class="hero-tagline-block">
+            <p class="hero-tagline">Premium City<br>Car Rentals</p>
+        </div>
+
+        <!-- Bottom CTA buttons -->
+        <div class="hero-ctas">
+            <a href="#book" class="hero-btn hero-btn-primary" id="heroBtnPrimary">Reserve a Whip</a>
+            <a href="#fleet" class="hero-btn hero-btn-secondary" id="heroBtnSecondary">Browse Fleet</a>
+        </div>
+
+
+    </header>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+        <div class="marquee-track">
+            <span>CERTIFIED CITY WHIPS</span><span class="mdot"> ✦ </span>
+            <span>PREMIUM FLEET</span><span class="mdot"> ✦ </span>
+            <span>INSTANT BOOKING</span><span class="mdot"> ✦ </span>
+            <span>FREE CANCELLATION</span><span class="mdot"> ✦ </span>
+            <span>24/7 SUPPORT</span><span class="mdot"> ✦ </span>
+            <span>NO HIDDEN FEES</span><span class="mdot"> ✦ </span>
+            <span>CERTIFIED CITY WHIPS</span><span class="mdot"> ✦ </span>
+            <span>PREMIUM FLEET</span><span class="mdot"> ✦ </span>
+            <span>INSTANT BOOKING</span><span class="mdot"> ✦ </span>
+            <span>FREE CANCELLATION</span><span class="mdot"> ✦ </span>
+            <span>24/7 SUPPORT</span><span class="mdot"> ✦ </span>
+            <span>NO HIDDEN FEES</span><span class="mdot"> ✦ </span>
+        </div>
+    </div>
+
+    <!-- BOOK SECTION -->
+    <section class="book-section" id="book">
+        <div class="wrap">
+            <div class="book-glass-card">
+                <div class="book-card-header">
+                    <div class="section-eyebrow">Find Your Ride</div>
+                    <h2 class="book-title">Search Available Whips</h2>
+                </div>
+                <form class="book-form" id="bookForm">
+                    <div class="bfield">
+                        <label for="city">City</label>
+                        <select id="city">
+                            <option value="">Choose city...</option>
+                            <option>New York City</option>
+                            <option>Los Angeles</option>
+                            <option>Chicago</option>
+                            <option>Miami</option>
+                            <option>Las Vegas</option>
+                            <option>San Francisco</option>
+                            <option>Seattle</option>
+                        </select>
+                    </div>
+                    <div class="bfield">
+                        <label for="pdate">Pick-up</label>
+                        <input type="date" id="pdate" />
+                    </div>
+                    <div class="bfield">
+                        <label for="rdate">Return</label>
+                        <input type="date" id="rdate" />
+                    </div>
+                    <div class="bfield">
+                        <label for="vtype">Type</label>
+                        <select id="vtype">
+                            <option value="">Any type</option>
+                            <option>Economy</option>
+                            <option>SUV</option>
+                            <option>Luxury</option>
+                            <option>Sports</option>
+                            <option>Electric</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="book-submit" id="bookSubmit">Search →</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FLEET -->
+    <section class="fleet-section" id="fleet">
+        <div class="wrap">
+            <div class="fleet-header">
+                <div class="section-eyebrow">Our Fleet</div>
+                <h2 class="fleet-title">Pick Your Ride</h2>
+                <p class="fleet-sub">Three categories. Hundreds of options. Choose your vibe and explore the full
+                    lineup.</p>
+            </div>
+
+            <div class="fleet-cat-grid">
+
+                <!-- SUVs -->
+                <a href="suvs.html" class="fleet-cat-card reveal" id="fleetSuv">
+                    <div class="fcc-accent-line"></div>
+                    <div class="fcc-icon-wrap">
+                        <svg viewBox="0 0 120 60" class="fcc-car-svg" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="suvGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#1e3a5f" />
+                                    <stop offset="100%" stop-color="#0d1f35" />
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="60" cy="54" rx="55" ry="4" fill="rgba(0,0,0,0.2)" />
+                            <circle cx="28" cy="46" r="10" fill="#1a1a1a" />
+                            <circle cx="28" cy="46" r="6" fill="#333" />
+                            <circle cx="28" cy="46" r="2" fill="#c8102e" />
+                            <circle cx="92" cy="46" r="10" fill="#1a1a1a" />
+                            <circle cx="92" cy="46" r="6" fill="#333" />
+                            <circle cx="92" cy="46" r="2" fill="#c8102e" />
+                            <path
+                                d="M10 40 Q12 28 22 26 L35 26 L42 12 Q48 6 58 5 L80 5 Q92 5 100 14 L110 26 L114 30 Q118 33 118 38 L118 44 Z"
+                                fill="url(#suvGrad)" />
+                            <path d="M42 26 L48 10 Q54 5 64 5 L80 5 Q90 5 98 14 L108 26 Z"
+                                fill="rgba(74,111,165,0.5)" />
+                            <ellipse cx="112" cy="36" rx="4" ry="3" fill="#fffde7" opacity="0.9" />
+                            <ellipse cx="12" cy="36" rx="3" ry="2" fill="#c8102e" opacity="0.9" />
+                        </svg>
+                    </div>
+                    <div class="fcc-body">
+                        <div class="fcc-eyebrow">Category 01</div>
+                        <div class="fcc-name">SUVs</div>
+                        <p class="fcc-desc">Commanding presence, elevated comfort. From sport to full-size luxury —
+                            built for the city and beyond.</p>
+                        <div class="fcc-meta">
+                            <span class="fcc-models">3 Models</span>
+                            <span class="fcc-price">From $199/day</span>
+                        </div>
+                    </div>
+                    <div class="fcc-arrow">→</div>
+                </a>
+
+                <!-- Sedans -->
+                <a href="sedans.html" class="fleet-cat-card reveal" id="fleetSedan">
+                    <div class="fcc-accent-line"></div>
+                    <div class="fcc-icon-wrap">
+                        <svg viewBox="0 0 120 60" class="fcc-car-svg" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="sedanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#2a1a3e" />
+                                    <stop offset="100%" stop-color="#150d20" />
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="60" cy="54" rx="55" ry="4" fill="rgba(0,0,0,0.2)" />
+                            <circle cx="28" cy="46" r="10" fill="#1a1a1a" />
+                            <circle cx="28" cy="46" r="6" fill="#333" />
+                            <circle cx="28" cy="46" r="2" fill="#c8102e" />
+                            <circle cx="92" cy="46" r="10" fill="#1a1a1a" />
+                            <circle cx="92" cy="46" r="6" fill="#333" />
+                            <circle cx="92" cy="46" r="2" fill="#c8102e" />
+                            <path
+                                d="M8 40 Q10 30 18 28 L28 28 L38 14 Q46 6 58 5 L76 5 Q88 5 96 12 L110 28 L114 32 Q118 36 118 40 L118 44 Z"
+                                fill="url(#sedanGrad)" />
+                            <path d="M38 28 L46 12 Q54 5 66 5 L76 5 Q86 5 94 12 L108 28 Z"
+                                fill="rgba(100,60,160,0.5)" />
+                            <ellipse cx="112" cy="36" rx="4" ry="3" fill="#fffde7" opacity="0.9" />
+                            <ellipse cx="10" cy="36" rx="3" ry="2" fill="#c8102e" opacity="0.9" />
+                        </svg>
+                    </div>
+                    <div class="fcc-body">
+                        <div class="fcc-eyebrow">Category 02</div>
+                        <div class="fcc-name">Sedans</div>
+                        <p class="fcc-desc">Sleek, refined, and unstoppable. Executive luxury to sport performance — the
+                            perfect city companion.</p>
+                        <div class="fcc-meta">
+                            <span class="fcc-models">3 Models</span>
+                            <span class="fcc-price">From $89/day</span>
+                        </div>
+                    </div>
+                    <div class="fcc-arrow">→</div>
+                </a>
+
+                <!-- Exotic Cars -->
+                <a href="exotics.html" class="fleet-cat-card reveal" id="fleetExotic">
+                    <div class="fcc-accent-line fcc-accent-red"></div>
+                    <div class="fcc-icon-wrap">
+                        <svg viewBox="0 0 120 60" class="fcc-car-svg" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="exoticGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#c8102e" />
+                                    <stop offset="100%" stop-color="#5a0010" />
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="60" cy="54" rx="55" ry="4" fill="rgba(0,0,0,0.2)" />
+                            <circle cx="25" cy="46" r="10" fill="#1a1a1a" />
+                            <circle cx="25" cy="46" r="6" fill="#333" />
+                            <circle cx="25" cy="46" r="2" fill="#c8102e" />
+                            <circle cx="95" cy="46" r="10" fill="#1a1a1a" />
+                            <circle cx="95" cy="46" r="6" fill="#333" />
+                            <circle cx="95" cy="46" r="2" fill="#c8102e" />
+                            <path
+                                d="M6 40 Q8 34 14 32 L22 32 L34 16 Q44 4 60 3 L78 3 Q94 3 104 14 L114 32 L118 36 Q120 40 118 44 Z"
+                                fill="url(#exoticGrad)" />
+                            <path d="M34 32 L44 14 Q54 4 66 3 L78 3 Q92 3 102 14 L112 32 Z"
+                                fill="rgba(200,16,46,0.3)" />
+                            <ellipse cx="116" cy="38" rx="4" ry="3" fill="#fffde7" opacity="0.9" />
+                            <ellipse cx="8" cy="38" rx="3" ry="2" fill="#ff2244" opacity="0.9" />
+                            <rect x="6" y="28" width="14" height="3" rx="1.5" fill="#1a1a1a" />
+                        </svg>
+                    </div>
+                    <div class="fcc-body">
+                        <div class="fcc-eyebrow">Category 03</div>
+                        <div class="fcc-name">Exotic Cars</div>
+                        <p class="fcc-desc">Drive the extraordinary. Supercars and grand tourers that turn every drive
+                            into an unforgettable event.</p>
+                        <div class="fcc-meta">
+                            <span class="fcc-models">3 Models</span>
+                            <span class="fcc-price">From $349/day</span>
+                        </div>
+                    </div>
+                    <div class="fcc-arrow">→</div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process-section" id="process">
+        <div class="wrap">
+            <div class="section-eyebrow">How It Works</div>
+            <h2 class="process-title">Simple as 1–2–3–4</h2>
+            <div class="process-grid">
+                <div class="proc-step reveal" id="step1">
+                    <div class="proc-num">01</div>
+                    <div class="proc-icon-wrap">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                            <circle cx="18" cy="18" r="10" stroke="currentColor" stroke-width="2" />
+                            <path d="M26 26 L34 34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3>Search</h3>
+                    <p>Filter by city, date, and vehicle type to find your perfect match.</p>
+                </div>
+                <div class="proc-step reveal" id="step2">
+                    <div class="proc-num">02</div>
+                    <div class="proc-icon-wrap">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                            <rect x="8" y="6" width="24" height="28" rx="3" stroke="currentColor" stroke-width="2" />
+                            <path d="M14 16 H26 M14 22 H22" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3>Book</h3>
+                    <p>Reserve in minutes. Instant confirmation, no waiting around.</p>
+                </div>
+                <div class="proc-step reveal" id="step3">
+                    <div class="proc-num">03</div>
+                    <div class="proc-icon-wrap">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                            <ellipse cx="20" cy="18" rx="8" ry="10" stroke="currentColor" stroke-width="2" />
+                            <path d="M14 28 L12 36 M26 28 L28 36" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                            <circle cx="20" cy="16" r="3" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <h3>Pick Up</h3>
+                    <p>Show your ID, grab the keys, and you're out. That simple.</p>
+                </div>
+                <div class="proc-step reveal" id="step4">
+                    <div class="proc-num">04</div>
+                    <div class="proc-icon-wrap">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                            <path d="M8 20 L16 28 L32 12" stroke="currentColor" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3>Return</h3>
+                    <p>Drop it off at any CCW location when you're done. Easy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PERKS -->
+    <section class="perks-section">
+        <div class="wrap">
+            <div class="section-eyebrow">Why CCW</div>
+            <h2 class="perks-title">Built Different</h2>
+            <div class="perks-grid">
+                <div class="perk-card reveal" id="perk1">
+                    <div class="perk-icon">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                            <path d="M20 4 L34 10 L34 22 Q34 30 20 36 Q6 30 6 22 L6 10 Z" stroke="currentColor"
+                                stroke-width="2" stroke-linejoin="round" />
+                            <path d="M14 20 L18 24 L26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3>Full Coverage</h3>
+                    <p>Every rental includes comprehensive insurance. Drive with total peace of mind.</p>
+                </div>
+                <div class="perk-card reveal" id="perk2">
+                    <div class="perk-icon">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                            <path d="M20 6 L22 14 L30 14 L24 19 L26 27 L20 22 L14 27 L16 19 L10 14 L18 14 Z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3>Instant Confirmation</h3>
+                    <p>Booking confirmed in seconds, not hours. Your time is too valuable to wait.</p>
+                </div>
+                <div class="perk-card reveal" id="perk3">
+                    <div class="perk-icon">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                            <path d="M8 20 C8 13 13 8 20 8 C27 8 32 13 32 20" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                            <path d="M8 20 L14 26 M8 20 L2 26" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3>Free Cancellation</h3>
+                    <p>Cancel up to 24 hours before pickup at no charge. No questions asked.</p>
+                </div>
+                <div class="perk-card reveal" id="perk4">
+                    <div class="perk-icon">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                            <path d="M8 8 L18 8 L22 16 L16 20 C18 24 22 28 26 30 L30 24 L38 28 L38 36 Q28 40 8 20 Z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Real humans, always available. Day or night, we've got you covered.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- CTA BAND -->
+    <section class="cta-band">
+        <div class="cta-band-orb cta-orb-1"></div>
+        <div class="cta-band-orb cta-orb-2"></div>
+        <div class="wrap">
+            <div class="section-eyebrow" style="text-align:center; display:block;">Ready?</div>
+            <h2 class="cta-band-title">Ready to Roll?</h2>
+            <p class="cta-band-sub">Join 50,000+ people who've already certified their city experience.</p>
+            <div class="cta-band-btns">
+                <a href="#book" class="btn-primary" id="ctaBtnPrimary">Reserve Now →</a>
+                <a href="#contact" class="btn-ghost" id="ctaBtnGhost">Talk to Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+        <div class="wrap">
+            <div class="section-eyebrow">Get In Touch</div>
+            <h2 class="contact-title">Contact CCW</h2>
+            <div class="contact-grid">
+                <div class="contact-left">
+                    <div class="c-block">
+                        <span class="c-label">Address</span>
+                        <p>1200 Luxury Drive, Suite 500<br>Beverly Hills, CA 90210</p>
+                    </div>
+                    <div class="c-block">
+                        <span class="c-label">Phone</span>
+                        <p>+1 (800) CCW-WHIPS<br>Available 24/7</p>
+                    </div>
+                    <div class="c-block">
+                        <span class="c-label">Email</span>
+                        <p>hello@certifiedcitywhips.com</p>
+                    </div>
+                    <div class="c-socials">
+                        <a href="#" class="c-soc" id="socIg">IG</a>
+                        <a href="#" class="c-soc" id="socTw">TW</a>
+                        <a href="#" class="c-soc" id="socTk">TK</a>
+                        <a href="#" class="c-soc" id="socYt">YT</a>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="cf-row">
+                        <div class="cf-field">
+                            <label for="cname">Name</label>
+                            <input type="text" id="cname" placeholder="Your name" />
+                        </div>
+                        <div class="cf-field">
+                            <label for="cemail">Email</label>
+                            <input type="email" id="cemail" placeholder="your@email.com" />
+                        </div>
+                    </div>
+                    <div class="cf-field">
+                        <label for="csubject">Subject</label>
+                        <input type="text" id="csubject" placeholder="What's up?" />
+                    </div>
+                    <div class="cf-field">
+                        <label for="cmsg">Message</label>
+                        <textarea id="cmsg" rows="5" placeholder="Tell us more..."></textarea>
+                    </div>
+                    <button type="submit" class="cf-submit" id="cSubmit">Send Message →</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Premium city car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Company</h5>
+                        <a href="about.html">About CCW</a>
+                        <a href="careers.html">Careers</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5>
+                        <a href="services.html">Car Rental</a>
+                        <a href="services.html">Roadside Assistance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5>
+                        <a href="faq.html">FAQ</a>
+                        <a href="#contact">Contact</a>
+                        <a href="privacy.html">Privacy</a>
+                        <a href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+                <p>Built for the city. Certified for the road. 🔴</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script src="cars-db.js"></script>
+    <script src="auth.js"></script>
+    <script src="cart.js"></script>
+    <script src="ccw-new.js"></script>
+    <script>
+        // Update nav auth button
+        if (CCW_AUTH.isLoggedIn()) {
+            const btn = document.querySelector('.nav-auth-btn');
+            if (btn) { btn.textContent = 'Dashboard'; btn.href = 'dashboard.html'; }
+        }
+
+        // Wire book form to search
+        const bookForm = document.getElementById('bookForm');
+        if (bookForm) {
+            bookForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const vtype = document.getElementById('vtype').value;
+                const q = vtype || 'all';
+                window.location.href = 'search-results.html?q=' + encodeURIComponent(q);
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Details — CertifiedCityWhips</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/ccw-new.css" />
+    <style>
+        .cd-hero {
+            padding: 140px 0 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cd-hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .cd-hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.3) blur(6px) saturate(1.3);
+            transform: scale(1.1);
+        }
+
+        .cd-hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(10, 13, 26, 0.6) 0%, rgba(10, 13, 26, 0.95) 100%);
+        }
+
+        .cd-hero-inner {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .cd-img-wrap {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .cd-img-wrap img {
+            width: 100%;
+            height: 360px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .cd-info {}
+
+        .cd-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.82rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .cd-back:hover {
+            color: var(--red);
+        }
+
+        .cd-badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--red);
+            background: rgba(200, 16, 46, 0.1);
+            border: 1px solid rgba(200, 16, 46, 0.2);
+            border-radius: 999px;
+            padding: 4px 14px;
+            margin-bottom: 12px;
+        }
+
+        .cd-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .cd-year {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 16px;
+        }
+
+        .cd-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .cd-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .cd-price {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
+            color: var(--red);
+        }
+
+        .cd-price-unit {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .cd-specs {
+            padding: 60px 0;
+        }
+
+        .cd-specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .cd-spec-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .cd-spec-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .cd-spec-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 8px;
+        }
+
+        .cd-spec-value {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #fff;
+        }
+
+        .cd-features-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .cd-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+
+        .cd-feat {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.55);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 6px 16px;
+        }
+
+        .cd-book-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 500px;
+        }
+
+        .cd-book-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .cd-book-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .cd-book-field label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 6px;
+        }
+
+        .cd-book-field input {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            outline: none;
+        }
+
+        .cd-book-field input:focus {
+            border-color: var(--red);
+        }
+
+        .cd-add-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--red);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: 1.5px solid #e8304a;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cd-add-btn:hover {
+            background: #e8304a;
+            box-shadow: 0 4px 20px rgba(200, 16, 46, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .cd-related {
+            padding: 60px 0 80px;
+        }
+
+        .cd-related-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+
+        .cd-related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .cd-rel-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .cd-rel-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .cd-rel-img {
+            height: 160px;
+            overflow: hidden;
+            background: #0a0d1a;
+        }
+
+        .cd-rel-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cd-rel-body {
+            padding: 16px;
+        }
+
+        .cd-rel-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .cd-rel-price {
+            font-size: 0.88rem;
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .cd-hero-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .cd-book-fields {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#fleet" class="nav-link">Fleet</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-end">
+                <a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a>
+                <a href="login.html" class="nav-cta nav-auth-btn" id="navCta">Login</a>
+                <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="carDetailContent"></div>
+
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Premium city car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Company</h5><a href="about.html">About CCW</a><a href="careers.html">Careers</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5><a href="services.html">Car Rental</a><a href="services.html">Roadside
+                            Assistance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5><a href="faq.html">FAQ</a><a href="index.html#contact">Contact</a><a
+                            href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+    <script src="js/cars-db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/products-db.js"></script>
+    <script>
+        // Update nav auth
+        if (CCW_AUTH.isLoggedIn()) {
+            const btn = document.querySelector('.nav-auth-btn');
+            if (btn) { btn.textContent = 'Dashboard'; btn.href = 'dashboard.html'; }
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const carId = params.get('id');
+        const car = carId ? getCarById(carId) : null;
+        const container = document.getElementById('carDetailContent');
+
+        if (!car) {
+            container.innerHTML = '<div style="padding:200px 0;text-align:center;"><h2 style="color:#fff;margin-bottom:16px;">Car Not Found</h2><p style="color:rgba(255,255,255,0.4);margin-bottom:24px;">The vehicle you\'re looking for doesn\'t exist.</p><a href="index.html#fleet" class="btn-primary">Browse Fleet →</a></div>';
+        } else {
+            document.title = car.year + ' ' + car.name + ' — CertifiedCityWhips';
+
+            // Set default dates
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const todayStr = today.toISOString().split('T')[0];
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
+            const isForSale = car.listingType === 'sale';
+            const related = getRelatedCars(car.id);
+            const priceLabel = isForSale ? '$' + car.price.toLocaleString() : '$' + car.price;
+            const priceUnit = isForSale ? '' : '/day';
+
+            container.innerHTML = `
+                <section class="cd-hero">
+                    <div class="cd-hero-bg">
+                        <img src="${car.imageUrl}" alt="" onerror="this.parentElement.style.background='${car.fallbackGradient}'" />
+                    </div>
+                    <div class="wrap cd-hero-inner">
+                        <div class="cd-img-wrap">
+                            <img src="${car.imageUrl}" alt="${car.name}" onerror="this.parentElement.style.background='${car.fallbackGradient}';this.style.display='none'" />
+                        </div>
+                        <div class="cd-info">
+                            <a href="javascript:history.back()" class="cd-back">\u2190 Back</a>
+                            <span class="cd-badge">${car.categoryLabel}</span>
+                            <h1 class="cd-name">${car.year} ${car.name}</h1>
+                            <p class="cd-year">${car.className} \u00b7 ${car.fuel} \u00b7 ${car.color}</p>
+                            <p class="cd-desc">${car.description}</p>
+                            <div class="cd-price-row">
+                                <span class="cd-price">${priceLabel}</span>
+                                <span class="cd-price-unit">${priceUnit}</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="cd-specs">
+                    <div class="wrap">
+                        <div class="cd-specs-grid">
+                            <div class="cd-spec-card"><div class="cd-spec-label">Class</div><div class="cd-spec-value">${car.className}</div></div>
+                            <div class="cd-spec-card"><div class="cd-spec-label">Fuel</div><div class="cd-spec-value">${car.fuel}</div></div>
+                            <div class="cd-spec-card"><div class="cd-spec-label">Mileage</div><div class="cd-spec-value">${isForSale ? car.mileage.toLocaleString() + ' mi' : (car.mileageType === 'unlimited' ? 'Unlimited' : 'Limited')}</div></div>
+                            <div class="cd-spec-card"><div class="cd-spec-label">Seats</div><div class="cd-spec-value">${car.seats} Passengers</div></div>
+                            <div class="cd-spec-card"><div class="cd-spec-label">Transmission</div><div class="cd-spec-value">${car.transmission}</div></div>
+                            <div class="cd-spec-card"><div class="cd-spec-label">Location</div><div class="cd-spec-value">${car.locationName}</div></div>
+                        </div>
+
+                        <h3 class="cd-features-title">Features & Equipment</h3>
+                        <div class="cd-features">
+                            ${car.features.map(f => '<span class="cd-feat">' + f + '</span>').join('')}
+                        </div>
+
+                        ${isForSale ? `
+                        <div class="cd-book-section">
+                            <h3 class="cd-book-title">Purchase This Vehicle</h3>
+                            <button class="cd-add-btn" id="buyBtn">Add to Cart — $${car.price.toLocaleString()}</button>
+                        </div>
+                        ` : `
+                        <div class="cd-book-section">
+                            <h3 class="cd-book-title">Reserve This Vehicle</h3>
+                            <form id="detailBookForm">
+                                <div class="cd-book-fields">
+                                    <div class="cd-book-field">
+                                        <label>Pickup Date</label>
+                                        <input type="date" id="detailPickup" value="${todayStr}" min="${todayStr}" required />
+                                    </div>
+                                    <div class="cd-book-field">
+                                        <label>Return Date</label>
+                                        <input type="date" id="detailReturn" value="${tomorrowStr}" min="${tomorrowStr}" required />
+                                    </div>
+                                </div>
+                                <button type="submit" class="cd-add-btn">Add to Cart — $${car.price}/day</button>
+                            </form>
+                        </div>
+                        `}
+                    </div>
+                </section>
+
+                ${related.length > 0 ? `
+                <section class="cd-related">
+                    <div class="wrap">
+                        <h3 class="cd-related-title">You May Also Like</h3>
+                        <div class="cd-related-grid">
+                            ${related.map(r => `
+                                <a href="car-detail.html?id=${r.id}" class="cd-rel-card">
+                                    <div class="cd-rel-img">
+                                        <img src="${r.imageUrl}" alt="${r.name}" onerror="this.parentElement.style.background='${r.fallbackGradient}';this.style.display='none'" />
+                                    </div>
+                                    <div class="cd-rel-body">
+                                        <div class="cd-rel-name">${r.year} ${r.name}</div>
+                                        <div class="cd-rel-price">${r.listingType === 'sale' ? '$' + r.price.toLocaleString() : '$' + r.price + '/day'}</div>
+                                    </div>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>` : ''}
+            `;
+
+            // Handle add to cart for rentals
+            const bookForm = document.getElementById('detailBookForm');
+            if (bookForm) {
+                bookForm.addEventListener('submit', e => {
+                    e.preventDefault();
+                    const pickup = document.getElementById('detailPickup').value;
+                    const ret = document.getElementById('detailReturn').value;
+                    if (ret <= pickup) { alert('Return date must be after pickup date.'); return; }
+                    CCW_CART.addToCart(car.id, pickup, ret);
+                    const toast = document.getElementById('toast');
+                    toast.textContent = car.year + ' ' + car.name + ' added to cart!';
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 3000);
+                });
+            }
+
+            // Handle buy button for sale vehicles
+            const buyBtn = document.getElementById('buyBtn');
+            if (buyBtn) {
+                buyBtn.addEventListener('click', () => {
+                    const added = CCW_CART.addVehicleSaleToCart(car);
+                    const toast = document.getElementById('toast');
+                    toast.textContent = added ? car.year + ' ' + car.name + ' added to cart!' : 'This vehicle is already in your cart.';
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 3000);
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

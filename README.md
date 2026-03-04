@@ -87,7 +87,7 @@ This website uses **two servers** working together:
  ┌────────────────────────────────┐
  │   RED HAT SERVER               │
  │                                │
- │   MariaDB Database             │
+ │   MySQL Database               │
  │   • Stores all products       │
  │   • Stores all vehicles       │
  │   • Stores locations, etc.    │
@@ -149,14 +149,14 @@ pm2 save
 This is the server that stores all the product and vehicle data.
 You only need to do this **once**.
 
-### Step 1: Install MariaDB
+### Step 1: Install MySQL
 
 SSH into your Red Hat server and run:
 
 ```bash
-sudo dnf install mariadb-server -y
-sudo systemctl start mariadb
-sudo systemctl enable mariadb
+sudo dnf install mysql-server -y
+sudo systemctl start mysqld
+sudo systemctl enable mysqld
 ```
 
 ### Step 2: Secure the Installation
@@ -203,10 +203,10 @@ mysql -u root -p -e "ALTER USER 'ccw_app'@'%' IDENTIFIED BY 'PICK_A_STRONG_PASSW
 
 ### Step 5: Allow Remote Connections
 
-Edit the MariaDB config:
+Edit the MySQL config:
 
 ```bash
-sudo vi /etc/my.cnf.d/mariadb-server.cnf
+sudo vi /etc/my.cnf.d/mysql-server.cnf
 ```
 
 Find the `[mysqld]` section and add this line:
@@ -220,7 +220,7 @@ Open the firewall and restart:
 ```bash
 sudo firewall-cmd --permanent --add-port=3306/tcp
 sudo firewall-cmd --reload
-sudo systemctl restart mariadb
+sudo systemctl restart mysqld
 ```
 
 ### Step 6: Test the Connection
@@ -336,7 +336,7 @@ Then close and reopen PowerShell.
 
 ### "connect ETIMEDOUT" in server logs
 → The server can't reach the Red Hat database. Check:
-1. Is MariaDB running? (`sudo systemctl status mariadb`)
+1. Is MySQL running? (`sudo systemctl status mysqld`)
 2. Is the IP address correct in `.env`?
 3. Is the firewall open? (`sudo firewall-cmd --list-ports`)
 4. Can you ping the Red Hat server from Windows? (`ping YOUR-REDHAT-IP`)

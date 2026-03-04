@@ -1,6 +1,6 @@
 /* ============================================================
    DATABASE CONNECTION POOL
-   Uses mysql2/promise for async MariaDB/MySQL access
+   Uses mysql2/promise for async MySQL access
    ============================================================ */
 
 const mysql = require('mysql2/promise');
@@ -32,7 +32,7 @@ const pool = mysql.createPool({
 async function testConnection() {
     try {
         const conn = await pool.getConnection();
-        console.log('✓ Connected to MariaDB at', process.env.DB_HOST || 'localhost');
+        console.log('✓ Connected to MySQL at', process.env.DB_HOST || 'localhost');
         conn.release();
     } catch (err) {
         console.error('✗ Database connection failed:', err.message);

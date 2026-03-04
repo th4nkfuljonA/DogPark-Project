@@ -1,5 +1,5 @@
 -- ============================================================
--- CERTIFIEDCITYWHIPS — MariaDB Schema & Seed Data
+-- CERTIFIEDCITYWHIPS — MySQL Schema & Seed Data
 -- Run this on your Red Hat database server
 -- ============================================================
 

@@ -285,6 +285,52 @@ Look for the `IPv4 Address` under your network adapter.
 
 ---
 
+## 🤖 Chatbot (CCW Assistant)
+
+A customer-support chatbot appears on **every page** as a floating green 💬 button in the bottom-right corner.
+
+### How It Works
+
+| Detail | Info |
+|---|---|
+| **Type** | Rule-based keyword matching — **NOT an AI/LLM model** |
+| **Runs on** | 100% client-side JavaScript in the browser |
+| **File** | `js/chatbot.js` |
+| **External APIs** | None — no OpenAI, no Google, no third-party services |
+| **Cost** | Free — no API keys or subscriptions needed |
+| **Server load** | Zero — doesn't hit the Node.js server at all |
+
+The chatbot uses **regex pattern matching** to compare user messages against a knowledge base of pre-written answers. It's fast, free, private, and works offline.
+
+### What It Can Answer
+- Vehicle availability, types, and pricing
+- Booking, cancellation, and rental extensions
+- Locations, hours, and contact info
+- Insurance and roadside assistance
+- Mileage limits and delivery options
+- Shop products (tires, detailing, accessories)
+- Vehicles for sale
+- Age/license requirements and payment methods
+
+### What It Blocks (Safety Guardrails)
+The chatbot will **refuse** to answer questions about:
+- Passwords, admin access, server/database details
+- Employee personal info (salary, SSN, addresses)
+- Company financials (revenue, profit, taxes)
+- Legal matters, lawsuits
+- Customer data or email lists
+- Credit card numbers, bank accounts
+
+Blocked questions get a polite redirect to contact the team directly.
+
+### How to Customize
+Edit `js/chatbot.js` to:
+- **Add new Q&A** — add entries to the `QA` array with `patterns` (regex) and `answer` (string)
+- **Block new topics** — add regex patterns to the `BLOCKED_PATTERNS` array
+- **Change the greeting** — edit the greeting message in the `toggle()` function
+
+---
+
 ## 🔌 API Endpoints Reference
 
 The website fetches data from these API endpoints. You can also test them directly in a browser.

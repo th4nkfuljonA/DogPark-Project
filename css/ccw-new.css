@@ -2187,3 +2187,28 @@ p {
         grid-template-columns: 1fr;
     }
 }
+
+/* ── LANGUAGE TOGGLE ────────────────────────────────────────── */
+.lang-toggle {
+    background: var(--glass-white-md);
+    color: var(--txt2);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    padding: 6px 12px;
+    border-radius: var(--pill);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: all var(--t2) var(--ease);
+    white-space: nowrap;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.lang-toggle:hover {
+    background: var(--glass-white-lg);
+    border-color: var(--glass-border-md);
+    color: var(--txt);
+    transform: translateY(-1px);
+}

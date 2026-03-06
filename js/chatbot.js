@@ -163,7 +163,7 @@ const CCW_CHATBOT = (function () {
 
     // ── CHAT LOGIC ──────────────────────────────────────────
     function getResponse(message) {
-        const msg = message.trim();
+        const msg = message.trim().slice(0, 500);  // Limit input length
         if (!msg) return null;
 
         // Check blocked topics first
@@ -291,7 +291,7 @@ const CCW_CHATBOT = (function () {
         </div>
         <div class="ccw-chat-messages" id="ccwChatMessages"></div>
         <div class="ccw-chat-input-wrap">
-            <input type="text" class="ccw-chat-input" id="ccwChatInput" placeholder="Type a message..." autocomplete="off" />
+            <input type="text" class="ccw-chat-input" id="ccwChatInput" placeholder="Type a message..." autocomplete="off" maxlength="500" />
             <button class="ccw-chat-send" id="ccwChatSend" title="Send">➤</button>
         </div>
     </div>`;
@@ -321,17 +321,30 @@ const CCW_CHATBOT = (function () {
         if (isOpen) input.focus();
     }
 
+    // SECURITY: Escape HTML to prevent XSS
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
     function addMsg(type, text) {
         const el = document.createElement('div');
         el.className = `ccw-msg ${type}`;
-        // Simple markdown bold
-        el.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+        if (type === 'user') {
+            // User messages: plain text only — no HTML rendering
+            el.textContent = text;
+        } else {
+            // Bot messages: escape first, then apply safe formatting
+            const safe = escapeHtml(text);
+            el.innerHTML = safe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+        }
         msgs.appendChild(el);
         msgs.scrollTop = msgs.scrollHeight;
     }
 
     function handleSend() {
-        const text = input.value.trim();
+        const text = input.value.trim().slice(0, 500);
         if (!text) return;
         addMsg('user', text);
         input.value = '';

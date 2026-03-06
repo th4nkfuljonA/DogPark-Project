@@ -1,6 +1,6 @@
 /* ============================================================
    DATABASE CONNECTION POOL
-   Uses mysql2/promise for async MySQL access
+   Uses mysql2/promise for async MariaDB access
    ============================================================ */
 
 const mysql = require('mysql2/promise');
@@ -19,10 +19,17 @@ const pool = mysql.createPool({
     queueLimit: 0,
 
     // Parse JSON columns automatically
+    // MariaDB stores JSON as LONGTEXT, so we parse by field name
     typeCast: function (field, next) {
         if (field.type === 'JSON') {
             const val = field.string();
             return val ? JSON.parse(val) : null;
+        }
+        // MariaDB: JSON columns stored as LONGTEXT — parse known JSON fields by name
+        if (field.name === 'features' && (field.type === 'BLOB' || field.type === 'VAR_STRING' || field.type === 'STRING')) {
+            const val = field.string();
+            if (!val) return null;
+            try { return JSON.parse(val); } catch { return val; }
         }
         return next();
     }
@@ -32,11 +39,11 @@ const pool = mysql.createPool({
 async function testConnection() {
     try {
         const conn = await pool.getConnection();
-        console.log('✓ Connected to MySQL at', process.env.DB_HOST || 'localhost');
+        console.log('✓ Connected to MariaDB at', process.env.DB_HOST || 'localhost');
         conn.release();
     } catch (err) {
         console.error('✗ Database connection failed:', err.message);
-        console.error('  Check your .env file and ensure the Red Hat server is reachable.');
+        console.error('  Check your .env file and ensure the MariaDB server is reachable.');
     }
 }
 

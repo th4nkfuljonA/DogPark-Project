@@ -1,7 +1,7 @@
 # 🚗 CertifiedCityWhips — Complete Server & Database Guide
 
 Welcome! This guide will walk you through **everything** about how this website is set up,
-how to run it, and how to connect it to your Red Hat database server.
+how to run it, and how to connect it to your MariaDB database server.
 
 ---
 
@@ -56,7 +56,7 @@ DogPark-Project-main/
 │   ├── package.json          (Node.js dependencies)
 │   └── node_modules/         (Installed packages — don't touch)
 │
-├── 📂 database/              ← SQL files (for the Red Hat server)
+├── 📂 database/              ← SQL files (for the MariaDB server)
 │   └── schema.sql            (Creates all tables + inserts all data)
 │
 └── 📂 docs/                  ← Documentation screenshots
@@ -85,9 +85,9 @@ This website uses **two servers** working together:
             │  Connects over network (port 3306)
             ▼
  ┌────────────────────────────────┐
- │   RED HAT SERVER               │
+ │   DATABASE SERVER              │
  │                                │
- │   MySQL Database               │
+ │   MariaDB Database             │
  │   • Stores all products       │
  │   • Stores all vehicles       │
  │   • Stores locations, etc.    │
@@ -97,7 +97,7 @@ This website uses **two servers** working together:
 
 **Why two servers?**
 - The **Windows server** hosts the website that people visit
-- The **Red Hat server** stores all the data (products, vehicles, etc.)
+- The **MariaDB server** stores all the data (products, vehicles, etc.)
 - This way, multiple websites or apps can share the same database
 - You can update data in one place and it shows up everywhere
 
@@ -144,25 +144,25 @@ pm2 save
 
 ---
 
-## 🗄️ Setting Up the Red Hat Database Server
+## 🗄️ Setting Up the MariaDB Database Server
 
 This is the server that stores all the product and vehicle data.
 You only need to do this **once**.
 
-### Step 1: Install MySQL
+### Step 1: Install MariaDB
 
-SSH into your Red Hat server and run:
+SSH into your database server and run:
 
 ```bash
-sudo dnf install mysql-server -y
-sudo systemctl start mysqld
-sudo systemctl enable mysqld
+sudo dnf install mariadb-server -y
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
 ```
 
 ### Step 2: Secure the Installation
 
 ```bash
-sudo mysql_secure_installation
+sudo mariadb-secure-installation
 ```
 
 It will ask you questions — answer them like this:
@@ -174,13 +174,13 @@ It will ask you questions — answer them like this:
 
 ### Step 3: Import the Database
 
-First, copy `database/schema.sql` from this Windows machine to your Red Hat server.
+First, copy `database/schema.sql` from this Windows machine to your MariaDB server.
 You can use SCP, USB drive, or paste the contents manually.
 
 Then run:
 
 ```bash
-mysql -u root -p < schema.sql
+mariadb -u root -p < schema.sql
 ```
 
 This creates:
@@ -196,20 +196,20 @@ This creates:
 ### Step 4: Set the App User Password
 
 ```bash
-mysql -u root -p -e "ALTER USER 'ccw_app'@'%' IDENTIFIED BY 'PICK_A_STRONG_PASSWORD'; FLUSH PRIVILEGES;"
+mariadb -u root -p -e "ALTER USER 'ccw_app'@'%' IDENTIFIED BY 'PICK_A_STRONG_PASSWORD'; FLUSH PRIVILEGES;"
 ```
 
 ⚠️ **Remember this password!** You'll need it for the next section.
 
 ### Step 5: Allow Remote Connections
 
-Edit the MySQL config:
+Edit the MariaDB config:
 
 ```bash
-sudo vi /etc/my.cnf.d/mysql-server.cnf
+sudo vi /etc/my.cnf.d/mariadb-server.cnf
 ```
 
-Find the `[mysqld]` section and add this line:
+Find the `[mariadb]` section and add this line:
 
 ```
 bind-address = 0.0.0.0
@@ -220,15 +220,15 @@ Open the firewall and restart:
 ```bash
 sudo firewall-cmd --permanent --add-port=3306/tcp
 sudo firewall-cmd --reload
-sudo systemctl restart mysqld
+sudo systemctl restart mariadb
 ```
 
 ### Step 6: Test the Connection
 
-From the Red Hat server itself, verify it works:
+From the database server itself, verify it works:
 
 ```bash
-mysql -u ccw_app -p certifiedcitywhips -e "SELECT COUNT(*) FROM products;"
+mariadb -u ccw_app -p certifiedcitywhips -e "SELECT COUNT(*) FROM products;"
 ```
 
 It should return `15`.
@@ -237,7 +237,7 @@ It should return `15`.
 
 ## ⚙️ Configuring the Windows Server
 
-Now tell the Windows server how to find the Red Hat database.
+Now tell the Windows server how to find the MariaDB database.
 
 ### Edit the `.env` File
 
@@ -245,7 +245,7 @@ Open `server/.env` in a text editor and fill in your details:
 
 ```
 # ── Database Connection ──────────────────────────
-# Replace with your Red Hat server's IP address
+# Replace with your MariaDB server's IP address
 DB_HOST=192.168.1.100
 DB_PORT=3306
 DB_USER=ccw_app
@@ -256,8 +256,8 @@ DB_NAME=certifiedcitywhips
 API_PORT=8080
 ```
 
-**How to find your Red Hat server's IP:**
-Run this on the Red Hat server:
+**How to find your MariaDB server's IP:**
+Run this on the database server:
 ```bash
 hostname -I
 ```
@@ -368,7 +368,7 @@ The website fetches data from these API endpoints. You can also test them direct
 ## 🔧 Troubleshooting
 
 ### "Products/vehicles not showing up on the website"
-→ The Red Hat database isn't connected yet. Follow the "Setting Up the Red Hat Database Server" section above, then edit your `server/.env` file.
+→ The MariaDB database isn't connected yet. Follow the "Setting Up the MariaDB Database Server" section above, then edit your `server/.env` file.
 
 ### "node is not recognized"
 → Node.js isn't installed. Run:
@@ -381,14 +381,14 @@ Then close and reopen PowerShell.
 → Port 80 requires admin privileges. Use port 8080 instead (already configured).
 
 ### "connect ETIMEDOUT" in server logs
-→ The server can't reach the Red Hat database. Check:
-1. Is MySQL running? (`sudo systemctl status mysqld`)
+→ The server can't reach the MariaDB database. Check:
+1. Is MariaDB running? (`sudo systemctl status mariadb`)
 2. Is the IP address correct in `.env`?
 3. Is the firewall open? (`sudo firewall-cmd --list-ports`)
-4. Can you ping the Red Hat server from Windows? (`ping YOUR-REDHAT-IP`)
+4. Can you ping the database server from Windows? (`ping YOUR-DB-SERVER-IP`)
 
 ### "Access denied for user 'ccw_app'"
 → Wrong password in `.env`, or the user wasn't created. Re-run:
 ```bash
-mysql -u root -p -e "CREATE USER IF NOT EXISTS 'ccw_app'@'%' IDENTIFIED BY 'your_password'; GRANT ALL ON certifiedcitywhips.* TO 'ccw_app'@'%'; FLUSH PRIVILEGES;"
+mariadb -u root -p -e "CREATE USER IF NOT EXISTS 'ccw_app'@'%' IDENTIFIED BY 'your_password'; GRANT ALL ON certifiedcitywhips.* TO 'ccw_app'@'%'; FLUSH PRIVILEGES;"
 ```

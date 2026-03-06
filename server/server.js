@@ -1,10 +1,12 @@
 /* ============================================================
-   CERTIFIEDCITYWHIPS — EXPRESS API SERVER
+   CERTIFIEDCITYWHIPS — EXPRESS API SERVER (HARDENED)
    Serves vehicle, product, and location data from MariaDB
    ============================================================ */
 
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const path = require('path');
 const { pool, testConnection } = require('./db');
 require('dotenv').config();
@@ -12,13 +14,63 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.API_PORT || 3000;
 
-// ── Middleware ───────────────────────────────────────────────
-app.use(cors());
-app.use(express.json());
+// ── SECURITY: Helmet — sets secure HTTP headers ─────────────
+// X-Content-Type-Options, X-Frame-Options, Strict-Transport-Security,
+// X-XSS-Protection, Referrer-Policy, and more
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com"],
+            imgSrc: ["'self'", "data:", "https:"],
+            connectSrc: ["'self'"],
+        }
+    },
+    crossOriginEmbedderPolicy: false,  // Allow external fonts/images
+}));
+
+// ── SECURITY: Remove X-Powered-By header ────────────────────
+app.disable('x-powered-by');
+
+// ── SECURITY: Rate limiting — prevent brute force / DDoS ────
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,   // 15-minute window
+    max: 100,                    // max 100 requests per window per IP
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many requests. Please try again later.' }
+});
+app.use('/api/', apiLimiter);
+
+// ── SECURITY: CORS — restrict to same-origin ────────────────
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow same-origin requests (no origin header) and localhost
+        if (!origin) return callback(null, true);
+        const allowed = [
+            `http://localhost:${PORT}`,
+            `http://127.0.0.1:${PORT}`,
+        ];
+        // Allow the server's own IP if set
+        if (process.env.SERVER_IP) {
+            allowed.push(`http://${process.env.SERVER_IP}:${PORT}`);
+        }
+        if (allowed.includes(origin)) return callback(null, true);
+        callback(new Error('CORS policy: origin not allowed'));
+    },
+    methods: ['GET'],            // Only allow GET requests (read-only API)
+    optionsSuccessStatus: 200
+}));
+
+// ── SECURITY: Request body size limit ───────────────────────
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: false, limit: '10kb' }));
 
 // ── Serve the static website files ──
-app.use(express.static(path.join(__dirname, '..', 'pages')));  // HTML pages at root
-app.use(express.static(path.join(__dirname, '..')));            // css/, js/, images/
+app.use(express.static(path.join(__dirname, '..', 'pages'), { dotfiles: 'deny' }));
+app.use(express.static(path.join(__dirname, '..'), { dotfiles: 'deny' }));
 
 // ── HELPER: convert DB rows to camelCase (matches old JS format) ──
 function toCamel(row) {
@@ -53,7 +105,7 @@ app.get('/api/products', async (req, res) => {
 // GET /api/products/search?q=... — search products
 app.get('/api/products/search', async (req, res) => {
     try {
-        const q = req.query.q;
+        const q = (req.query.q || '').trim().slice(0, 100);
         if (!q) return res.json([]);
         const like = `%${q}%`;
         const [rows] = await pool.query(
@@ -157,7 +209,7 @@ app.get('/api/vehicles/sales', async (req, res) => {
 // GET /api/vehicles/search?q=... — search vehicles
 app.get('/api/vehicles/search', async (req, res) => {
     try {
-        const q = req.query.q;
+        const q = (req.query.q || '').trim().slice(0, 100);
         if (!q) return res.json([]);
         const like = `%${q}%`;
         const [rows] = await pool.query(
@@ -295,14 +347,26 @@ app.get('/api/health', async (req, res) => {
         conn.release();
         res.json({ status: 'ok', database: 'connected', timestamp: new Date().toISOString() });
     } catch (err) {
-        res.status(503).json({ status: 'error', database: 'disconnected', error: err.message });
+        // Don't leak error details in health check
+        res.status(503).json({ status: 'error', database: 'disconnected' });
     }
+});
+
+// ── SECURITY: 404 catch-all for unknown API routes ──────────
+app.use('/api/*', (req, res) => {
+    res.status(404).json({ error: 'Endpoint not found' });
+});
+
+// ── SECURITY: Global error handler — never leak stack traces ─
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err.message);
+    res.status(500).json({ error: 'Internal server error' });
 });
 
 // ── Start Server ─────────────────────────────────────────────
 app.listen(PORT, async () => {
     console.log(`\n╔══════════════════════════════════════════════╗`);
-    console.log(`║  CertifiedCityWhips API Server               ║`);
+    console.log(`║  CertifiedCityWhips API Server (HARDENED)    ║`);
     console.log(`║  Running on http://localhost:${PORT}            ║`);
     console.log(`╚══════════════════════════════════════════════╝\n`);
     await testConnection();

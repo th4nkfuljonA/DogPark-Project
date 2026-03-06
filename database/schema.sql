@@ -1,6 +1,6 @@
 -- ============================================================
--- CERTIFIEDCITYWHIPS — MySQL Schema & Seed Data
--- Run this on your Red Hat database server
+-- CERTIFIEDCITYWHIPS — MariaDB Schema & Seed Data
+-- Run this on your MariaDB database server
 -- ============================================================
 
 CREATE DATABASE IF NOT EXISTS certifiedcitywhips
@@ -79,7 +79,7 @@ CREATE TABLE vehicles (
     transmission      VARCHAR(20) DEFAULT 'Auto',
     fuel              VARCHAR(20),
     description       TEXT,
-    features          JSON,
+    features          LONGTEXT,
     image_url         VARCHAR(500),
     fallback_gradient VARCHAR(255),
     c1                VARCHAR(10),
@@ -88,7 +88,8 @@ CREATE TABLE vehicles (
     is_active         BOOLEAN DEFAULT TRUE,
     created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (class_id) REFERENCES vehicle_classes(id),
-    FOREIGN KEY (location_id) REFERENCES locations(id)
+    FOREIGN KEY (location_id) REFERENCES locations(id),
+    CHECK (JSON_VALID(features) OR features IS NULL)
 );
 
 -- Rental Vehicles
@@ -190,7 +191,7 @@ INSERT INTO services (id, name, description, price, price_type, is_rental_addon,
 
 -- ── APPLICATION USER (for remote access from Windows server) ─
 
--- Create a user that the Node.js API will use to connect remotely
+-- Create a user that the Node.js API will use to connect remotely to MariaDB
 -- Replace 'your_password_here' with a strong password
 -- Replace '%' with the Windows server IP for tighter security (e.g., '192.168.1.100')
 CREATE USER IF NOT EXISTS 'ccw_app'@'%' IDENTIFIED BY 'your_password_here';

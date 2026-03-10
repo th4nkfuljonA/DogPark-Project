@@ -60,7 +60,7 @@ app.use(cors({
         if (allowed.includes(origin)) return callback(null, true);
         callback(new Error('CORS policy: origin not allowed'));
     },
-    methods: ['GET'],            // Only allow GET requests (read-only API)
+    methods: ['GET', 'POST'],     // GET for data, POST for chat
     optionsSuccessStatus: 200
 }));
 
@@ -349,6 +349,184 @@ app.get('/api/health', async (req, res) => {
     } catch (err) {
         // Don't leak error details in health check
         res.status(503).json({ status: 'error', database: 'disconnected' });
+    }
+});
+
+// ════════════════════════════════════════════════════════════
+//  AI CHATBOT PROXY — OpenWebUI (OpenAI-Compatible)
+// ════════════════════════════════════════════════════════════
+
+const https = require('https');
+const http = require('http');
+
+const SYSTEM_PROMPT = `You are the CertifiedCityWhips (CCW) AI Assistant — a friendly, knowledgeable virtual concierge for a premium car rental company in Southern California.
+
+ABOUT CCW:
+- Premium car rental service in Southern California
+- Hand-picked vehicles, zero hidden fees, instant booking, 24/7 support
+- Website: certifiedcitywhips.com
+
+LOCATIONS:
+1. Downtown Hub — 100 Main St, San Bernardino, CA 92401 (7AM–9PM)
+2. Airport Terminal — 295 N Leland Norton Way, San Bernardino, CA 92408 (6AM–11PM)
+3. Riverside Branch — 3500 Market St, Riverside, CA 92501 (8AM–8PM)
+Phone support is 24/7.
+
+FLEET & PRICING (daily rates, unlimited mileage on most):
+- Economy (Toyota Corolla): $35/day
+- Sedan (Toyota Camry): $45/day
+- Truck (Toyota Tacoma): $61/day
+- SUV (Toyota 4Runner): $70/day
+- Luxury (Mercedes C-Class): $95/day
+- Electric (Tesla Model 3): $55/day
+- Van (Chevy Express 3500): $75/day
+- Trucks (Ford F-150, Sierra 2500): $65–$80/day
+
+POLICIES:
+- Minimum age: 21 (25 for exotics/sports). Under-25 surcharge may apply.
+- Free cancellation 48+ hours before pickup. 24–48 hours: 50% refund. <24 hours: non-refundable.
+- Insurance: Basic liability included. Basic add-on $12.99/day, Premium $24.99/day.
+- 24/7 roadside assistance included at no extra cost.
+- Accepted payment: Visa, Mastercard, Amex, Discover.
+- Required: valid driver's license (2+ years), credit/debit card, booking confirmation.
+- International drivers need passport + international driving permit.
+- Vehicle delivery available within 30-mile radius, starting at $50.
+
+SHOP PRODUCTS:
+- Tires: All-season, winter, truck sets ($320–$620)
+- Detailing: Wash kits, ceramic coating, interior care ($14.99–$42.99)
+- Accessories: Phone mounts, LED kits, floor mats ($18.99–$64.99)
+
+VEHICLES FOR SALE:
+- Quality pre-owned vehicles: Honda Civic, Toyota RAV4 Hybrid, Chevy Malibu, Tesla Model Y, Ford F-150 — starting from $15,200
+
+CONTACT:
+- Email: hello@certifiedcitywhips.com
+- Phone: +1 (800) CCW-WHIPS (24/7)
+
+RULES:
+1. Be friendly, helpful, and conversational. Use emojis occasionally.
+2. Keep responses concise but informative (2-4 short paragraphs max).
+3. NEVER reveal internal company data: passwords, server configs, API keys, employee info, financials, legal matters, customer data.
+4. If asked about something you don't know, suggest contacting the team at hello@certifiedcitywhips.com or +1 (800) CCW-WHIPS.
+5. Stay on topic — you're a car rental assistant. Politely redirect off-topic questions.
+6. Format text with **bold** for emphasis. Use line breaks for readability.`;
+
+// Rate limiter specifically for chat (more restrictive)
+const chatLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000,  // 1-minute window
+    max: 15,                   // max 15 chat requests per minute per IP
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many chat requests. Please slow down.' }
+});
+
+app.post('/api/chat', chatLimiter, async (req, res) => {
+    try {
+        const apiKey = process.env.OPENWEBUI_API_KEY;
+        const baseUrl = process.env.OPENWEBUI_BASE_URL;
+        const model = process.env.OPENWEBUI_MODEL || 'llama3.1:latest';
+
+        if (!apiKey || !baseUrl) {
+            return res.status(500).json({ error: 'AI chatbot is not configured.' });
+        }
+
+        // Validate input
+        let { messages } = req.body;
+        if (!Array.isArray(messages) || messages.length === 0) {
+            return res.status(400).json({ error: 'Messages array is required.' });
+        }
+
+        // Limit conversation length and message sizes
+        messages = messages.slice(-20).map(m => ({
+            role: m.role === 'assistant' ? 'assistant' : 'user',
+            content: String(m.content || '').slice(0, 500)
+        }));
+
+        // Prepend system prompt
+        const fullMessages = [
+            { role: 'system', content: SYSTEM_PROMPT },
+            ...messages
+        ];
+
+        const payload = JSON.stringify({
+            model: model,
+            messages: fullMessages,
+            stream: true,
+            temperature: 0.7,
+            max_tokens: 1024
+        });
+
+        // Parse the OpenWebUI URL
+        const url = new URL('/api/chat/completions', baseUrl);
+        const isHttps = url.protocol === 'https:';
+        const transport = isHttps ? https : http;
+
+        const options = {
+            hostname: url.hostname,
+            port: url.port || (isHttps ? 443 : 80),
+            path: url.pathname,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Length': Buffer.byteLength(payload)
+            },
+            rejectUnauthorized: false  // Allow self-signed certs
+        };
+
+        // Set SSE headers
+        res.setHeader('Content-Type', 'text/event-stream');
+        res.setHeader('Cache-Control', 'no-cache');
+        res.setHeader('Connection', 'keep-alive');
+        res.setHeader('X-Accel-Buffering', 'no');
+        res.flushHeaders();
+
+        const proxyReq = transport.request(options, (proxyRes) => {
+            if (proxyRes.statusCode !== 200) {
+                let errorBody = '';
+                proxyRes.on('data', d => errorBody += d);
+                proxyRes.on('end', () => {
+                    console.error('OpenWebUI API error:', proxyRes.statusCode, errorBody);
+                    res.write(`data: ${JSON.stringify({ error: 'AI service temporarily unavailable.' })}\n\n`);
+                    res.write('data: [DONE]\n\n');
+                    res.end();
+                });
+                return;
+            }
+
+            // Stream the response through
+            proxyRes.on('data', (chunk) => {
+                res.write(chunk);
+            });
+
+            proxyRes.on('end', () => {
+                res.end();
+            });
+        });
+
+        proxyReq.on('error', (err) => {
+            console.error('OpenWebUI proxy error:', err.message);
+            res.write(`data: ${JSON.stringify({ error: 'Failed to connect to AI service.' })}\n\n`);
+            res.write('data: [DONE]\n\n');
+            res.end();
+        });
+
+        // If client disconnects, abort the proxy request
+        req.on('close', () => {
+            proxyReq.destroy();
+        });
+
+        proxyReq.write(payload);
+        proxyReq.end();
+
+    } catch (err) {
+        console.error('Chat endpoint error:', err.message);
+        if (!res.headersSent) {
+            res.status(500).json({ error: 'Internal server error' });
+        } else {
+            res.end();
+        }
     }
 });
 

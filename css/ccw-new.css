@@ -1,17 +1,17 @@
 /* ============================================================
-   CERTIFIEDCITYWHIPS — PREMIUM DARK MODE
-   True Charcoal · Electric Cyan · Deep Gold
-   2026 Automotive Luxury | Montserrat + Inter
+   CERTIFIEDCITYWHIPS — MIDNIGHT FLAME
+   True Black · Fierce Red · Vivid Gold
+   2026 Ultra-Premium Luxury | Space Grotesk + Inter
    ============================================================ */
 
 /* ── DESIGN TOKENS ─────────────────────────────────────────── */
 :root {
-    /* True Charcoal Palette */
-    --bg-deep: #0B0D10;
-    --bg-dark: #111317;
-    --bg-mid: #191C22;
-    --bg-surface: #1F2229;
-    --bg-elevated: #262930;
+    /* True Black Palette */
+    --bg-deep: #050508;
+    --bg-dark: #0A0A10;
+    --bg-mid: #101018;
+    --bg-surface: #151520;
+    --bg-elevated: #1A1A28;
 
     /* Legacy aliases (backward compat) */
     --lotus-deep: var(--bg-deep);
@@ -19,45 +19,45 @@
     --lotus-mid: var(--bg-mid);
     --lotus-blue: var(--bg-surface);
     --lotus-accent: var(--bg-elevated);
-    --lotus-mauve: #2a2235;
-    --lotus-soft: #4a4060;
-    --lotus-mist: #8090a8;
-    --lotus-pale: #c4d0e0;
+    --lotus-mauve: #1e1428;
+    --lotus-soft: #3a2850;
+    --lotus-mist: #7080a0;
+    --lotus-pale: #c0cce0;
 
-    /* Electric Cyan — Primary Accent */
-    --accent: #00E5CC;
-    --accent-deep: #00B8A3;
-    --accent-bright: #33FFE8;
-    --accent-glow: rgba(0, 229, 204, 0.35);
-    --accent-glass: rgba(0, 229, 204, 0.10);
+    /* Fierce Red — Primary Accent */
+    --accent: #FF3C3C;
+    --accent-deep: #CC2020;
+    --accent-bright: #FF6B6B;
+    --accent-glow: rgba(255, 60, 60, 0.40);
+    --accent-glass: rgba(255, 60, 60, 0.12);
 
-    /* Deep Gold — Premium / VIP */
-    --gold: #D4A853;
-    --gold-deep: #B08C3E;
-    --gold-bright: #E8C06A;
-    --gold-glow: rgba(212, 168, 83, 0.30);
-    --gold-glass: rgba(212, 168, 83, 0.08);
+    /* Vivid Gold — Premium / VIP */
+    --gold: #FFD700;
+    --gold-deep: #D4A800;
+    --gold-bright: #FFE44D;
+    --gold-glow: rgba(255, 215, 0, 0.35);
+    --gold-glass: rgba(255, 215, 0, 0.10);
 
-    /* Legacy red aliases → cyan */
+    /* Legacy red aliases → accent */
     --red: var(--accent);
     --red-deep: var(--accent-deep);
     --red-bright: var(--accent-bright);
     --red-glow: var(--accent-glow);
     --red-glass: var(--accent-glass);
 
-    /* Glass / Surface */
-    --glass-white: rgba(255, 255, 255, 0.04);
-    --glass-white-md: rgba(255, 255, 255, 0.07);
-    --glass-white-lg: rgba(255, 255, 255, 0.10);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-border-md: rgba(255, 255, 255, 0.14);
-    --glass-blue: rgba(0, 229, 204, 0.06);
-    --glass-red: rgba(0, 229, 204, 0.10);
+    /* Glass / Surface — stronger for true black */
+    --glass-white: rgba(255, 255, 255, 0.05);
+    --glass-white-md: rgba(255, 255, 255, 0.08);
+    --glass-white-lg: rgba(255, 255, 255, 0.12);
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --glass-border-md: rgba(255, 255, 255, 0.18);
+    --glass-blue: rgba(255, 60, 60, 0.06);
+    --glass-red: rgba(255, 60, 60, 0.10);
 
-    /* Text — Cloud Dancer */
-    --txt: #F5F0EB;
-    --txt2: rgba(245, 240, 235, 0.65);
-    --txt3: rgba(245, 240, 235, 0.40);
+    /* Text — Pure White for max contrast */
+    --txt: #FFFFFF;
+    --txt2: rgba(255, 255, 255, 0.65);
+    --txt3: rgba(255, 255, 255, 0.40);
     --txt-red: var(--accent);
 
     /* Radii */
@@ -77,14 +77,14 @@
     --t3: 0.3s;
     --t5: 0.5s;
 
-    /* Shadows */
-    --sh-glass: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    --sh-red: 0 0 40px rgba(0, 229, 204, 0.25), 0 4px 20px rgba(0, 229, 204, 0.15);
+    /* Shadows — neon glow variants */
+    --sh-glass: 0 8px 40px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    --sh-red: 0 0 50px rgba(255, 60, 60, 0.30), 0 4px 24px rgba(255, 60, 60, 0.20);
     --sh-accent: var(--sh-red);
-    --sh-gold: 0 0 30px rgba(212, 168, 83, 0.20);
-    --sh-blue: 0 0 60px rgba(0, 229, 204, 0.12);
-    --sh-card: 0 20px 60px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.4);
-    --sh-hover: 0 30px 80px rgba(0, 0, 0, 0.7), 0 8px 24px rgba(0, 229, 204, 0.08);
+    --sh-gold: 0 0 40px rgba(255, 215, 0, 0.25);
+    --sh-blue: 0 0 60px rgba(255, 60, 60, 0.15);
+    --sh-card: 0 24px 70px rgba(0, 0, 0, 0.7), 0 4px 20px rgba(0, 0, 0, 0.5);
+    --sh-hover: 0 30px 80px rgba(0, 0, 0, 0.8), 0 8px 30px rgba(255, 60, 60, 0.12);
 }
 
 /* ── RESET ──────────────────────────────────────────────────── */
@@ -144,23 +144,30 @@ button {
     border-radius: 2px;
 }
 
-/* ── NOISE TEXTURE OVERLAY — disabled for clean photo look ──── */
+/* ── NOISE TEXTURE OVERLAY — subtle premium grain ──────────── */
 .noise-overlay {
-    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    mix-blend-mode: overlay;
 }
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────────── */
 h1,
 h2 {
-    font-family: 'Montserrat', 'Outfit', sans-serif;
-    font-weight: 800;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
+    font-weight: 700;
     letter-spacing: -0.04em;
     line-height: 1;
     color: var(--txt);
 }
 
 h3 {
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 700;
     font-size: 1.1rem;
     color: var(--txt);
@@ -217,7 +224,7 @@ p {
     gap: 8px;
     background: linear-gradient(135deg, var(--accent), var(--accent-deep));
     color: var(--bg-deep);
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 700;
     font-size: 0.92rem;
     letter-spacing: 0.02em;
@@ -227,6 +234,18 @@ p {
     transition: all var(--t3) var(--ease);
     position: relative;
     overflow: hidden;
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px rgba(255, 60, 60, 0.25);
+    }
+
+    50% {
+        box-shadow: 0 0 40px rgba(255, 60, 60, 0.45), 0 0 80px rgba(255, 60, 60, 0.15);
+    }
 }
 
 .btn-primary::before {
@@ -241,7 +260,8 @@ p {
 .btn-primary:hover {
     background: linear-gradient(135deg, var(--accent-bright), var(--accent));
     box-shadow: var(--sh-accent);
-    transform: translateY(-2px) scale(1.02);
+    transform: translateY(-3px) scale(1.03);
+    animation: pulseGlow 2s ease-in-out infinite;
 }
 
 .btn-primary:hover::before {
@@ -254,7 +274,7 @@ p {
     gap: 8px;
     background: var(--glass-white);
     color: var(--txt);
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 600;
     font-size: 0.92rem;
     padding: 14px 32px;
@@ -282,11 +302,11 @@ p {
 }
 
 .nav.scrolled {
-    background: rgba(10, 13, 26, 0.75);
+    background: rgba(5, 5, 8, 0.85);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-bottom: 1px solid var(--glass-border);
-    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 60, 60, 0.15);
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 60, 60, 0.08);
 }
 
 .nav-inner {
@@ -310,17 +330,17 @@ p {
 .nav-logo-mark {
     background: var(--red);
     color: #fff;
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 900;
     font-size: 0.85rem;
     letter-spacing: 0.08em;
     padding: 5px 10px;
     border-radius: var(--r4);
-    box-shadow: 0 2px 12px var(--red-glow);
+    box-shadow: 0 2px 16px var(--red-glow);
 }
 
 .nav-wordmark {
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 700;
     font-size: 0.95rem;
     color: var(--txt);
@@ -360,7 +380,7 @@ p {
 .nav-cta {
     background: linear-gradient(135deg, var(--accent), var(--accent-deep));
     color: var(--bg-deep);
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 700;
     font-size: 0.85rem;
     padding: 10px 22px;
@@ -438,16 +458,16 @@ p {
     /* Cinematic charcoal overlay — dark vignette at edges */
     background:
         linear-gradient(to top,
-            rgba(11, 13, 16, 0.97) 0%,
-            rgba(11, 13, 16, 0.55) 25%,
-            rgba(11, 13, 16, 0.1) 55%,
+            rgba(5, 5, 8, 0.98) 0%,
+            rgba(5, 5, 8, 0.65) 25%,
+            rgba(5, 5, 8, 0.15) 55%,
             transparent 100%),
         linear-gradient(to right,
-            rgba(11, 13, 16, 0.65) 0%,
-            rgba(11, 13, 16, 0.1) 40%,
+            rgba(5, 5, 8, 0.75) 0%,
+            rgba(5, 5, 8, 0.15) 40%,
             transparent 65%),
         radial-gradient(ellipse 80% 60% at 30% 40%,
-            rgba(0, 229, 204, 0.05) 0%,
+            rgba(255, 60, 60, 0.06) 0%,
             transparent 70%);
     backdrop-filter: blur(0.4px);
     -webkit-backdrop-filter: blur(0.4px);
@@ -468,7 +488,7 @@ p {
     height: 500px;
     top: -80px;
     left: -80px;
-    background: radial-gradient(circle, rgba(0, 229, 204, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 60, 60, 0.10) 0%, transparent 70%);
     animation-delay: 0s;
 }
 
@@ -477,7 +497,7 @@ p {
     height: 400px;
     bottom: 20%;
     right: -60px;
-    background: radial-gradient(circle, rgba(212, 168, 83, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
     animation-delay: -3s;
 }
 
@@ -502,7 +522,7 @@ p {
     position: absolute;
     top: 0;
     left: -0.04em;
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 900;
     font-size: clamp(14rem, 28vw, 28rem);
     line-height: 0.85;
@@ -530,7 +550,7 @@ p {
 }
 
 .hero-tagline {
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 800;
     font-size: clamp(2rem, 4vw, 3.5rem);
     line-height: 1.15;
@@ -554,7 +574,7 @@ p {
 .hero-btn {
     display: inline-flex;
     align-items: center;
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 700;
     font-size: 0.92rem;
     padding: 14px 28px;
@@ -568,7 +588,7 @@ p {
     background: var(--red);
     color: #fff;
     border: 1.5px solid var(--red-bright);
-    box-shadow: 0 4px 20px rgba(200, 16, 46, 0.35);
+    box-shadow: 0 4px 20px rgba(255, 60, 60, 0.35);
 }
 
 .hero-btn-primary:hover {
@@ -618,7 +638,7 @@ p {
 }
 
 .hsp-num {
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 800;
     font-size: 1.4rem;
     color: var(--txt);
@@ -662,7 +682,7 @@ p {
     gap: 40px;
     white-space: nowrap;
     animation: marquee 30s linear infinite;
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 700;
     font-size: 0.82rem;
     letter-spacing: 0.14em;
@@ -777,7 +797,7 @@ p {
 .book-submit {
     background: var(--red);
     color: #fff;
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 700;
     font-size: 0.92rem;
     padding: 13px 28px;
@@ -916,7 +936,7 @@ p {
 }
 
 .fcc-name {
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 800;
     font-size: 1.6rem;
     color: var(--txt);
@@ -948,7 +968,7 @@ p {
 }
 
 .fcc-price {
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 700;
     font-size: 0.9rem;
     color: var(--red);
@@ -977,7 +997,7 @@ p {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse 70% 50% at 50% 50%, rgba(26, 42, 94, 0.15) 0%, transparent 70%);
+        radial-gradient(ellipse 70% 50% at 50% 50%, rgba(255, 60, 60, 0.08) 0%, transparent 70%);
     pointer-events: none;
 }
 
@@ -1021,7 +1041,7 @@ p {
 }
 
 .proc-num {
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 900;
     font-size: 3.5rem;
     line-height: 1;
@@ -1163,8 +1183,8 @@ p {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse 60% 40% at 20% 50%, rgba(61, 42, 94, 0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 80% 50%, rgba(26, 42, 94, 0.12) 0%, transparent 60%);
+        radial-gradient(ellipse 60% 40% at 20% 50%, rgba(255, 60, 60, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 50%, rgba(255, 215, 0, 0.06) 0%, transparent 60%);
     pointer-events: none;
 }
 
@@ -1278,7 +1298,7 @@ p {
 }
 
 .rsb-num {
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 800;
     font-size: 1.9rem;
     color: #fff;
@@ -1315,9 +1335,9 @@ p {
     position: relative;
     overflow: hidden;
     background: linear-gradient(135deg,
-            rgba(0, 229, 204, 0.05) 0%,
-            rgba(25, 28, 34, 0.6) 50%,
-            rgba(212, 168, 83, 0.04) 100%);
+            rgba(255, 60, 60, 0.06) 0%,
+            rgba(15, 15, 24, 0.7) 50%,
+            rgba(255, 215, 0, 0.04) 100%);
     border-top: 1px solid var(--glass-border);
     border-bottom: 1px solid var(--glass-border);
 }
@@ -1334,7 +1354,7 @@ p {
     height: 500px;
     top: -100px;
     left: -100px;
-    background: radial-gradient(circle, rgba(0, 229, 204, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 60, 60, 0.10) 0%, transparent 70%);
 }
 
 .cta-orb-2 {
@@ -1342,7 +1362,7 @@ p {
     height: 500px;
     bottom: -100px;
     right: -100px;
-    background: radial-gradient(circle, rgba(212, 168, 83, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
 }
 
 .cta-band-title {
@@ -1499,7 +1519,7 @@ p {
 .cf-submit {
     background: linear-gradient(135deg, var(--accent), var(--accent-deep));
     color: var(--bg-deep);
-    font-family: 'Montserrat', 'Outfit', sans-serif;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
     font-weight: 700;
     font-size: 0.95rem;
     padding: 15px 32px;
@@ -1673,7 +1693,7 @@ p {
         top: 72px;
         left: 0;
         right: 0;
-        background: rgba(10, 13, 26, 0.95);
+        background: rgba(5, 5, 8, 0.95);
         backdrop-filter: blur(24px);
         border-bottom: 1px solid var(--glass-border);
         padding: 20px 24px;

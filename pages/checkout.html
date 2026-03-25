@@ -329,6 +329,53 @@
             margin-bottom: 32px;
         }
 
+        /* Validation styles */
+        .ck-field input.invalid {
+            border-color: #ff4444;
+            background: rgba(255, 68, 68, 0.06);
+        }
+
+        .ck-field input.valid {
+            border-color: #2ecc71;
+        }
+
+        .ck-field-error {
+            font-size: 0.7rem;
+            color: #ff4444;
+            margin-top: 4px;
+            display: none;
+            animation: ccwShake 0.3s ease;
+        }
+
+        .ck-field-error.show {
+            display: block;
+        }
+
+        @keyframes ccwShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+
+        .ck-field-hint {
+            font-size: 0.68rem;
+            color: rgba(255, 255, 255, 0.2);
+            margin-top: 4px;
+        }
+
+        .ck-card-type {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            pointer-events: none;
+        }
+
+        .ck-field-card-wrap {
+            position: relative;
+        }
+
         @media (max-width: 640px) {
             .ck-row {
                 grid-template-columns: 1fr;
@@ -409,19 +456,35 @@
 
             <!-- Step 2: Personal Info -->
             <div class="ck-panel" id="panel2">
-                <form class="ck-form" id="infoForm">
+                <form class="ck-form" id="infoForm" novalidate>
                     <div class="ck-row">
-                        <div class="ck-field"><label>First Name</label><input type="text" id="ckFirstName"
-                                placeholder="John" required /></div>
-                        <div class="ck-field"><label>Last Name</label><input type="text" id="ckLastName"
-                                placeholder="Doe" required /></div>
+                        <div class="ck-field">
+                            <label>First Name</label>
+                            <input type="text" id="ckFirstName" placeholder="John" required minlength="2" maxlength="50" />
+                            <div class="ck-field-error" id="errFirstName">First name is required (min 2 characters)</div>
+                        </div>
+                        <div class="ck-field">
+                            <label>Last Name</label>
+                            <input type="text" id="ckLastName" placeholder="Doe" required minlength="2" maxlength="50" />
+                            <div class="ck-field-error" id="errLastName">Last name is required (min 2 characters)</div>
+                        </div>
                     </div>
-                    <div class="ck-field"><label>Email</label><input type="email" id="ckEmail"
-                            placeholder="your@email.com" required /></div>
-                    <div class="ck-field"><label>Phone</label><input type="tel" id="ckPhone"
-                            placeholder="+1 (555) 123-4567" required /></div>
-                    <div class="ck-field"><label>Driver's License #</label><input type="text" id="ckLicense"
-                            placeholder="DL Number" required /></div>
+                    <div class="ck-field">
+                        <label>Email</label>
+                        <input type="email" id="ckEmail" placeholder="your@email.com" required maxlength="100" autocomplete="email" />
+                        <div class="ck-field-error" id="errEmail">Please enter a valid email (e.g. name@example.com)</div>
+                    </div>
+                    <div class="ck-field">
+                        <label>Phone</label>
+                        <input type="tel" id="ckPhone" placeholder="(555) 123-4567" required maxlength="14" autocomplete="tel" />
+                        <div class="ck-field-error" id="errPhone">Please enter a valid 10-digit phone number</div>
+                    </div>
+                    <div class="ck-field">
+                        <label>Driver's License #</label>
+                        <input type="text" id="ckLicense" placeholder="e.g. D1234567" required minlength="4" maxlength="20" />
+                        <div class="ck-field-error" id="errLicense">License must be 4–20 alphanumeric characters</div>
+                        <div class="ck-field-hint">Letters and numbers only (e.g. D1234567)</div>
+                    </div>
                     <div class="ck-btns">
                         <button type="button" class="ck-btn ck-btn-ghost" onclick="goToStep(1)">← Back</button>
                         <button type="submit" class="ck-btn ck-btn-primary">Continue to Payment →</button>
@@ -431,25 +494,40 @@
 
             <!-- Step 3: Payment Mockup -->
             <div class="ck-panel" id="panel3">
-                <div class="ck-form">
+                <form class="ck-form" id="paymentForm" novalidate>
                     <div class="ck-mockup">
                         <strong>⚠️ Demo Mode:</strong> This is a payment mockup. No real charges will be made.
                     </div>
-                    <div class="ck-field"><label>Card Number</label><input type="text" id="ckCard"
-                            placeholder="4242 4242 4242 4242" maxlength="19" /></div>
+                    <div class="ck-field">
+                        <label>Card Number</label>
+                        <div class="ck-field-card-wrap">
+                            <input type="text" id="ckCard" placeholder="4242 4242 4242 4242" maxlength="19" required inputmode="numeric" autocomplete="cc-number" />
+                            <span class="ck-card-type" id="cardTypeIcon"></span>
+                        </div>
+                        <div class="ck-field-error" id="errCard">Please enter a valid card number (13–19 digits)</div>
+                    </div>
                     <div class="ck-row">
-                        <div class="ck-field"><label>Expiration</label><input type="text" placeholder="MM/YY"
-                                maxlength="5" /></div>
-                        <div class="ck-field"><label>CVC</label><input type="text" placeholder="123" maxlength="4" />
+                        <div class="ck-field">
+                            <label>Expiration</label>
+                            <input type="text" id="ckExpiry" placeholder="MM/YY" maxlength="5" required inputmode="numeric" autocomplete="cc-exp" />
+                            <div class="ck-field-error" id="errExpiry">Enter a valid future date (MM/YY)</div>
+                        </div>
+                        <div class="ck-field">
+                            <label>CVC</label>
+                            <input type="text" id="ckCVC" placeholder="123" maxlength="4" required inputmode="numeric" autocomplete="cc-csc" />
+                            <div class="ck-field-error" id="errCVC">CVC must be 3 or 4 digits</div>
                         </div>
                     </div>
-                    <div class="ck-field"><label>Cardholder Name</label><input type="text" placeholder="John Doe" />
+                    <div class="ck-field">
+                        <label>Cardholder Name</label>
+                        <input type="text" id="ckCardName" placeholder="John Doe" required minlength="2" maxlength="80" autocomplete="cc-name" />
+                        <div class="ck-field-error" id="errCardName">Cardholder name is required</div>
                     </div>
                     <div class="ck-btns">
-                        <button class="ck-btn ck-btn-ghost" onclick="goToStep(2)">← Back</button>
-                        <button class="ck-btn ck-btn-primary" onclick="completeCheckout()">Complete Booking →</button>
+                        <button type="button" class="ck-btn ck-btn-ghost" onclick="goToStep(2)">← Back</button>
+                        <button type="submit" class="ck-btn ck-btn-primary">Complete Booking →</button>
                     </div>
-                </div>
+                </form>
             </div>
 
             <!-- Step 4: Confirmation -->
@@ -588,10 +666,167 @@
             renderCart();
         }
 
-        // Info form submit
+        /* ── VALIDATION HELPERS ─────────────────────────── */
+        function showError(inputEl, errId) {
+            inputEl.classList.add('invalid');
+            inputEl.classList.remove('valid');
+            document.getElementById(errId).classList.add('show');
+        }
+        function clearError(inputEl, errId) {
+            inputEl.classList.remove('invalid');
+            inputEl.classList.add('valid');
+            document.getElementById(errId).classList.remove('show');
+        }
+        function resetField(inputEl, errId) {
+            inputEl.classList.remove('invalid', 'valid');
+            document.getElementById(errId).classList.remove('show');
+        }
+
+        // ── Email validation ──
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+        }
+
+        // ── Phone: strip to digits, must be 10 ──
+        function getPhoneDigits(val) { return val.replace(/\D/g, ''); }
+        function isValidPhone(phone) { return getPhoneDigits(phone).length === 10; }
+        function formatPhone(val) {
+            const d = getPhoneDigits(val).slice(0, 10);
+            if (d.length <= 3) return d;
+            if (d.length <= 6) return '(' + d.slice(0,3) + ') ' + d.slice(3);
+            return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6);
+        }
+
+        // ── Driver's License: alphanumeric, 4–20 chars ──
+        function isValidLicense(val) { return /^[A-Za-z0-9]{4,20}$/.test(val); }
+
+        // ── Credit card: Luhn algorithm ──
+        function getCardDigits(val) { return val.replace(/\D/g, ''); }
+        function luhnCheck(num) {
+            let sum = 0, alt = false;
+            for (let i = num.length - 1; i >= 0; i--) {
+                let n = parseInt(num[i], 10);
+                if (alt) { n *= 2; if (n > 9) n -= 9; }
+                sum += n; alt = !alt;
+            }
+            return sum % 10 === 0;
+        }
+        function isValidCard(val) {
+            const d = getCardDigits(val);
+            return d.length >= 13 && d.length <= 19 && luhnCheck(d);
+        }
+        function formatCard(val) {
+            const d = getCardDigits(val).slice(0, 19);
+            return d.replace(/(.{4})/g, '$1 ').trim();
+        }
+        function detectCardType(val) {
+            const d = getCardDigits(val);
+            if (/^4/.test(d)) return '💳 Visa';
+            if (/^5[1-5]/.test(d) || /^2[2-7]/.test(d)) return '💳 MC';
+            if (/^3[47]/.test(d)) return '💳 Amex';
+            if (/^6(?:011|5)/.test(d)) return '💳 Disc';
+            return '';
+        }
+
+        // ── Expiry: MM/YY, must be in future ──
+        function formatExpiry(val) {
+            const d = val.replace(/\D/g, '').slice(0, 4);
+            if (d.length <= 2) return d;
+            return d.slice(0,2) + '/' + d.slice(2);
+        }
+        function isValidExpiry(val) {
+            const m = val.match(/^(0[1-9]|1[0-2])\/([0-9]{2})$/);
+            if (!m) return false;
+            const month = parseInt(m[1], 10);
+            const year = parseInt('20' + m[2], 10);
+            const now = new Date();
+            const expDate = new Date(year, month); // 1st of month after
+            return expDate > now;
+        }
+
+        // ── CVC: 3 or 4 digits ──
+        function isValidCVC(val) { return /^[0-9]{3,4}$/.test(val); }
+
+        /* ── AUTO-FORMAT on input ──────────────────────── */
+        document.getElementById('ckPhone').addEventListener('input', function() {
+            const pos = this.selectionStart;
+            const old = this.value;
+            this.value = formatPhone(this.value);
+        });
+        document.getElementById('ckCard').addEventListener('input', function() {
+            this.value = formatCard(this.value);
+            document.getElementById('cardTypeIcon').textContent = detectCardType(this.value);
+        });
+        document.getElementById('ckExpiry').addEventListener('input', function() {
+            this.value = formatExpiry(this.value);
+        });
+        document.getElementById('ckCVC').addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').slice(0, 4);
+        });
+        document.getElementById('ckLicense').addEventListener('input', function() {
+            this.value = this.value.replace(/[^A-Za-z0-9]/g, '').slice(0, 20);
+        });
+
+        /* ── Live "valid" feedback on blur ─────────────── */
+        document.getElementById('ckEmail').addEventListener('blur', function() {
+            if (!this.value) return resetField(this, 'errEmail');
+            isValidEmail(this.value) ? clearError(this, 'errEmail') : showError(this, 'errEmail');
+        });
+        document.getElementById('ckPhone').addEventListener('blur', function() {
+            if (!this.value) return resetField(this, 'errPhone');
+            isValidPhone(this.value) ? clearError(this, 'errPhone') : showError(this, 'errPhone');
+        });
+        document.getElementById('ckLicense').addEventListener('blur', function() {
+            if (!this.value) return resetField(this, 'errLicense');
+            isValidLicense(this.value) ? clearError(this, 'errLicense') : showError(this, 'errLicense');
+        });
+        document.getElementById('ckCard').addEventListener('blur', function() {
+            if (!this.value) return resetField(this, 'errCard');
+            isValidCard(this.value) ? clearError(this, 'errCard') : showError(this, 'errCard');
+        });
+        document.getElementById('ckExpiry').addEventListener('blur', function() {
+            if (!this.value) return resetField(this, 'errExpiry');
+            isValidExpiry(this.value) ? clearError(this, 'errExpiry') : showError(this, 'errExpiry');
+        });
+        document.getElementById('ckCVC').addEventListener('blur', function() {
+            if (!this.value) return resetField(this, 'errCVC');
+            isValidCVC(this.value) ? clearError(this, 'errCVC') : showError(this, 'errCVC');
+        });
+
+        /* ── STEP 2: Info form validation ──────────────── */
         document.getElementById('infoForm').addEventListener('submit', e => {
             e.preventDefault();
-            goToStep(3);
+            let valid = true;
+            const first = document.getElementById('ckFirstName');
+            const last = document.getElementById('ckLastName');
+            const email = document.getElementById('ckEmail');
+            const phone = document.getElementById('ckPhone');
+            const license = document.getElementById('ckLicense');
+
+            if (!first.value.trim() || first.value.trim().length < 2) { showError(first, 'errFirstName'); valid = false; } else clearError(first, 'errFirstName');
+            if (!last.value.trim() || last.value.trim().length < 2) { showError(last, 'errLastName'); valid = false; } else clearError(last, 'errLastName');
+            if (!isValidEmail(email.value)) { showError(email, 'errEmail'); valid = false; } else clearError(email, 'errEmail');
+            if (!isValidPhone(phone.value)) { showError(phone, 'errPhone'); valid = false; } else clearError(phone, 'errPhone');
+            if (!isValidLicense(license.value)) { showError(license, 'errLicense'); valid = false; } else clearError(license, 'errLicense');
+
+            if (valid) goToStep(3);
+        });
+
+        /* ── STEP 3: Payment form validation ───────────── */
+        document.getElementById('paymentForm').addEventListener('submit', e => {
+            e.preventDefault();
+            let valid = true;
+            const card = document.getElementById('ckCard');
+            const expiry = document.getElementById('ckExpiry');
+            const cvc = document.getElementById('ckCVC');
+            const cardName = document.getElementById('ckCardName');
+
+            if (!isValidCard(card.value)) { showError(card, 'errCard'); valid = false; } else clearError(card, 'errCard');
+            if (!isValidExpiry(expiry.value)) { showError(expiry, 'errExpiry'); valid = false; } else clearError(expiry, 'errExpiry');
+            if (!isValidCVC(cvc.value)) { showError(cvc, 'errCVC'); valid = false; } else clearError(cvc, 'errCVC');
+            if (!cardName.value.trim() || cardName.value.trim().length < 2) { showError(cardName, 'errCardName'); valid = false; } else clearError(cardName, 'errCardName');
+
+            if (valid) completeCheckout();
         });
 
         function completeCheckout() {

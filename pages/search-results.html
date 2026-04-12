@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Results — CertifiedCityWhips</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/ccw-new.css" />
+    <style>
+        .sr-page {
+            padding: 140px 0 80px;
+            min-height: 100vh;
+        }
+
+        .sr-header {
+            margin-bottom: 48px;
+        }
+
+        .sr-title {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .sr-title span {
+            color: var(--red);
+        }
+
+        .sr-count {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 24px;
+        }
+
+        .sr-search-bar {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin-bottom: 8px;
+        }
+
+        .sr-search-bar input {
+            flex: 1;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            outline: none;
+        }
+
+        .sr-search-bar input:focus {
+            border-color: var(--red);
+        }
+
+        .sr-search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .sr-search-bar button {
+            padding: 14px 28px;
+            background: var(--red);
+            color: #fff;
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+            border: 1.5px solid var(--accent-bright);
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sr-search-bar button:hover {
+            background: var(--accent-bright);
+        }
+
+        .sr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .sr-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .sr-card:hover {
+            border-color: rgba(255, 255, 255, 0.18);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .sr-card-img {
+            height: 200px;
+            overflow: hidden;
+            background: #050508;
+            position: relative;
+        }
+
+        .sr-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sr-card-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--red);
+            background: rgba(10, 13, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 60, 60, 0.3);
+            border-radius: 999px;
+            padding: 4px 12px;
+        }
+
+        .sr-card-body {
+            padding: 20px;
+        }
+
+        .sr-card-name {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .sr-card-sub {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 12px;
+        }
+
+        .sr-card-specs {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+
+        .sr-card-spec {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .sr-card-price {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--red);
+        }
+
+        .sr-card-price span {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 400;
+        }
+
+        .sr-empty {
+            text-align: center;
+            padding: 80px 24px;
+        }
+
+        .sr-empty-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .sr-empty-text {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 8px;
+        }
+
+        .sr-empty-hint {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.25);
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .sr-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#fleet" class="nav-link" data-i18n="nav.fleet">Fleet</a></li>
+                                <li><a href="services.html" class="nav-link" data-i18n="nav.services">Services</a></li>
+                
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="nav-end">
+                <button class="lang-toggle" id="langToggle" onclick="CCW_I18N.toggle()">ðŸŒ ES</button>
+                <a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a>
+                <a href="login.html" class="nav-cta nav-auth-btn" id="navCta" data-i18n="nav.login">Login</a>
+                <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="sr-page">
+        <div class="wrap">
+            <div class="sr-header">
+                <form class="sr-search-bar" id="searchForm">
+                    <input type="text" id="searchInput" placeholder="Search vehicles..." autofocus />
+                    <button type="submit">Search</button>
+                </form>
+                <h1 class="sr-title" id="srTitle"></h1>
+                <p class="sr-count" id="srCount"></p>
+            </div>
+            <div id="srResults"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Southern California's premium car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Company</h5><a href="about.html">About CCW</a><a href="careers.html">Careers</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5><a href="services.html">Car Rental</a><a href="services.html">Roadside
+                            Assistance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5><a href="faq.html">FAQ</a><a href="index.html#contact" data-i18n="nav.contact">Contact</a><a
+                            href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+    <script src="js/i18n.js"></script>
+    <script src="js/cars-db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/products-db.js"></script>
+    <script>
+        if (CCW_AUTH.isLoggedIn()) {
+            const b = document.querySelector('.nav-auth-btn');
+            if (b) {
+                b.textContent = 'Sign Out';
+                b.href = '#';
+                b.addEventListener('click', function(e) { e.preventDefault(); CCW_AUTH.logout(); window.location.href = 'index.html'; });
+            }
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const q = params.get('q') || '';
+        document.getElementById('searchInput').value = q;
+
+        function doSearch(query) {
+            const results = query ? searchCars(query) : CARS_DB;
+            const title = document.getElementById('srTitle');
+            const count = document.getElementById('srCount');
+            const container = document.getElementById('srResults');
+
+            title.innerHTML = query ? `Results for "<span>${query}</span>"` : 'All Vehicles';
+            count.textContent = `${results.length} vehicle${results.length !== 1 ? 's' : ''} found`;
+
+            if (results.length === 0) {
+                container.innerHTML = `
+                    <div class="sr-empty">
+                        <div class="sr-empty-icon">🔍</div>
+                        <p class="sr-empty-text">No vehicles found for "${query}"</p>
+                        <p class="sr-empty-hint">Try searching for "Toyota", "SUV", "truck", or "electric"</p>
+                        <a href="index.html#fleet" class="btn-primary" style="margin-top:12px;">Browse All Fleet →</a>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = '<div class="sr-grid">' + results.map(car => `
+                <a href="car-detail.html?id=${car.id}" class="sr-card">
+                    <div class="sr-card-img">
+                        <img src="${car.imageUrl}" alt="${car.name}" onerror="this.parentElement.style.background='${car.fallbackGradient}';this.style.display='none'" />
+                        <span class="sr-card-badge">${car.listingType === 'sale' ? 'FOR SALE' : car.categoryLabel}</span>
+                    </div>
+                    <div class="sr-card-body">
+                        <div class="sr-card-name">${car.year} ${car.name}</div>
+                        <div class="sr-card-sub">${car.className} \u00b7 ${car.fuel} \u00b7 ${car.color}</div>
+                        <div class="sr-card-specs">
+                            <span class="sr-card-spec">${car.seats} seats</span>
+                            <span class="sr-card-spec">${car.transmission}</span>
+                            <span class="sr-card-spec">${car.locationName}</span>
+                        </div>
+                        <div class="sr-card-price">${car.listingType === 'sale' ? '$' + car.price.toLocaleString() : '$' + car.price + ' <span>/day</span>'}</div>
+                    </div>
+                </a>
+            `).join('') + '</div>';
+        }
+
+        doSearch(q);
+
+        document.getElementById('searchForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const newQ = document.getElementById('searchInput').value.trim();
+            window.location.href = 'search-results.html?q=' + encodeURIComponent(newQ);
+        });
+    </script>
+<script src="js/chatbot.js"></script>
+</body>
+
+</html>

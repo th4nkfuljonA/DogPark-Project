@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>System Metrics | Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&family=Montserrat:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/css/ccw-new.css" />
+    <style>
+        /* ── Auth Overlay ── */
+        #auth-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-deep);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .auth-box {
+            background: var(--glass-white);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--r24);
+            padding: 48px;
+            text-align: center;
+            box-shadow: var(--sh-glass);
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+            animation: authFadeIn 0.5s ease-out;
+        }
+
+        .auth-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--red), var(--lotus-soft), transparent);
+        }
+
+        @keyframes authFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-box h2 {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--txt);
+            margin: 0 0 8px 0;
+        }
+
+        .auth-box .auth-sub {
+            color: var(--txt3);
+            font-size: 0.85rem;
+            margin: 0 0 28px 0;
+        }
+
+        .auth-box input {
+            width: 100%;
+            padding: 13px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--glass-border);
+            border-radius: var(--r12);
+            color: var(--txt);
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: all 0.2s;
+            box-sizing: border-box;
+        }
+
+        .auth-box input::placeholder {
+            color: var(--txt3);
+        }
+
+        .auth-box input:focus {
+            border-color: var(--accent);
+            background: rgba(255, 60, 60, 0.04);
+            box-shadow: 0 0 0 3px rgba(255, 60, 60, 0.10);
+        }
+
+        .auth-box button {
+            margin-top: 16px;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+            color: var(--bg-deep);
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: 1.5px solid var(--accent);
+            border-radius: var(--pill);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .auth-box button:hover {
+            background: linear-gradient(135deg, var(--accent-bright), var(--accent));
+            box-shadow: var(--sh-accent);
+            transform: translateY(-2px);
+        }
+
+        #auth-error {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 16px;
+            display: none;
+            font-weight: 600;
+        }
+
+        /* ── Ops Center Page ── */
+        .ops-page {
+            padding: 140px 0 80px;
+            min-height: 100vh;
+            display: none;
+        }
+
+        .ops-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .ops-title {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 800;
+            color: #fff;
+            margin: 0;
+        }
+
+        .ops-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--txt3);
+        }
+
+        .ops-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #2ecc71;
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); }
+        }
+
+        /* Tabs */
+        .ops-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .ops-tab {
+            padding: 10px 24px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--txt3);
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--pill);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ops-tab:hover {
+            color: var(--txt);
+            border-color: var(--glass-border-md);
+            background: var(--glass-white-md);
+        }
+
+        .ops-tab.active {
+            color: #fff;
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Panels */
+        .ops-panel {
+            display: none;
+        }
+
+        .ops-panel.active {
+            display: block;
+            animation: panelFadeIn 0.4s ease-out;
+        }
+
+        @keyframes panelFadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Data Table */
+        .ops-table-wrap {
+            background: var(--glass-white);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--r20);
+            overflow: hidden;
+            box-shadow: var(--sh-glass);
+        }
+
+        .ops-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .ops-table th {
+            text-align: left;
+            padding: 16px 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--txt3);
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .ops-table td {
+            padding: 14px 20px;
+            font-size: 0.88rem;
+            color: var(--txt2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .ops-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .ops-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .ops-table .mono {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.82rem;
+            color: var(--txt3);
+        }
+
+        .ops-table .truncate {
+            max-width: 220px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--txt3);
+            font-size: 0.82rem;
+        }
+
+        .ops-table .muted {
+            color: var(--txt3);
+            font-size: 0.82rem;
+        }
+
+        /* Badges */
+        .ops-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: var(--pill);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .ops-badge-threat {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .ops-badge-ok {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .ops-badge-open {
+            background: rgba(255, 170, 0, 0.15);
+            color: #ffaa00;
+            border: 1px solid rgba(255, 170, 0, 0.25);
+        }
+
+        .ops-badge-info {
+            background: rgba(255, 60, 60, 0.12);
+            color: var(--accent-bright);
+            border: 1px solid rgba(255, 60, 60, 0.25);
+        }
+
+        .ops-empty {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--txt3);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .ops-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .ops-table-wrap {
+                overflow-x: auto;
+            }
+
+            .ops-table {
+                min-width: 700px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav class="nav scrolled" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#fleet" class="nav-link">Fleet</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-end">
+                <a href="checkout.html" class="nav-link" style="position:relative;">🛒</a>
+                <a href="dashboard.html" class="nav-cta" id="navCta">Dashboard</a>
+                <button class="burger" id="burger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- AUTH GATE -->
+    <div id="auth-overlay">
+        <div class="auth-box">
+            <h2>Legacy System Access</h2>
+            <p class="auth-sub">Requires Level 3 Authorization</p>
+            <input type="password" id="pass-input" placeholder="Enter Access Code">
+            <button id="login-btn">Authenticate →</button>
+            <p id="auth-error">Invalid access code. Try again.</p>
+        </div>
+    </div>
+
+    <!-- OPS CENTER -->
+    <div class="ops-page" id="app-content">
+        <div class="wrap">
+            <div class="ops-header">
+                <div>
+                    <div class="section-eyebrow">Admin Panel</div>
+                    <h1 class="ops-title">Ops Center Dashboard</h1>
+                </div>
+                <div class="ops-status">
+                    <div class="ops-status-dot"></div>
+                    Uptime: Nominal
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="ops-tabs">
+                <button class="ops-tab active" data-target="threats">🛡️ Security Threats</button>
+                <button class="ops-tab" data-target="tickets">🎫 Help Desk Tickets</button>
+                <button class="ops-tab" data-target="transactions">💳 Orders & Rentals</button>
+            </div>
+
+            <!-- Security Threats Panel -->
+            <div id="threats" class="ops-panel active">
+                <div class="ops-table-wrap">
+                    <table class="ops-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Path Targeted</th>
+                                <th>IP Address</th>
+                                <th>User Agent</th>
+                                <th>Severity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="threat-list">
+                            <tr><td colspan="5" class="ops-empty">Loading logs...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tickets Panel -->
+            <div id="tickets" class="ops-panel">
+                <div class="ops-table-wrap">
+                    <table class="ops-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User Email</th>
+                                <th>Subject</th>
+                                <th>Status</th>
+                                <th>Resolution Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticket-list">
+                            <tr><td colspan="5" class="ops-empty">Loading tickets...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Transactions Panel -->
+            <div id="transactions" class="ops-panel">
+                <div class="ops-table-wrap">
+                    <table class="ops-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer Email</th>
+                                <th>Type</th>
+                                <th>Total Cost</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactions-list">
+                            <tr><td colspan="5" class="ops-empty">Loading transactions...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="ops-footer" style="display:none;">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Southern California's premium car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Company</h5>
+                        <a href="about.html">About CCW</a>
+                        <a href="assets/lib/legacy-v1-metrics">Careers</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5>
+                        <a href="services.html">Car Rental</a>
+                        <a href="services.html">Insurance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5>
+                        <a href="faq.html">FAQ</a>
+                        <a href="index.html#contact">Contact</a>
+                        <a href="privacy.html">Privacy</a>
+                        <a href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+                <p>Proudly serving Southern California. 🌴</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Burger menu
+        const burger = document.getElementById('burger');
+        if (burger) burger.addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
+
+        // Scroll nav
+        window.addEventListener('scroll', () => {
+            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+        });
+
+        // Authentication
+        const authOverlay = document.getElementById('auth-overlay');
+        const defaultPassword = 'Secur1ty!';
+
+        document.getElementById('login-btn').addEventListener('click', () => {
+            const val = document.getElementById('pass-input').value;
+            if (val === defaultPassword) {
+                authOverlay.style.display = 'none';
+                document.getElementById('app-content').style.display = 'block';
+                document.getElementById('ops-footer').style.display = 'block';
+                loadData();
+            } else {
+                document.getElementById('auth-error').style.display = 'block';
+            }
+        });
+
+        // Enter key support
+        document.getElementById('pass-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('login-btn').click();
+        });
+
+        // Tab logic
+        document.querySelectorAll('.ops-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.ops-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.ops-panel').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.getAttribute('data-target')).classList.add('active');
+            });
+        });
+
+        async function loadData() {
+            try {
+                // Fetch Security Logs
+                const resLogs = await fetch('/api/admin/metrics?type=logs', {
+                    headers: { 'Authorization': 'Bearer ' + document.getElementById('pass-input').value }
+                });
+                if (resLogs.ok) {
+                    const logs = await resLogs.json();
+                    const tbody = document.getElementById('threat-list');
+                    tbody.innerHTML = '';
+                    if (logs.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="5" class="ops-empty">No threat logs found. Honeypots are quiet. ✅</td></tr>`;
+                    }
+                    logs.forEach(log => {
+                        tbody.innerHTML += `
+                            <tr>
+                                <td class="muted">${new Date(log.timestamp).toLocaleString()}</td>
+                                <td>${log.path}</td>
+                                <td><span class="mono">${log.ip}</span></td>
+                                <td class="truncate" title="${log.userAgent}">${log.userAgent}</td>
+                                <td><span class="ops-badge ops-badge-threat">HIGH</span></td>
+                            </tr>
+                        `;
+                    });
+                }
+
+                // Fetch Tickets
+                const resTickets = await fetch('/api/admin/metrics?type=tickets', {
+                    headers: { 'Authorization': 'Bearer ' + document.getElementById('pass-input').value }
+                });
+                if (resTickets.ok) {
+                    const tickets = await resTickets.json();
+                    const tTbody = document.getElementById('ticket-list');
+                    tTbody.innerHTML = '';
+                    if (tickets.length === 0) {
+                        tTbody.innerHTML = `<tr><td colspan="5" class="ops-empty">No tickets found.</td></tr>`;
+                    }
+                    tickets.forEach(t => {
+                        const resTime = t.resolutionTime ? t.resolutionTime + ' hrs' : 'Pending';
+                        const badgeClass = t.status === 'Resolved' ? 'ops-badge-ok' : 'ops-badge-open';
+                        tTbody.innerHTML += `
+                            <tr>
+                                <td>#${t.id}</td>
+                                <td>${t.email}</td>
+                                <td>${t.subject}</td>
+                                <td><span class="ops-badge ${badgeClass}">${t.status}</span></td>
+                                <td>${resTime}</td>
+                            </tr>
+                        `;
+                    });
+                }
+
+                // Fetch Transactions (Orders & Reservations)
+                const [resOrders, resReservations] = await Promise.all([
+                    fetch('/api/admin/metrics?type=orders', { headers: { 'Authorization': 'Bearer ' + document.getElementById('pass-input').value } }),
+                    fetch('/api/admin/metrics?type=reservations', { headers: { 'Authorization': 'Bearer ' + document.getElementById('pass-input').value } })
+                ]);
+
+                if (resOrders.ok && resReservations.ok) {
+                    const orders = await resOrders.json();
+                    const reservations = await resReservations.json();
+
+                    const mappedOrders = orders.map(o => ({ ...o, txType: 'Store Order' }));
+                    const mappedReservations = reservations.map(r => ({ ...r, txType: 'Rental' }));
+
+                    const combined = [...mappedOrders, ...mappedReservations].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+                    const txTbody = document.getElementById('transactions-list');
+                    txTbody.innerHTML = '';
+
+                    if (combined.length === 0) {
+                        txTbody.innerHTML = `<tr><td colspan="5" class="ops-empty">No recent transactions found.</td></tr>`;
+                    }
+
+                    combined.forEach(tx => {
+                        txTbody.innerHTML += `
+                            <tr>
+                                <td>#${tx.id}</td>
+                                <td>${tx.email}</td>
+                                <td><span class="ops-badge ops-badge-info">${tx.txType}</span></td>
+                                <td>$${parseFloat(tx.total_amount || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}</td>
+                                <td class="muted">${new Date(tx.created_at).toLocaleString()}</td>
+                            </tr>
+                        `;
+                    });
+                }
+            } catch (err) {
+                console.error("Failed to load metrics", err);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us — CertifiedCityWhips</title>
+    <meta name="description"
+        content="Learn about CertifiedCityWhips — our story, mission, and commitment to premium car rentals." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/ccw-new.css" />
+    <style>
+        .info-page {
+            padding: 140px 0 80px;
+            min-height: 100vh;
+        }
+
+        .info-hero {
+            margin-bottom: 60px;
+        }
+
+        .info-eyebrow {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 12px;
+        }
+
+        .info-title {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            color: #fff;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .info-sub {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.45);
+            max-width: 640px;
+            line-height: 1.7;
+        }
+
+        .info-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+
+        .info-section h2 {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .info-section p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.8;
+            margin-bottom: 16px;
+            max-width: 720px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.3s;
+        }
+
+        .info-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .info-card-icon {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .info-card h3 {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .info-card p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.6;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#fleet" class="nav-link" data-i18n="nav.fleet">Fleet</a></li>
+                                <li><a href="services.html" class="nav-link" data-i18n="nav.services">Services</a></li>
+
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="nav-end">
+                <button class="lang-toggle" id="langToggle" onclick="CCW_I18N.toggle()">ðŸŒ ES</button>
+                <a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a>
+                <a href="login.html" class="nav-cta nav-auth-btn" id="navCta" data-i18n="nav.login">Login</a>
+                <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="info-page">
+        <div class="wrap">
+            <div class="info-hero">
+                <div class="info-eyebrow" data-i18n="about.eyebrow">About Us</div>
+                <h1 class="info-title" data-i18n="about.title">Driven by Excellence.<br>Fueled by Passion.</h1>
+                <p class="info-sub" data-i18n="about.intro">CertifiedCityWhips was founded with a simple vision: make
+                    premium car rentals
+                    accessible, transparent, and unforgettable. We believe every journey should feel extraordinary.</p>
+            </div>
+            <div class="info-sections">
+                <div class="info-section">
+                    <h2 data-i18n="about.story.title">Our Story</h2>
+                    <p data-i18n="about.story.p1">Founded in 2020, CertifiedCityWhips began as a two-car operation in
+                        San Bernardino, California. What started
+                        as a passion project quickly grew into one of the most trusted names in premium car rental
+                        across Southern California. Today, we operate across 3 locations in the Inland Empire with a
+                        growing fleet of hand-picked vehicles.</p>
+                    <p data-i18n="about.story.p2">Our founder saw a gap in the market — luxury car rentals that didn't
+                        come with hidden fees, poor
+                        customer service, and outdated vehicles. CCW was built to be the antithesis of traditional car
+                        rental: transparent pricing, immaculate vehicles, and a booking experience that takes under 2
+                        minutes.</p>
+                </div>
+                <div class="info-section">
+                    <h2 data-i18n="about.values.title">Our Values</h2>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="info-card-icon">🏆</div>
+                            <h3 data-i18n="about.val1.title">Excellence First</h3>
+                            <p data-i18n="about.val1.desc">Every vehicle is inspected, detailed, and certified before it
+                                reaches our customers. We
+                                accept nothing less than perfection.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon">🤝</div>
+                            <h3 data-i18n="about.val2.title">Radical Transparency</h3>
+                            <p data-i18n="about.val2.desc">No hidden fees. No surprises. What you see is what you pay.
+                                Period. We believe trust is
+                                earned through honesty.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon">⚡</div>
+                            <h3 data-i18n="about.val3.title">Speed & Simplicity</h3>
+                            <p data-i18n="about.val3.desc">Book in under 2 minutes. Pick up in under 5. We've engineered
+                                every friction point out of
+                                the rental experience.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon">💎</div>
+                            <h3 data-i18n="about.val4.title">Premium Without Pretense</h3>
+                            <p data-i18n="about.val4.desc">Luxury shouldn't feel exclusive. We make premium vehicles
+                                accessible to anyone who values
+                                quality and appreciates fine engineering.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <h2 data-i18n="about.numbers.title">By the Numbers</h2>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="info-card-icon" style="font-size:2.2rem;color:var(--red);">15+</div>
+                            <h3 data-i18n="about.num.vehicles">Vehicles</h3>
+                            <p data-i18n="about.num.veh.desc">A hand-picked fleet of premium SUVs, sedans, and trucks.
+                            </p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon" style="font-size:2.2rem;color:var(--red);">1K+</div>
+                            <h3 data-i18n="about.num.rentals">Completed Rentals</h3>
+                            <p data-i18n="about.num.rent.desc">Trusted by thousands of customers across Southern
+                                California.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon" style="font-size:2.2rem;color:var(--red);">4.9★</div>
+                            <h3 data-i18n="about.num.rating">Average Rating</h3>
+                            <p data-i18n="about.num.rat.desc">Consistently rated the top premium car rental service.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-card-icon" style="font-size:2.2rem;color:var(--red);">3</div>
+                            <h3 data-i18n="about.num.locations">Locations</h3>
+                            <p data-i18n="about.num.loc.desc">San Bernardino (Downtown & Airport) and Riverside.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand"><a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Southern California's premium car rentals. Hand-picked vehicles, zero hidden fees, instant
+                        booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Company</h5><a href="about.html">About CCW</a><a href="careers.html">Careers</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5><a href="services.html">Car Rental</a><a href="services.html">Roadside
+                            Assistance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5><a href="faq.html">FAQ</a><a href="index.html#contact" data-i18n="nav.contact">Contact</a><a href="privacy.html">Privacy</a><a
+                            href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+    <script src="js/i18n.js"></script>
+    <script src="js/cars-db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/products-db.js"></script>
+    <script>if (CCW_AUTH.isLoggedIn()) {
+            const b = document.querySelector('.nav-auth-btn');
+            if (b) {
+                b.textContent = 'Sign Out';
+                b.href = '#';
+                b.addEventListener('click', function(e) { e.preventDefault(); CCW_AUTH.logout(); window.location.href = 'index.html'; });
+            }
+        }</script>
+    <script src="js/chatbot.js"></script>
+
+</body>
+
+</html>

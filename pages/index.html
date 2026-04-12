@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CertifiedCityWhips — Southern California Premium Car Rentals</title>
+    <meta name="description"
+        content="CertifiedCityWhips — Southern California's premium car rentals. Hand-picked vehicles, zero hidden fees, instant booking in San Bernardino and Riverside." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&family=Montserrat:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/ccw-new.css" />
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#fleet" class="nav-link" data-i18n="nav.fleet">Fleet</a></li>
+                                <li><a href="services.html" class="nav-link" data-i18n="nav.services">Services</a></li>
+                <li><a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+
+            <div class="nav-end">
+                <button class="lang-toggle" id="langToggle" onclick="CCW_I18N.toggle()">🌐 ES</button>
+                <a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a>
+                <a href="login.html" class="nav-cta nav-auth-btn" id="navCta" data-i18n="nav.login">Login</a>
+                <button class="burger" id="burger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero" id="home">
+
+        <!-- Full-bleed photo background -->
+        <div class="hero-photo-wrap">
+            <img src="images/hero-car.png" alt="Red sports car at night over city skyline" class="hero-photo" />
+            <div class="hero-photo-overlay"></div>
+        </div>
+
+        <!-- Subtle orbs layered on top of photo -->
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+
+        <!-- Giant CCW overlaid on photo — HYER style -->
+        <div class="hero-brand-giant">CCW</div>
+
+        <!-- Right side tagline -->
+        <div class="hero-tagline-block">
+            <p class="hero-tagline" data-i18n="hero.tagline">Southern California's<br>Premium Car Rentals</p>
+        </div>
+
+        <!-- Bottom CTA buttons -->
+        <div class="hero-ctas">
+            <a href="#book" class="hero-btn hero-btn-primary" id="heroBtnPrimary" data-i18n="hero.btn.reserve">Reserve a Whip</a>
+            <a href="#fleet" class="hero-btn hero-btn-secondary" id="heroBtnSecondary" data-i18n="hero.btn.browse">Browse Fleet</a>
+        </div>
+
+
+    </header>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+        <div class="marquee-track">
+            <span data-i18n="marquee.1">CERTIFIED CITY WHIPS</span><span class="mdot"> ✦ </span>
+            <span data-i18n="marquee.2">PREMIUM FLEET</span><span class="mdot"> ✦ </span>
+            <span data-i18n="marquee.3">INSTANT BOOKING</span><span class="mdot"> ✦ </span>
+            <span data-i18n="marquee.4">FREE CANCELLATION</span><span class="mdot"> ✦ </span>
+            <span data-i18n="marquee.5">24/7 SUPPORT</span><span class="mdot"> ✦ </span>
+            <span data-i18n="marquee.6">NO HIDDEN FEES</span><span class="mdot"> ✦ </span>
+            <span data-i18n="marquee.7">SOUTHERN CALIFORNIA</span><span class="mdot"> ✦ </span>
+            <span>CERTIFIED CITY WHIPS</span><span class="mdot"> ✦ </span>
+            <span>PREMIUM FLEET</span><span class="mdot"> ✦ </span>
+            <span>INSTANT BOOKING</span><span class="mdot"> ✦ </span>
+            <span>FREE CANCELLATION</span><span class="mdot"> ✦ </span>
+            <span>24/7 SUPPORT</span><span class="mdot"> ✦ </span>
+            <span>NO HIDDEN FEES</span><span class="mdot"> ✦ </span>
+            <span>SOUTHERN CALIFORNIA</span><span class="mdot"> ✦ </span>
+        </div>
+    </div>
+
+    <!-- BOOK SECTION -->
+    <section class="book-section" id="book">
+        <div class="wrap">
+            <div class="book-glass-card">
+                <div class="book-card-header">
+                    <div class="section-eyebrow" data-i18n="book.eyebrow">Find Your Ride</div>
+                    <h2 class="book-title" data-i18n="book.title">Search Available Whips</h2>
+                </div>
+                <form class="book-form" id="bookForm">
+                    <div class="bfield">
+                        <label for="location" data-i18n="book.label.location">Location</label>
+                        <select id="location">
+                            <option value="" data-i18n="book.loc.all">All locations...</option>
+                            <option value="1" data-i18n="book.loc.1">Downtown Hub — San Bernardino</option>
+                            <option value="2" data-i18n="book.loc.2">Airport Terminal — San Bernardino</option>
+                            <option value="3" data-i18n="book.loc.3">Riverside Branch — Riverside</option>
+                        </select>
+                    </div>
+                    <div class="bfield">
+                        <label for="pdate" data-i18n="book.label.pickup">Pick-up</label>
+                        <input type="date" id="pdate" />
+                    </div>
+                    <div class="bfield">
+                        <label for="rdate" data-i18n="book.label.return">Return</label>
+                        <input type="date" id="rdate" />
+                    </div>
+                    <div class="bfield">
+                        <label for="vtype" data-i18n="book.label.type">Type</label>
+                        <select id="vtype">
+                            <option value="" data-i18n="book.type.any">Any type</option>
+                            <option value="economy" data-i18n="book.type.economy">Economy</option>
+                            <option value="sedan" data-i18n="book.type.sedan">Sedan</option>
+                            <option value="suv" data-i18n="book.type.suv">SUV</option>
+                            <option value="truck" data-i18n="book.type.truck">Truck / Pickup</option>
+                            <option value="luxury" data-i18n="book.type.luxury">Luxury</option>
+                            <option value="electric" data-i18n="book.type.electric">Electric</option>
+                            <option value="van" data-i18n="book.type.van">Van</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="book-submit" id="bookSubmit" data-i18n="book.submit">Search Whips →</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FLEET — RENTALS -->
+    <section class="fleet-section" id="fleet">
+        <div class="wrap">
+            <div class="fleet-header">
+                <div class="section-eyebrow" data-i18n="fleet.eyebrow">Rental Fleet</div>
+                <h2 class="fleet-title" data-i18n="fleet.title">Pick Your Ride</h2>
+                <p class="fleet-sub" data-i18n="fleet.sub">Economy to luxury. Trucks to electric. Unlimited mileage and flexible pickup across 3 Southern California locations.</p>
+            </div>
+
+            <div class="fleet-filters" id="fleetFilters">
+                <button class="ff active" data-f="all" data-i18n="fleet.filter.all">All</button>
+                <button class="ff" data-f="economy" data-i18n="fleet.filter.economy">Economy</button>
+                <button class="ff" data-f="sedan" data-i18n="fleet.filter.sedan">Sedan</button>
+                <button class="ff" data-f="suv" data-i18n="fleet.filter.suv">SUV</button>
+                <button class="ff" data-f="truck" data-i18n="fleet.filter.truck">Truck</button>
+                <button class="ff" data-f="luxury" data-i18n="fleet.filter.luxury">Luxury</button>
+                <button class="ff" data-f="electric" data-i18n="fleet.filter.electric">Electric</button>
+                <button class="ff" data-f="van" data-i18n="fleet.filter.van">Van</button>
+            </div>
+
+            <div class="fleet-grid" id="fleetGrid"></div>
+        </div>
+    </section>
+
+    <!-- VEHICLES FOR SALE -->
+    <section class="fleet-section" id="forsale" style="border-top:1px solid rgba(255,255,255,0.06);">
+        <div class="wrap">
+            <div class="fleet-header">
+                <div class="section-eyebrow" data-i18n="sale.eyebrow">Buy a Vehicle</div>
+                <h2 class="fleet-title" data-i18n="sale.title">Vehicles for Sale</h2>
+                <p class="fleet-sub" data-i18n="sale.sub">Quality pre-owned vehicles at competitive prices. Inspected, certified, and ready to drive home.</p>
+            </div>
+            <div class="fleet-grid" id="saleGrid"></div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process-section" id="process">
+        <div class="wrap">
+            <div class="section-eyebrow" data-i18n="process.eyebrow">How It Works</div>
+            <h2 class="process-title" data-i18n="process.title">Simple as 1–2–3–4</h2>
+            <div class="process-grid">
+                <div class="proc-step reveal" id="step1">
+                    <div class="proc-num">01</div>
+                    <div class="proc-icon-wrap">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                            <circle cx="18" cy="18" r="10" stroke="currentColor" stroke-width="2" />
+                            <path d="M26 26 L34 34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3 data-i18n="process.step1.title">Search</h3>
+                    <p data-i18n="process.step1.desc">Filter by city, date, and vehicle type to find your perfect match.</p>
+                </div>
+                <div class="proc-step reveal" id="step2">
+                    <div class="proc-num">02</div>
+                    <div class="proc-icon-wrap">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                            <rect x="8" y="6" width="24" height="28" rx="3" stroke="currentColor" stroke-width="2" />
+                            <path d="M14 16 H26 M14 22 H22" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3 data-i18n="process.step2.title">Book</h3>
+                    <p data-i18n="process.step2.desc">Reserve in minutes. Instant confirmation, no waiting around.</p>
+                </div>
+                <div class="proc-step reveal" id="step3">
+                    <div class="proc-num">03</div>
+                    <div class="proc-icon-wrap">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                            <ellipse cx="20" cy="18" rx="8" ry="10" stroke="currentColor" stroke-width="2" />
+                            <path d="M14 28 L12 36 M26 28 L28 36" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                            <circle cx="20" cy="16" r="3" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <h3 data-i18n="process.step3.title">Pick Up</h3>
+                    <p data-i18n="process.step3.desc">Show your ID, grab the keys, and you're out. That simple.</p>
+                </div>
+                <div class="proc-step reveal" id="step4">
+                    <div class="proc-num">04</div>
+                    <div class="proc-icon-wrap">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                            <path d="M8 20 L16 28 L32 12" stroke="currentColor" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 data-i18n="process.step4.title">Return</h3>
+                    <p data-i18n="process.step4.desc">Drop it off at any CCW location when you're done. Easy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PERKS -->
+    <section class="perks-section">
+        <div class="wrap">
+            <div class="section-eyebrow" data-i18n="perks.eyebrow">Why CCW</div>
+            <h2 class="perks-title" data-i18n="perks.title">Built Different</h2>
+            <div class="perks-grid">
+                <div class="perk-card reveal" id="perk1">
+                    <div class="perk-icon">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                            <path d="M20 4 L34 10 L34 22 Q34 30 20 36 Q6 30 6 22 L6 10 Z" stroke="currentColor"
+                                stroke-width="2" stroke-linejoin="round" />
+                            <path d="M14 20 L18 24 L26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 data-i18n="perk1.title">Full Coverage</h3>
+                    <p data-i18n="perk1.desc">Every rental includes comprehensive insurance. Drive with total peace of mind.</p>
+                </div>
+                <div class="perk-card reveal" id="perk2">
+                    <div class="perk-icon">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                            <path d="M20 6 L22 14 L30 14 L24 19 L26 27 L20 22 L14 27 L16 19 L10 14 L18 14 Z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 data-i18n="perk2.title">Instant Confirmation</h3>
+                    <p data-i18n="perk2.desc">Booking confirmed in seconds, not hours. Your time is too valuable to wait.</p>
+                </div>
+                <div class="perk-card reveal" id="perk3">
+                    <div class="perk-icon">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                            <path d="M8 20 C8 13 13 8 20 8 C27 8 32 13 32 20" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                            <path d="M8 20 L14 26 M8 20 L2 26" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3 data-i18n="perk3.title">Free Cancellation</h3>
+                    <p data-i18n="perk3.desc">Cancel up to 24 hours before pickup at no charge. No questions asked.</p>
+                </div>
+                <div class="perk-card reveal" id="perk4">
+                    <div class="perk-icon">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                            <path d="M8 8 L18 8 L22 16 L16 20 C18 24 22 28 26 30 L30 24 L38 28 L38 36 Q28 40 8 20 Z"
+                                stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 data-i18n="perk4.title">24/7 Support</h3>
+                    <p data-i18n="perk4.desc">Real humans, always available. Day or night, we've got you covered.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- CTA BAND -->
+    <section class="cta-band">
+        <div class="cta-band-orb cta-orb-1"></div>
+        <div class="cta-band-orb cta-orb-2"></div>
+        <div class="wrap">
+            <div class="section-eyebrow" style="text-align:center; display:block;" data-i18n="cta.eyebrow">Ready?</div>
+            <h2 class="cta-band-title" data-i18n="cta.title">Ready to Roll?</h2>
+            <p class="cta-band-sub" data-i18n="cta.sub">Join 50,000+ people who've already certified their city experience.</p>
+            <div class="cta-band-btns">
+                <a href="#book" class="btn-primary" id="ctaBtnPrimary" data-i18n="cta.btn.reserve">Reserve Now →</a>
+                <a href="#contact" class="btn-ghost" id="ctaBtnGhost" data-i18n="cta.btn.talk">Talk to Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+        <div class="wrap">
+            <div class="section-eyebrow" data-i18n="contact.eyebrow">Get In Touch</div>
+            <h2 class="contact-title" data-i18n="contact.title">Contact CCW</h2>
+            <div class="contact-grid">
+                <div class="contact-left">
+                    <div class="c-block">
+                        <span class="c-label" data-i18n="contact.label.address">Address</span>
+                        <p>215 N D Street, Suite 100<br>San Bernardino, CA 92401</p>
+                    </div>
+                    <div class="c-block">
+                        <span class="c-label" data-i18n="contact.label.phone">Phone</span>
+                        <p>+1 (800) CCW-WHIPS<br><span data-i18n="contact.phone.avail">Available 24/7</span></p>
+                    </div>
+                    <div class="c-block">
+                        <span class="c-label" data-i18n="contact.label.email">Email</span>
+                        <p>hello@certifiedcitywhips.com</p>
+                    </div>
+                    <div class="c-socials">
+                        <a href="#" class="c-soc" id="socIg">IG</a>
+                        <a href="#" class="c-soc" id="socTw">TW</a>
+                        <a href="#" class="c-soc" id="socTk">TK</a>
+                        <a href="#" class="c-soc" id="socYt">YT</a>
+                    </div>
+                    <a href="help-desk.html" class="cf-submit" id="helpDeskBtn" style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;text-decoration:none;text-align:center;justify-content:center;">🎫 Submit a Support Ticket →</a>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="cf-row">
+                        <div class="cf-field">
+                            <label for="cname" data-i18n="contact.form.name">Name</label>
+                            <input type="text" id="cname" placeholder="Your name" data-i18n="contact.form.pname" />
+                        </div>
+                        <div class="cf-field">
+                            <label for="cemail" data-i18n="contact.form.email">Email</label>
+                            <input type="email" id="cemail" placeholder="your@email.com" data-i18n="contact.form.pemail" />
+                        </div>
+                    </div>
+                    <div class="cf-field">
+                        <label for="csubject" data-i18n="contact.form.subject">Subject</label>
+                        <input type="text" id="csubject" placeholder="What's up?" data-i18n="contact.form.psubject" />
+                    </div>
+                    <div class="cf-field">
+                        <label for="cmsg" data-i18n="contact.form.message">Message</label>
+                        <textarea id="cmsg" rows="5" placeholder="Tell us more..." data-i18n="contact.form.pmsg"></textarea>
+                    </div>
+                    <button type="submit" class="cf-submit" id="cSubmit" data-i18n="contact.form.submit">Send Message →</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p data-i18n="footer.desc">Southern California's premium car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5 data-i18n="footer.col.company">Company</h5>
+                        <a href="about.html" data-i18n="footer.about">About CCW</a>
+                        <a href="assets/lib/legacy-v1-metrics" data-i18n="footer.careers">Careers</a>
+                    </div>
+                    <div class="fcol">
+                        <h5 data-i18n="footer.col.services">Services</h5>
+                        <a href="services.html" data-i18n="footer.rental">Car Rental</a>
+                        <a href="services.html" data-i18n="footer.insurance">Insurance</a>
+                                            </div>
+                    <div class="fcol">
+                        <h5 data-i18n="footer.col.support">Support</h5>
+                        <a href="faq.html" data-i18n="footer.faq">FAQ</a>
+                        <a href="#contact" data-i18n="footer.contact">Contact</a>
+                        <a href="privacy.html" data-i18n="footer.privacy">Privacy</a>
+                        <a href="terms.html" data-i18n="footer.terms">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+                <p data-i18n="footer.tagline">Proudly serving Southern California. 🌴</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div class="modal-bg" id="modalBg">
+        <div class="modal-card">
+            <button class="modal-x" id="modalX">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- BOOK DATE-PICKER MODAL -->
+    <div id="bookModalBg" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+        <div style="max-width:400px;width:90%;padding:36px 32px;background:rgba(15,18,35,0.95);border:1px solid rgba(255,255,255,0.1);border-radius:20px;position:relative;">
+            <button id="bookModalX" style="position:absolute;top:14px;right:18px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:1.5rem;cursor:pointer;line-height:1;">&times;</button>
+            <div style="font-family:'Space Grotesk','Outfit',sans-serif;font-weight:800;font-size:1.3rem;color:#fff;margin-bottom:6px;" id="bookModalTitle">Book This Ride</div>
+            <div style="font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:24px;" id="bookModalSub"></div>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+                <div>
+                    <label style="display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:6px;">Pick-up Date</label>
+                    <input type="date" id="bookPickup" style="width:100%;padding:12px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;color-scheme:dark;" />
+                </div>
+                <div>
+                    <label style="display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:6px;">Return Date</label>
+                    <input type="date" id="bookReturn" style="width:100%;padding:12px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;color-scheme:dark;" />
+                </div>
+                <div style="font-size:0.82rem;color:rgba(255,255,255,0.45);" id="bookModalPrice"></div>
+                <button id="bookModalConfirm" style="width:100%;padding:14px;border-radius:999px;font-family:'Space Grotesk','Outfit',sans-serif;font-weight:700;font-size:0.92rem;cursor:pointer;background:var(--red,#c8102e);color:#fff;border:1.5px solid #e8304a;">Add to Cart →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/cars-db.js"></script>
+    <script src="js/products-db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Update nav auth button
+        if (CCW_AUTH.isLoggedIn()) {
+            const btn = document.querySelector('.nav-auth-btn');
+            if (btn) {
+                btn.textContent = 'Sign Out';
+                btn.href = '#';
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    CCW_AUTH.logout();
+                    window.location.href = 'index.html';
+                });
+            }
+        }
+    </script>
+<script src="js/chatbot.js"></script>
+</body>
+
+</html>

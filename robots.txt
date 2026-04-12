@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Restricted areas - Do not crawl
+Disallow: /config/db_backup.sql.gz
+Disallow: /api/v1/debug-mode
+Disallow: /login.php
+Disallow: /assets/lib/legacy-v1-metrics

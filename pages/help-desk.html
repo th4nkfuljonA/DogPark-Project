@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Support & Help Desk — CertifiedCityWhips</title>
+    <meta name="description" content="Submit and track IT support tickets for CertifiedCityWhips. Premium help desk services." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&family=Montserrat:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/ccw-new.css" />
+    <style>
+        /* ── Help Desk Page Specific ── */
+        .helpdesk-page {
+            padding: 140px 0 80px;
+            min-height: 100vh;
+        }
+
+        .helpdesk-header {
+            margin-bottom: 48px;
+        }
+
+        .helpdesk-title {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .helpdesk-sub {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        /* Tabs */
+        .hd-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .hd-tab {
+            padding: 10px 24px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--txt3);
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--pill);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .hd-tab:hover {
+            color: var(--txt);
+            border-color: var(--glass-border-md);
+            background: var(--glass-white-md);
+        }
+
+        .hd-tab.active {
+            color: #fff;
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Panels */
+        .hd-panel {
+            display: none;
+        }
+
+        .hd-panel.active {
+            display: block;
+            animation: hdFadeIn 0.4s ease-out;
+        }
+
+        @keyframes hdFadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Card */
+        .hd-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--r24);
+            padding: 40px;
+            box-shadow: var(--sh-glass);
+            position: relative;
+            overflow: hidden;
+            max-width: 700px;
+        }
+
+        .hd-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--red), var(--lotus-soft), transparent);
+        }
+
+        .hd-form-group {
+            margin-bottom: 20px;
+        }
+
+        .hd-form-group label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--txt3);
+            margin-bottom: 8px;
+        }
+
+        .hd-form-group input,
+        .hd-form-group textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--glass-border);
+            border-radius: var(--r12);
+            padding: 13px 16px;
+            color: var(--txt);
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: all 0.2s;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        .hd-form-group input::placeholder,
+        .hd-form-group textarea::placeholder {
+            color: var(--txt3);
+        }
+
+        .hd-form-group input:focus,
+        .hd-form-group textarea:focus {
+            border-color: var(--accent);
+            background: rgba(255, 60, 60, 0.04);
+            box-shadow: 0 0 0 3px rgba(255, 60, 60, 0.10);
+        }
+
+        .hd-submit {
+            background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+            color: var(--bg-deep);
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 15px 32px;
+            border-radius: var(--pill);
+            border: 1.5px solid var(--accent);
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .hd-submit:hover {
+            background: linear-gradient(135deg, var(--accent-bright), var(--accent));
+            box-shadow: var(--sh-accent);
+            transform: translateY(-2px);
+        }
+
+        /* Success & Error Messages */
+        .hd-success {
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: rgba(255, 60, 60, 0.08);
+            border: 1px solid rgba(255, 60, 60, 0.25);
+            border-radius: var(--r12);
+            color: var(--accent-bright);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .hd-error {
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            border-radius: var(--r12);
+            color: #ef4444;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* Result Card */
+        .hd-result {
+            margin-top: 24px;
+            padding: 24px;
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--r16);
+            display: none;
+        }
+
+        .hd-result h3 {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff;
+            margin: 0 0 8px 0;
+        }
+
+        .hd-result-email {
+            font-size: 0.85rem;
+            color: var(--txt3);
+            margin-bottom: 12px;
+        }
+
+        .hd-result-desc {
+            font-size: 0.9rem;
+            color: var(--txt2);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .hd-badge {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: var(--pill);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .hd-badge-open {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .hd-badge-resolved {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .hd-result-time {
+            font-size: 0.85rem;
+            color: var(--txt3);
+            margin-top: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#fleet" class="nav-link">Fleet</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-end">
+                <a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a>
+                <a href="login.html" class="nav-cta nav-auth-btn" id="navCta">Login</a>
+                <button class="burger" id="burger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HELP DESK PAGE -->
+    <div class="helpdesk-page">
+        <div class="wrap">
+            <div class="helpdesk-header">
+                <div class="section-eyebrow">Support Center</div>
+                <h1 class="helpdesk-title">Help Desk</h1>
+                <p class="helpdesk-sub">Submit a support ticket or track your existing request.</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="hd-tabs">
+                <button class="hd-tab active" data-target="submit-panel">🎫 Submit a Ticket</button>
+                <button class="hd-tab" data-target="track-panel">🔍 Track Ticket Status</button>
+            </div>
+
+            <!-- Submit Ticket Panel -->
+            <div id="submit-panel" class="hd-panel active">
+                <div class="hd-card">
+                    <div class="hd-form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="t-email" placeholder="client@example.com">
+                    </div>
+                    <div class="hd-form-group">
+                        <label>Issue Subject</label>
+                        <input type="text" id="t-subject" placeholder="e.g. Reservation Inquiry">
+                    </div>
+                    <div class="hd-form-group">
+                        <label>Description</label>
+                        <textarea id="t-desc" rows="5" placeholder="Please describe the issue in detail..."></textarea>
+                    </div>
+                    <button class="hd-submit" id="btn-submit">Submit Ticket →</button>
+                    <div id="submit-msg" class="hd-success"></div>
+                </div>
+            </div>
+
+            <!-- Track Ticket Panel -->
+            <div id="track-panel" class="hd-panel">
+                <div class="hd-card">
+                    <div class="hd-form-group">
+                        <label>Ticket ID</label>
+                        <input type="text" id="t-id" placeholder="Enter your Ticket ID (e.g. 1000)">
+                    </div>
+                    <button class="hd-submit" id="btn-track">Check Status →</button>
+
+                    <div id="result-box" class="hd-result">
+                        <h3 id="res-subject"></h3>
+                        <p id="res-email" class="hd-result-email"></p>
+                        <p id="res-desc" class="hd-result-desc"></p>
+                        <div id="res-status" class="hd-badge"></div>
+                        <p id="res-time" class="hd-result-time"></p>
+                    </div>
+                    <div id="track-error" class="hd-error">Ticket not found. Please check your ID and try again.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Southern California's premium car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Company</h5>
+                        <a href="about.html">About CCW</a>
+                        <a href="assets/lib/legacy-v1-metrics">Careers</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5>
+                        <a href="services.html">Car Rental</a>
+                        <a href="services.html">Insurance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5>
+                        <a href="faq.html">FAQ</a>
+                        <a href="index.html#contact">Contact</a>
+                        <a href="privacy.html">Privacy</a>
+                        <a href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+                <p>Proudly serving Southern California. 🌴</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+    <script src="js/auth.js"></script>
+    <script>
+        // Burger menu
+        const burger = document.getElementById('burger');
+        if (burger) burger.addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
+
+        // Scroll nav styling
+        window.addEventListener('scroll', () => {
+            document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+        });
+        document.getElementById('nav').classList.add('scrolled');
+
+        // Auth button state
+        if (typeof CCW_AUTH !== 'undefined' && CCW_AUTH.isLoggedIn()) {
+            const btn = document.querySelector('.nav-auth-btn');
+            if (btn) {
+                btn.textContent = 'Dashboard';
+                btn.href = 'dashboard.html';
+            }
+        }
+
+        // Tab switching
+        document.querySelectorAll('.hd-tab').forEach(t => {
+            t.addEventListener('click', () => {
+                document.querySelectorAll('.hd-tab').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.hd-panel').forEach(p => p.classList.remove('active'));
+                t.classList.add('active');
+                document.getElementById(t.getAttribute('data-target')).classList.add('active');
+            });
+        });
+
+        // Submit Ticket
+        document.getElementById('btn-submit').addEventListener('click', async () => {
+            const email = document.getElementById('t-email').value;
+            const subject = document.getElementById('t-subject').value;
+            const description = document.getElementById('t-desc').value;
+
+            if (!email || !subject || !description) {
+                alert("Please fill all fields."); return;
+            }
+
+            try {
+                const res = await fetch('/api/tickets', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, subject, description })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    const msg = document.getElementById('submit-msg');
+                    msg.style.display = 'block';
+                    msg.innerHTML = `✅ Ticket submitted! Your Ticket ID is: <strong>${data.ticketId}</strong> — save this to track your status.`;
+                    document.getElementById('t-subject').value = '';
+                    document.getElementById('t-desc').value = '';
+                }
+            } catch (e) {
+                alert("Submission failed. Please try again later.");
+            }
+        });
+
+        // Track Ticket
+        document.getElementById('btn-track').addEventListener('click', async () => {
+            const id = document.getElementById('t-id').value.trim();
+            if (!id) return;
+
+            document.getElementById('result-box').style.display = 'none';
+            document.getElementById('track-error').style.display = 'none';
+
+            try {
+                const res = await fetch('/api/tickets/' + id);
+                if (res.ok) {
+                    const t = await res.json();
+                    document.getElementById('result-box').style.display = 'block';
+                    document.getElementById('res-subject').innerText = t.subject;
+                    document.getElementById('res-email').innerText = "Reported by: " + t.email;
+                    document.getElementById('res-desc').innerText = t.description;
+
+                    const badge = document.getElementById('res-status');
+                    badge.innerText = t.status.toUpperCase();
+                    badge.className = t.status === 'Resolved' ? 'hd-badge hd-badge-resolved' : 'hd-badge hd-badge-open';
+
+                    const timeInfo = document.getElementById('res-time');
+                    if (t.status === 'Resolved') {
+                        timeInfo.innerText = `Resolution Time: ${t.resolutionTime} hours`;
+                    } else {
+                        timeInfo.innerText = "Ticket is currently under review by our team.";
+                    }
+                } else {
+                    document.getElementById('track-error').style.display = 'block';
+                }
+            } catch (e) {
+                document.getElementById('track-error').style.display = 'block';
+            }
+        });
+    </script>
+    <script src="js/chatbot.js"></script>
+</body>
+
+</html>

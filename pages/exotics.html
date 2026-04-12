@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exotic Cars — CertifiedCityWhips</title>
+    <meta name="description"
+        content="Browse our exotic car fleet at CertifiedCityWhips. Supercars and hypercars available for rent in your city." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&family=Montserrat:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/ccw-new.css" />
+    <style>
+        .page-hero {
+            padding: 160px 0 100px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(160deg, #050508 0%, #150508 50%, #1a0a0d 100%);
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 60% at 10% 40%, rgba(255, 60, 60, 0.15) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 90% 60%, rgba(90, 0, 16, 0.1) 0%, transparent 55%);
+            pointer-events: none;
+        }
+
+        .page-hero-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 32px;
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--red);
+        }
+
+        .back-link::before {
+            content: '←';
+        }
+
+        .page-hero h1 {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .page-hero h1 span {
+            color: var(--red);
+        }
+
+        .page-hero-sub {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.55);
+            max-width: 540px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+        }
+
+        .page-hero-stats {
+            display: flex;
+            gap: 0;
+            background: rgba(15, 18, 35, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            padding: 16px 0;
+            width: fit-content;
+        }
+
+        .ph-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 36px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ph-stat:last-child {
+            border-right: none;
+        }
+
+        .ph-stat-n {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .ph-stat-n em {
+            font-style: normal;
+            color: var(--red);
+            font-size: 1rem;
+        }
+
+        .ph-stat-l {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 4px;
+        }
+
+        .vehicles-section {
+            padding: 100px 0;
+        }
+
+        .vehicles-section .section-header {
+            margin-bottom: 60px;
+        }
+
+        .vehicles-section h2 {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .vehicles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .v-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .v-card:hover {
+            border-color: rgba(255, 60, 60, 0.3);
+            transform: translateY(-6px);
+            box-shadow: 0 24px 60px rgba(255, 60, 60, 0.15);
+        }
+
+        .v-img {
+            height: 200px;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+            background: #050508;
+        }
+
+        .v-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .v-card:hover .v-img img {
+            transform: scale(1.05);
+        }
+
+        .v-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(8, 10, 20, 0.7) 0%, transparent 50%);
+        }
+
+        .v-img-label {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(8px);
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 2;
+        }
+
+        .v-img-price {
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #fff;
+            z-index: 2;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .v-img-price span {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.65);
+            font-weight: 500;
+        }
+
+        .v-body {
+            padding: 24px;
+        }
+
+        .v-name {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .v-year {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 14px;
+            letter-spacing: 0.04em;
+        }
+
+        .v-desc {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
+
+        .v-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .v-spec {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        .v-spec-l {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 3px;
+        }
+
+        .v-spec-v {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .v-feats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 22px;
+        }
+
+        .v-feat {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.55);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            padding: 4px 12px;
+        }
+
+        .v-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .v-book {
+            flex: 1;
+            background: var(--red);
+            color: #fff;
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+            padding: 12px 20px;
+            border-radius: 999px;
+            border: 1.5px solid var(--accent-bright);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .v-book:hover {
+            background: var(--accent-bright);
+            box-shadow: 0 4px 20px rgba(255, 60, 60, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .v-info {
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 12px 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .v-info:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+
+        .exotic-notice {
+            background: rgba(255, 60, 60, 0.08);
+            border: 1px solid rgba(255, 60, 60, 0.2);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 48px;
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .exotic-notice strong {
+            color: var(--red);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (max-width: 900px) {
+            .vehicles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-hero-stats {
+                flex-wrap: wrap;
+                border-radius: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#fleet" class="nav-link" style="color:var(--red)" data-i18n="nav.fleet">Fleet</a></li>
+                                <li><a href="services.html" class="nav-link" data-i18n="nav.services">Services</a></li>
+                
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="nav-end">
+                <button class="lang-toggle" id="langToggle" onclick="CCW_I18N.toggle()">ðŸŒ ES</button>
+                <a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a>
+                <a href="login.html" class="nav-cta nav-auth-btn" id="navCta" data-i18n="nav.login">Login</a>
+                <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-hero">
+        <div class="wrap page-hero-inner">
+            <a href="index.html#fleet" class="back-link">Back to Fleet</a>
+            <div class="section-eyebrow">Our Fleet — Exotic Cars</div>
+            <h1>Drive the<br><span>Extraordinary.</span></h1>
+            <p class="page-hero-sub">These aren't just cars — they're experiences. Our exotic fleet puts you behind the
+                wheel of the world's most coveted machines. No excuses. No limits.</p>
+            <div class="page-hero-stats">
+                <div class="ph-stat">
+                    <div class="ph-stat-n">3<em>+</em></div>
+                    <div class="ph-stat-l">Exotic Models</div>
+                </div>
+                <div class="ph-stat">
+                    <div class="ph-stat-n">650<em>+HP</em></div>
+                    <div class="ph-stat-l">Avg Power</div>
+                </div>
+                <div class="ph-stat">
+                    <div class="ph-stat-n">$349<em>/day</em></div>
+                    <div class="ph-stat-l">Starting From</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="vehicles-section">
+        <div class="wrap">
+            <div class="section-header">
+                <div class="section-eyebrow">Choose Your Exotic</div>
+                <h2>Exotic Car Lineup</h2>
+                <p>Each vehicle is inspected, detailed, and certified before every rental.</p>
+            </div>
+            <div class="exotic-notice">
+                <strong>⚠️ Requirements:</strong> Minimum age 25 · Valid driver's license · Full Coverage insurance
+                required · Security deposit applies
+            </div>
+            <div class="vehicles-grid">
+
+                <div class="v-card reveal">
+                    <div class="v-img">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/2021_Porsche_911_992_Turbo_S.jpg"
+                            alt="Porsche 911 Turbo S"
+                            onerror="this.parentElement.style.background='linear-gradient(135deg,rgba(120,8,23,0.5),rgba(60,0,10,0.7))'" />
+                        <div class="v-img-overlay"></div>
+                        <span class="v-img-label">Exotic — Sports</span>
+                        <div class="v-img-price">$349 <span>/day</span></div>
+                    </div>
+                    <div class="v-body">
+                        <div class="v-name">Porsche 911 Turbo S</div>
+                        <div class="v-year">2024 · Petrol · AWD</div>
+                        <p class="v-desc">The pinnacle of sports car engineering. Raw, unadulterated performance wrapped
+                            in iconic Porsche design. Every drive is a masterclass in precision.</p>
+                        <div class="v-specs">
+                            <div class="v-spec">
+                                <div class="v-spec-l">Power</div>
+                                <div class="v-spec-v">650 HP</div>
+                            </div>
+                            <div class="v-spec">
+                                <div class="v-spec-l">0–60 mph</div>
+                                <div class="v-spec-v">2.7 sec</div>
+                            </div>
+                            <div class="v-spec">
+                                <div class="v-spec-l">Seats</div>
+                                <div class="v-spec-v">2 Passengers</div>
+                            </div>
+                            <div class="v-spec">
+                                <div class="v-spec-l">Top Speed</div>
+                                <div class="v-spec-v">205 mph</div>
+                            </div>
+                        </div>
+                        <div class="v-feats">
+                            <span class="v-feat">Heated Seats</span><span class="v-feat">Sport Chrono</span>
+                            <span class="v-feat">PASM</span><span class="v-feat">Bose Sound</span>
+                            <span class="v-feat">Night Vision</span><span class="v-feat">Apple CarPlay</span>
+                        </div>
+                        <div class="v-actions">
+                            <a href="car-detail.html?id=1" class="v-book"
+                                style="text-decoration:none;text-align:center;">Book Now</a>
+                            <a href="car-detail.html?id=1" class="v-info"
+                                style="text-decoration:none;text-align:center;">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="v-card reveal">
+                    <div class="v-img">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Lamborghini_Huracan_%2824246143269%29.jpg"
+                            alt="Lamborghini Huracán"
+                            onerror="this.parentElement.style.background='linear-gradient(135deg,rgba(160,10,28,0.5),rgba(80,0,14,0.7))'" />
+                        <div class="v-img-overlay"></div>
+                        <span class="v-img-label">Exotic — Supercar</span>
+                        <div class="v-img-price">$599 <span>/day</span></div>
+                    </div>
+                    <div class="v-body">
+                        <div class="v-name">Lamborghini Huracán</div>
+                        <div class="v-year">2023 · Petrol · AWD</div>
+                        <p class="v-desc">A visceral supercar experience. Every drive is an event you'll never forget.
+                            The Huracán's naturally aspirated V10 is a symphony of pure aggression.</p>
+                        <div class="v-specs">
+                            <div class="v-spec">
+                                <div class="v-spec-l">Power</div>
+                                <div class="v-spec-v">631 HP</div>
+                            </div>
+                            <div class="v-spec">
+                                <div class="v-spec-l">0–60 mph</div>
+                                <div class="v-spec-v">2.9 sec</div>
+                            </div>
+                            <div class="v-spec">
+                                <div class="v-spec-l">Seats</div>
+                                <div class="v-spec-v">2 Passengers</div>
+                            </div>
+                            <div class="v-spec">
+                                <div class="v-spec-l">Top Speed</div>
+                                <div class="v-spec-v">202 mph</div>
+                            </div>
+                        </div>
+                        <div class="v-feats">
+                            <span class="v-feat">Carbon Fiber</span><span class="v-feat">Lifting System</span>
+                            <span class="v-feat">Alcantara Interior</span><span class="v-feat">Sport Exhaust</span>
+                            <span class="v-feat">Rear Camera</span><span class="v-feat">Launch Control</span>
+                        </div>
+                        <div class="v-actions">
+                            <a href="car-detail.html?id=4" class="v-book"
+                                style="text-decoration:none;text-align:center;">Book Now</a>
+                            <a href="car-detail.html?id=4" class="v-info"
+                                style="text-decoration:none;text-align:center;">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="v-card reveal">
+                    <div class="v-img">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Bentley_Continental_GT_V8_S_%28front%29.jpg"
+                            alt="Bentley Continental GT"
+                            onerror="this.parentElement.style.background='linear-gradient(135deg,rgba(20,15,35,0.5),rgba(10,8,18,0.7))'" />
+                        <div class="v-img-overlay"></div>
+                        <span class="v-img-label">Exotic — Grand Tourer</span>
+                        <div class="v-img-price">$499 <span>/day</span></div>
+                    </div>
+                    <div class="v-body">
+                        <div class="v-name">Bentley Continental GT</div>
+                        <div class="v-year">2024 · Petrol · AWD</div>
+                        <p class="v-desc">Handcrafted British excellence. The grand tourer that defines the genre —
+                            effortless power, unmatched luxury, and a presence that commands every room.</p>
+                        <div class="v-specs">
+                            <div class="v-spec">
+                                <div class="v-spec-l">Power</div>
+                                <div class="v-spec-v">659 HP</div>
+                            </div>
+                            <div class="v-spec">
+                                <div class="v-spec-l">0–60 mph</div>
+                                <div class="v-spec-v">3.6 sec</div>
+                            </div>
+                            <div class="v-spec">
+                                <div class="v-spec-l">Seats</div>
+                                <div class="v-spec-v">4 Passengers</div>
+                            </div>
+                            <div class="v-spec">
+                                <div class="v-spec-l">Top Speed</div>
+                                <div class="v-spec-v">207 mph</div>
+                            </div>
+                        </div>
+                        <div class="v-feats">
+                            <span class="v-feat">Naim Audio</span><span class="v-feat">Rotating Display</span>
+                            <span class="v-feat">Handcrafted Interior</span><span class="v-feat">Air Suspension</span>
+                            <span class="v-feat">Night Vision</span><span class="v-feat">Massage Seats</span>
+                        </div>
+                        <div class="v-actions">
+                            <a href="car-detail.html?id=6" class="v-book"
+                                style="text-decoration:none;text-align:center;">Book Now</a>
+                            <a href="car-detail.html?id=6" class="v-info"
+                                style="text-decoration:none;text-align:center;">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Southern California's premium car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Fleet</h5><a href="suvs.html">SUVs</a><a href="sedans.html">Sedans</a><a
+                            href="exotics.html">Exotic Cars</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5><a href="services.html">Car Rental</a><a href="services.html#roadside">Roadside
+                            Assistance</a><a href="services.html#insurance">Insurance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5><a href="faq.html">FAQ</a><a href="index.html#contact" data-i18n="nav.contact">Contact</a><a
+                            href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+            <p>Proudly serving Southern California. 🌴</p>
+        </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+    <script src="js/i18n.js"></script>
+    <script src="js/cars-db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/products-db.js"></script>
+    <script>
+        if (CCW_AUTH.isLoggedIn()) {
+            const b = document.querySelector('.nav-auth-btn');
+            if (b) {
+                b.textContent = 'Sign Out';
+                b.href = '#';
+                b.addEventListener('click', function(e) { e.preventDefault(); CCW_AUTH.logout(); window.location.href = 'index.html'; });
+            }
+        }
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 100); obs.unobserve(e.target); }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    </script>
+<script src="js/chatbot.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice — CertifiedCityWhips</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #ff3c3c;
+            --text: #1a1a1a;
+            --text-light: #666;
+            --border: #eaeaea;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: #f8f9fa;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .invoice-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 60px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 60px;
+        }
+        .brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .brand span { color: var(--red); }
+        .invoice-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: #ddd;
+            text-transform: uppercase;
+            margin: 0;
+        }
+        .details-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+        .info-col h3 {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 10px 0;
+        }
+        .info-col p {
+            margin: 0 0 5px 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .table-wrap {
+            margin-top: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: right;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        th:first-child, td:first-child { text-align: left; }
+        th {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-weight: 600;
+            border-bottom: 2px solid #ccc;
+        }
+        .total-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+        .total-box {
+            width: 300px;
+        }
+        .tot-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .tot-line.grand {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-top: 10px;
+        }
+        .tot-line.grand .val { color: var(--red); }
+        
+        .actions {
+            text-align: center;
+            margin-top: 60px;
+        }
+        .btn {
+            background: var(--text);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            margin: 0 10px;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+        .btn-red { background: var(--red); }
+        p { margin: 0; }
+        
+        @media print {
+            body { background: #fff; padding: 0; }
+            .invoice-wrapper { box-shadow: none; padding: 0; }
+            .actions { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-wrapper">
+        <div class="header">
+            <div>
+                <div class="brand">Certified<span>City</span>Whips</div>
+                <div style="color:var(--text-light); font-size: 0.9rem; margin-top:5px; line-height:1.5;">
+                    123 Luxury Drive, Beverly Hills<br>
+                    CA 90210, USA<br>
+                    billing@citywhips.com
+                </div>
+            </div>
+            <h1 class="invoice-title">Invoice</h1>
+        </div>
+
+        <div class="details-row">
+            <div class="info-col">
+                <h3>Billed To</h3>
+                <div id="customerInfo">Loading...</div>
+            </div>
+            <div class="info-col" style="text-align: right;">
+                <h3>Invoice Details</h3>
+                <p><strong>Invoice No:</strong> <span id="invNo">...</span></p>
+                <p><strong>Date:</strong> <span id="invDate">...</span></p>
+                <p><strong>Status:</strong> <span style="color:#2ecc71; font-weight:600;">PAID </span></p>
+            </div>
+        </div>
+
+        <div class="table-wrap">
+            <table id="invTable">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Qty / Duration</th>
+                        <th>Rate</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="invItems">
+                    <!-- Items -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="total-row">
+            <div class="total-box">
+                <div class="tot-line">
+                    <span>Subtotal</span>
+                    <span id="invSubtotal">$0.00</span>
+                </div>
+                <div class="tot-line">
+                    <span>Tax (0%)</span>
+                    <span>$0.00</span>
+                </div>
+                <div class="tot-line grand">
+                    <span>Total</span>
+                    <span class="val" id="invTotal">$0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn" onclick="window.print()">🖨️ Print Invoice</button>
+            <a href="dashboard.html" class="btn btn-red">← Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        async function loadInvoice() {
+            if (!CCW_AUTH.isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = urlParams.get('type');
+            const targetId = urlParams.get('id');
+            const user = CCW_AUTH.getCurrentUser();
+
+            if (!type || !targetId) {
+                alert("Invalid Invoice Link");
+                return;
+            }
+
+            try {
+                // 1. Fetch User Profile for Address
+                const profRes = await fetch('/api/profile/' + user.userId);
+                const profile = await profRes.json();
+                
+                const cusInfo = document.getElementById('customerInfo');
+                cusInfo.innerHTML = `
+                    <p style="font-weight:600;font-size:1.1rem;margin-bottom:8px;color:#1a1a1a;">${profile.name || user.name}</p>
+                    <p>${user.email}</p>
+                    <p>${profile.phone || ''}</p>
+                    <p>${profile.address ? profile.address + '<br>' + profile.city + ', ' + profile.state + ' ' + (profile.zip||'') : ''}</p>
+                `;
+
+                // 2. Fetch specific transaction
+                const endpoint = type === 'order' ? '/api/orders/user/' + user.userId : '/api/reservations/user/' + user.userId;
+                const txRes = await fetch(endpoint);
+                const allTx = await txRes.json();
+                
+                const tx = allTx.find(t => t.id == targetId);
+                
+                if (!tx) {
+                    document.body.innerHTML = '<h2 style="text-align:center;padding:100px;font-family:sans-serif;">Invoice not found or unauthorized.</h2>';
+                    return;
+                }
+
+                // 3. Populate Header
+                document.getElementById('invNo').innerText = (type === 'order' ? 'ORD-' : 'RNT-') + tx.id.toString().padStart(6, '0');
+                document.getElementById('invDate').innerText = new Date(tx.createdAt || tx.pickupDate || Date.now()).toLocaleDateString();
+
+                // 4. Populate Items
+                const tbody = document.getElementById('invItems');
+                let subtotal = 0;
+
+                if (type === 'order') {
+                    tx.items.forEach(item => {
+                        const tr = document.createElement('tr');
+                        const lineTotal = parseFloat(item.totalPrice);
+                        subtotal += lineTotal;
+                        tr.innerHTML = `
+                            <td><strong style="color:var(--text);">${item.productName}</strong></td>
+                            <td>${item.quantity}</td>
+                            <td>$${parseFloat(item.unitPrice).toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+                            <td>$${lineTotal.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                } else if (type === 'rental') {
+                    const diffTime = Math.abs(new Date(tx.returnDate) - new Date(tx.pickupDate));
+                    const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+                    const daily = parseFloat(tx.dailyRate);
+                    subtotal = parseFloat(tx.totalCost);
+                    
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>
+                            <strong style="color:var(--text);">${tx.vehicleName || (tx.year + ' ' + tx.make + ' ' + tx.model)}</strong><br>
+                            <span style="font-size:0.85rem;color:var(--text-light);">Pickup: ${new Date(tx.pickupDate).toLocaleDateString()} | Return: ${new Date(tx.returnDate).toLocaleDateString()}</span>
+                        </td>
+                        <td>${days} Day(s)</td>
+                        <td>$${daily.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+                        <td>$${subtotal.toLocaleString(undefined, {minimumFractionDigits:2})}</td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+
+                // 5. Totals
+                document.getElementById('invSubtotal').innerText = '$' + subtotal.toLocaleString(undefined, {minimumFractionDigits:2});
+                document.getElementById('invTotal').innerText = '$' + subtotal.toLocaleString(undefined, {minimumFractionDigits:2});
+
+            } catch (err) {
+                console.error("Error loading invoice:", err);
+                alert("Failed to load invoice details.");
+            }
+        }
+
+        window.onload = loadInvoice;
+    </script>
+</body>
+</html>

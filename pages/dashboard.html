@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — CertifiedCityWhips</title>
+    <meta name="description" content="Your CertifiedCityWhips dashboard — manage rentals and bookings." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="css/ccw-new.css" />
+    <style>
+        .dash-page {
+            padding: 140px 0 80px;
+            min-height: 100vh;
+        }
+
+        .dash-header {
+            margin-bottom: 48px;
+        }
+
+        .dash-greeting {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .dash-greeting span {
+            color: var(--red);
+        }
+
+        .dash-sub {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .dash-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .dash-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            border: none;
+        }
+
+        .dash-btn-primary {
+            background: var(--red);
+            color: #fff;
+            border: 1.5px solid var(--accent-bright);
+        }
+
+        .dash-btn-primary:hover {
+            background: var(--accent-bright);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(255, 60, 60, 0.3);
+        }
+
+        .dash-btn-ghost {
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dash-btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+
+        .dash-section-title {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+
+        .dash-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+        }
+
+        .rental-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .rental-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .rental-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .rental-name {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #fff;
+        }
+
+        .rental-status {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 999px;
+        }
+
+        .rental-status.active {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .rental-status.completed {
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rental-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .rental-detail-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 2px;
+        }
+
+        .rental-detail-value {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.92rem;
+            color: #fff;
+        }
+
+        .dash-empty {
+            text-align: center;
+            padding: 60px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+
+        .dash-empty-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .dash-empty-text {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .dash-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand" id="navBrand">
+                <div class="nav-logo-mark">CCW</div>
+                <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#fleet" class="nav-link" data-i18n="nav.fleet">Fleet</a></li>
+                                <li><a href="services.html" class="nav-link" data-i18n="nav.services">Services</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <div class="nav-end">
+                <button class="lang-toggle" id="langToggle" onclick="CCW_I18N.toggle()">ðŸŒ ES</button>
+                <a href="checkout.html" class="nav-link" style="position:relative;">🛒 <span class="cart-badge"
+                        style="position:absolute;top:-6px;right:-10px;background:var(--red);color:#fff;font-size:0.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center;">0</span></a>
+                <a href="dashboard.html" class="nav-cta" id="navCta">Dashboard</a>
+                <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dash-page">
+        <div class="wrap">
+            <div class="dash-header">
+                <h1 class="dash-greeting">Welcome back, <span id="userName">User</span></h1>
+                <p class="dash-sub">Manage your rentals and bookings.</p>
+                <div class="dash-actions">
+                    <a href="index.html#fleet" class="dash-btn dash-btn-primary">Browse Fleet →</a>
+                    <button class="dash-btn dash-btn-ghost" id="logoutBtn">Log Out</button>
+                </div>
+            </div>
+
+            <h3 class="dash-section-title">Your Profile</h3>
+            <div class="rental-card" style="margin-bottom: 48px;">
+                <form id="profileForm" style="display: flex; flex-direction: column; gap: 16px;">
+                    <div>
+                        <label style="display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:6px;">Full Name</label>
+                        <input type="text" id="profName" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;" />
+                    </div>
+                    <div>
+                        <label style="display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:6px;">Phone</label>
+                        <input type="tel" id="profPhone" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;" />
+                    </div>
+                    <div>
+                        <label style="display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:6px;">Street Address</label>
+                        <input type="text" id="profAddress" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;" />
+                    </div>
+                    <div style="display:flex; gap:12px;">
+                        <div style="flex:2;">
+                            <label style="display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:6px;">City</label>
+                            <input type="text" id="profCity" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;" />
+                        </div>
+                        <div style="flex:1;">
+                            <label style="display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:6px;">State</label>
+                            <input type="text" id="profState" maxlength="2" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;" />
+                        </div>
+                        <div style="flex:1.5;">
+                            <label style="display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:6px;">Zip Code</label>
+                            <input type="text" id="profZip" maxlength="10" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;" />
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="dash-btn dash-btn-primary" id="saveProfileBtn">Save Profile</button>
+                    </div>
+                </form>
+            </div>
+
+            <h3 class="dash-section-title">Your Rentals</h3>
+            <div id="rentalsList"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="nav-logo-mark">CCW</div>
+                        <div class="nav-wordmark">Certified<span>City</span>Whips</div>
+                    </a>
+                    <p>Southern California's premium car rentals. Hand-picked vehicles, zero hidden fees, instant booking.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="fcol">
+                        <h5>Company</h5><a href="about.html">About CCW</a><a href="careers.html">Careers</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Services</h5><a href="services.html">Car Rental</a><a href="services.html">Roadside
+                            Assistance</a>
+                    </div>
+                    <div class="fcol">
+                        <h5>Support</h5><a href="faq.html">FAQ</a><a href="index.html#contact" data-i18n="nav.contact">Contact</a><a
+                            href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CertifiedCityWhips. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+    <script src="js/i18n.js"></script>
+    <script src="js/cars-db.js"></script>
+    <script src="js/products-db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        // Burger menu
+        const burger = document.getElementById('burger');
+        if (burger) burger.addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
+
+        // Redirect if not logged in
+        if (!CCW_AUTH.isLoggedIn()) {
+            window.location.href = 'login.html';
+        }
+
+        const user = CCW_AUTH.getCurrentUser();
+        if (user) {
+            document.getElementById('userName').textContent = user.name.split(' ')[0];
+        }
+
+        // Logout
+        // --- PROFILE LOGIC ---
+        async function loadProfile() {
+            const user = CCW_AUTH.getCurrentUser();
+            if (!user) return;
+            try {
+                const res = await fetch('/api/profile/' + user.userId);
+                const profile = await res.json();
+                document.getElementById('profName').value = profile.name || '';
+                document.getElementById('profPhone').value = profile.phone || '';
+                document.getElementById('profAddress').value = profile.address || '';
+                document.getElementById('profCity').value = profile.city || '';
+                document.getElementById('profState').value = profile.state || '';
+                document.getElementById('profZip').value = profile.zip || '';
+            } catch(e) { console.error('Error fetching profile', e); }
+        }
+
+        document.getElementById('profileForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = CCW_AUTH.getCurrentUser();
+            const btn = document.getElementById('saveProfileBtn');
+            btn.textContent = 'Saving...';
+            try {
+                const res = await fetch('/api/profile/' + user.userId, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: document.getElementById('profName').value,
+                        phone: document.getElementById('profPhone').value,
+                        address: document.getElementById('profAddress').value,
+                        city: document.getElementById('profCity').value,
+                        state: document.getElementById('profState').value,
+                        zip: document.getElementById('profZip').value
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert('Profile updated successfully!');
+                } else {
+                    alert('Could not save profile.');
+                }
+            } catch(e) {
+                console.error('Save failed', e);
+                alert('Could not save profile. Check logs.');
+            } finally {
+                btn.textContent = 'Save Profile';
+            }
+        });
+        
+        loadProfile();
+
+        // Logout listener
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            CCW_AUTH.logout();
+            window.location.href = 'login.html';
+        });
+
+        // Render rentals from database
+        async function renderRentals() {
+            const container = document.getElementById('rentalsList');
+            const user = CCW_AUTH.getCurrentUser();
+            if (!user) return;
+
+            try {
+                // Fetch reservations from database
+                const resResponse = await fetch('/api/reservations/user/' + user.userId);
+                const reservations = await resResponse.json();
+
+                // Fetch orders from database
+                const ordResponse = await fetch('/api/orders/user/' + user.userId);
+                const orders = await ordResponse.json();
+
+                // --- RENDER RENTALS SECTION ---
+                let html = '';
+                if (reservations.length === 0) {
+                    html += `
+                        <div class="dash-empty" style="margin-bottom:48px;">
+                            <div class="dash-empty-icon">🚗</div>
+                            <p class="dash-empty-text">You haven't booked any rentals yet.</p>
+                            <a href="index.html#fleet" class="dash-btn dash-btn-primary">Browse Fleet →</a>
+                        </div>`;
+                } else {
+                    html += '<div class="dash-grid" style="margin-bottom:48px;">';
+                    reservations.forEach(r => {
+                        html += `
+                        <div class="rental-card">
+                            <div class="rental-top">
+                                <div class="rental-name">${r.vehicleName || (r.year + ' ' + r.make + ' ' + r.model)}</div>
+                                <span class="rental-status ${r.status}">${r.status}</span>
+                            </div>
+                            <div class="rental-details">
+                                <div><div class="rental-detail-label">Pickup</div><div class="rental-detail-value">${new Date(r.pickupDate).toLocaleDateString()}</div></div>
+                                <div><div class="rental-detail-label">Return</div><div class="rental-detail-value">${new Date(r.returnDate).toLocaleDateString()}</div></div>
+                                <div><div class="rental-detail-label">Total</div><div class="rental-detail-value" style="color:var(--red)">$${parseFloat(r.totalCost).toLocaleString()}</div></div>
+                                <div><div class="rental-detail-label">Location</div><div class="rental-detail-value">${r.pickupLocationName || 'CCW'}</div></div>
+                            </div>
+                            <div style="margin-top: 16px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 16px; text-align: right;">
+                                <a href="invoice.html?type=rental&id=${r.id}" class="dash-btn dash-btn-ghost" style="font-size: 0.75rem; padding: 8px 16px;">📄 View Invoice</a>
+                            </div>
+                        </div>`;
+                    });
+                    html += '</div>';
+                }
+
+                // --- RENDER ORDERS SECTION ---
+                html += '<h3 class="dash-section-title">Your Orders</h3>';
+                
+                if (orders.length === 0) {
+                    html += `
+                        <div class="dash-empty">
+                            <div class="dash-empty-icon">📦</div>
+                            <p class="dash-empty-text">You haven't placed any orders yet.</p>
+                            <a href="index.html#fleet" class="dash-btn dash-btn-primary">Browse Fleet →</a>
+                        </div>`;
+                } else {
+                    html += '<div class="dash-grid">';
+                    orders.forEach(o => {
+                        // Create item list text with quantities and prices
+                        let itemDetailsHtml = '';
+                        if (o.items && o.items.length > 0) {
+                            itemDetailsHtml = o.items.map(i => {
+                                return `<div><span style="color:rgba(255,255,255,0.7)">${i.quantity}x</span> ${i.productName} <span style="font-size:0.8em;color:var(--red)">($${parseFloat(i.totalPrice).toLocaleString()})</span></div>`;
+                            }).join('');
+                        } else {
+                            itemDetailsHtml = '<div>No items</div>';
+                        }
+                        
+                        let shippingHtml = '';
+                        if (o.shippingAddress) {
+                            shippingHtml = `
+                                <div style="grid-column: 1 / -1; margin-bottom: 8px;">
+                                    <div class="rental-detail-label">Shipping to</div>
+                                    <div class="rental-detail-value" style="font-size:0.85rem;font-weight:400;line-height:1.4;">
+                                        ${o.shippingAddress}, ${o.shippingCity || ''}, ${o.shippingState || ''} ${o.shippingZip || ''}
+                                    </div>
+                                </div>`;
+                        }
+                        
+                        html += `
+                        <div class="rental-card">
+                            <div class="rental-top">
+                                <div class="rental-name">Order #${o.id}</div>
+                                <span class="rental-status ${o.status}">${o.status}</span>
+                            </div>
+                            <div class="rental-details">
+                                <div style="grid-column: 1 / -1; margin-bottom: 8px;">
+                                    <div class="rental-detail-label">Items</div>
+                                    <div class="rental-detail-value" style="font-size:0.85rem;font-weight:400;line-height:1.4;">
+                                        ${itemDetailsHtml}
+                                    </div>
+                                </div>
+                                ${shippingHtml}
+                                <div><div class="rental-detail-label">Total</div><div class="rental-detail-value" style="color:var(--red)">$${parseFloat(o.totalAmount).toLocaleString()}</div></div>
+                                <div><div class="rental-detail-label">Date</div><div class="rental-detail-value">${new Date(o.createdAt).toLocaleDateString()}</div></div>
+                            </div>
+                            <div style="margin-top: 16px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 16px; text-align: right;">
+                                <a href="invoice.html?type=order&id=${o.id}" class="dash-btn dash-btn-ghost" style="font-size: 0.75rem; padding: 8px 16px;">📄 View Invoice</a>
+                            </div>
+                        </div>`;
+                    });
+                    html += '</div>';
+                }
+
+                container.innerHTML = html;
+
+            } catch (err) {
+                console.error('Error loading dashboard data:', err);
+                container.innerHTML = `
+                    <div class="dash-empty">
+                        <div class="dash-empty-icon">⚠️</div>
+                        <p class="dash-empty-text">Could not load your data. Please try again.</p>
+                    </div>`;
+            }
+        }
+
+        renderRentals();
+    </script>
+<script src="js/chatbot.js"></script>
+</body>
+
+</html>

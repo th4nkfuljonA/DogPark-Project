@@ -12,7 +12,7 @@ const bcrypt = require('bcryptjs');
 const { pool, testConnection } = require('./db');
 require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { sendOrderConfirmation, sendAdminNotification } = require('./email');
+const { sendOrderConfirmation, sendAdminNotification, sendTicketNotification } = require('./email');
 
 const app = express();
 const PORT = process.env.API_PORT || 3000;
@@ -674,13 +674,18 @@ app.post('/api/tickets', (req, res) => {
         const { email, subject, description } = req.body;
         const tickets = readJson(ticketsPath);
         const newId = tickets.length > 0 ? Math.max(...tickets.map(t=>t.id)) + 1 : 1000;
-        tickets.push({
+        const newTicket = {
             id: newId,
             email, subject, description,
             status: 'Open',
             createdAt: new Date().toISOString()
-        });
+        };
+        tickets.push(newTicket);
         writeJson(ticketsPath, tickets);
+        
+        // Notify admin
+        sendTicketNotification(newTicket).catch(console.error);
+        
         res.json({ success: true, ticketId: newId });
     } catch (e) {
         res.status(500).json({ success: false, error: 'Server error' });

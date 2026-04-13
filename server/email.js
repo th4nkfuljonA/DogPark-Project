@@ -125,7 +125,42 @@ async function sendAdminNotification(user, id, type, totalCost) {
     }
 }
 
+/**
+ * Send a notification to the admin about a new support ticket.
+ * @param {Object} ticket - { id, email, subject, description }
+ */
+async function sendTicketNotification(ticket) {
+    try {
+        const tp = await initTransporter();
+        let subject = `New Help Desk Ticket Received! (#${ticket.id})`;
+        
+        let htmlContent = `
+            <h2>New Help Desk Ticket</h2>
+            <p><strong>Ticket ID:</strong> ${ticket.id}</p>
+            <p><strong>From:</strong> ${ticket.email}</p>
+            <p><strong>Subject:</strong> ${ticket.subject}</p>
+            <p><strong>Description:</strong><br/>${ticket.description.replace(/\n/g, '<br/>')}</p>
+            <p>Please log in to the legacy metrics portal to view or resolve this ticket securely.</p>
+        `;
+
+        let info = await tp.sendMail({
+            from: getFromEmail(),
+            to: getAdminEmail(),
+            subject: subject,
+            html: htmlContent,
+        });
+
+        console.log(`[Email] Ticket notification sent (Message ID: ${info.messageId})`);
+        if (info.messageId && nodemailer.getTestMessageUrl(info)) {
+            console.log(`[Email-Preview]: ${nodemailer.getTestMessageUrl(info)}`);
+        }
+    } catch (err) {
+        console.error('[Email] Failed to send ticket notification:', err);
+    }
+}
+
 module.exports = {
     sendOrderConfirmation,
-    sendAdminNotification
+    sendAdminNotification,
+    sendTicketNotification
 };
